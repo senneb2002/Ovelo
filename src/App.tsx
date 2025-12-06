@@ -26,6 +26,7 @@ function App() {
   const [generating, setGenerating] = useState(false);
   const [tooltip, setTooltip] = useState<{ show: boolean, x: number, y: number, content: string }>({ show: false, x: 0, y: 0, content: "" });
   const [currentPersona, setCurrentPersona] = useState<string>("calm_coach");
+  const [backendError, setBackendError] = useState(false);
 
   // Paywall state
   const [freeRemaining, setFreeRemaining] = useState<number | null>(null);
@@ -47,6 +48,7 @@ function App() {
       await invoke("sync_device_id", { deviceId });
     } catch (error) {
       console.error('Error syncing device ID:', error);
+      setBackendError(true);
     }
   }
 
@@ -84,6 +86,7 @@ function App() {
       }
     } catch (error) {
       console.error('Error checking profile:', error);
+      setBackendError(true);
     }
   }
 
@@ -147,7 +150,8 @@ function App() {
       }
     } catch (error) {
       console.error('Error loading data:', error);
-      setLoading(false); // Stop loading even on error
+      setLoading(false);
+      setBackendError(true);
     }
   }
 
@@ -477,6 +481,40 @@ function App() {
 
     return <div className="reflection-text" dangerouslySetInnerHTML={{ __html: html }} />;
   };
+
+  if (backendError) {
+    return (
+      <div className="app-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', padding: '20px', textAlign: 'center', background: '#0f172a' }}>
+        <div style={{ maxWidth: '500px' }}>
+          <h2 style={{ color: '#ef4444', marginBottom: '10px' }}>Backend Service Failed</h2>
+          <p style={{ marginBottom: '20px', color: '#cbd5e1' }}>The Ovelo background service could not start.</p>
+
+          <div style={{ background: '#1e293b', padding: '15px', borderRadius: '8px', textAlign: 'left', marginBottom: '20px' }}>
+            <p style={{ marginBottom: '8px', fontSize: '0.9em', color: '#94a3b8' }}>Please check the crash log:</p>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <code style={{ display: 'block', background: '#0f172a', padding: '8px', borderRadius: '4px', width: '100%', fontFamily: 'monospace', color: '#e2e8f0' }}>%APPDATA%\Ovelo\server.log</code>
+            </div>
+          </div>
+
+          <div style={{ textAlign: 'left', fontSize: '0.9em', color: '#cbd5e1', lineHeight: '1.6' }}>
+            <strong>To investigate:</strong>
+            <ol style={{ paddingLeft: '20px', marginTop: '5px', color: '#94a3b8' }}>
+              <li>Press <code>Windows + R</code> on your keyboard.</li>
+              <li>Paste <code>%APPDATA%\Ovelo</code> and press Enter.</li>
+              <li>Open <code>server.log</code> and share the content.</li>
+            </ol>
+          </div>
+
+          <button
+            onClick={() => window.location.reload()}
+            style={{ marginTop: '30px', padding: '10px 20px', background: '#334155', border: 'none', borderRadius: '6px', color: 'white', cursor: 'pointer', fontSize: '1em' }}
+          >
+            Retry Connection
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="app-container">
