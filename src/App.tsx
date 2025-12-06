@@ -3,6 +3,8 @@ import { invoke } from "@tauri-apps/api/core";
 import { Link, useNavigate } from 'react-router-dom';
 import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/plugin-notification';
 import { generateReflectionApi } from './services/api';
+import { check } from '@tauri-apps/plugin-updater';
+import { relaunch } from '@tauri-apps/plugin-process';
 import "./App.css";
 
 // Configuration
@@ -59,6 +61,22 @@ function App() {
     const interval = setInterval(loadData, 60000); // Refresh every minute
 
     window.addEventListener('resize', handleResize);
+
+    // Auto-update check
+    const checkForUpdates = async () => {
+      try {
+        const update = await check();
+        if (update?.available) {
+          console.log(`Update to ${update.version} available! Downloading...`);
+          await update.downloadAndInstall();
+          console.log("Update installed, relaunching...");
+          await relaunch();
+        }
+      } catch (error) {
+        console.error('Error checking for updates:', error);
+      }
+    };
+    checkForUpdates();
 
     return () => {
       clearInterval(interval);

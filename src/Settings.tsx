@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { registerDevice, createCheckoutSession, createPortalSession } from './services/api';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import { isEnabled, enable, disable } from '@tauri-apps/plugin-autostart';
+import { getVersion } from '@tauri-apps/api/app';
 import "./App.css";
 
 function Settings() {
@@ -19,12 +20,14 @@ function Settings() {
         reflectionPersona: 'calm_coach',
         privacyLevel: 'smart'
     });
+    const [appVersion, setAppVersion] = useState<string>('');
 
     const [autostartEnabled, setAutostartEnabled] = useState(false);
 
     useEffect(() => {
         loadSettings();
         loadAutostartStatus();
+        getVersion().then(v => setAppVersion(v));
     }, []);
 
     async function loadAutostartStatus() {
@@ -488,6 +491,8 @@ function Settings() {
                         </div>
                         <p className="settings-note" style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '1rem', textAlign: 'center' }}>
                             Your account is device-based — no login required. Subscriptions are linked to this device.
+                            <br />
+                            <span style={{ opacity: 0.7 }}>Version {appVersion}</span>
                         </p>
                     </div>
                 </section>
