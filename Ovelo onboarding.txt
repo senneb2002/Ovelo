@@ -1,0 +1,326 @@
+OVELO ONBOARDING SPECIFICATION
+===============================================
+
+Purpose:
+--------
+This onboarding flow creates a Focus Profile for the user so Ovelo can personalize focus detection based on their work style, app usage, and attention habits. 
+Cursor should interpret and design real values, weights, thresholds, and logic.
+
+General Notes for Cursor:
+-------------------------
+- All numeric calibration values (weights, thresholds, percentages) should be chosen by Cursor.
+- Cursor should design mapping logic from onboarding answers to internal scoring mechanisms.
+- Cursor should create a clean, minimal, calming UI.
+- Cursor should infer any missing values reasonably.
+
+OVERVIEW OF ONBOARDING FLOW:
+----------------------------
+The onboarding contains 5 steps:
+
+1. Identity
+2. Work Style Archetype
+3. Focus Goals
+4. Priority App Category
+5. Focus Patterns
+
+All answers are stored into a FocusProfile object. Cursor should generate this object, including derived fields and weights.
+
+------------------------------------------------------------
+STEP 1 — IDENTITY
+------------------------------------------------------------
+Screen: “Welcome to Ovelo.”
+
+Question:
+- "What should we call you?"
+  → Free text input
+  → If empty, use system username
+
+Save:
+- userName
+
+------------------------------------------------------------
+STEP 2 — WORK STYLE ARCHETYPE
+------------------------------------------------------------
+Prompt:
+“What best describes your daily work style?”
+
+Options:
+- Programmer / Engineer
+- Researcher / Analyst
+- Writer / Student
+- Designer / Creative
+- Manager / Communicator
+- Custom Blend (sliders)
+
+Cursor must determine:
+- typingWeight
+- mouseStillnessWeight
+- microSwitchTolerance
+- idleInterpretation style
+- category behavior mapping
+
+No explicit numbers given; Cursor selects appropriate values.
+
+Save:
+- workArchetype
+
+If “Custom Blend” is chosen:
+- Provide sliders for:
+  - Typing intensity
+  - Mouse activity
+  - Switch frequency
+  - Reading load
+
+Cursor must handle weighting.
+
+------------------------------------------------------------
+STEP 3 — FOCUS GOALS
+------------------------------------------------------------
+Prompt:
+“What is your main focus goal right now?”
+
+Options:
+- More Deep Focus Blocks
+- Reduce Mindless Drift
+- Better Daily Rhythm
+- Less App-Hopping
+- Stay Consistent
+
+Cursor must interpret:
+- Drift sensitivity
+- Stability expectations
+- Focus scoring emphasis
+- Recovery weighting
+- Peak-window importance
+
+Save:
+- primaryGoal
+
+Cursor should derive logic internally.
+
+------------------------------------------------------------
+STEP 4 — PRIORITY APP CATEGORY
+------------------------------------------------------------
+Prompt:
+“Which app or app-category matters most to you?”
+
+Options:
+- Code Editor
+- Browser
+- Notes / Docs
+- Design Tools
+- Messaging
+- Video Tools
+- Games
+- Research Reading apps
+
+Save:
+- priorityCategory
+
+Cursor should create:
+- categoryFocusMultiplier mapping
+- category weight adjustments
+
+Values left to Cursor.
+
+------------------------------------------------------------
+STEP 5 — FOCUS PATTERNS
+------------------------------------------------------------
+3 Micro-questions:
+
+A) “How long is your ideal focus session?”
+Options:
+- ~20–30 min
+- ~40–60 min
+- 90+ min
+
+Save:
+- preferredFocusLengthMinutes (Cursor interprets numeric value)
+
+B) “How easily do you get pulled out of focus?”
+Options:
+- Very easily
+- Sometimes
+- Rarely
+
+Save:
+- sensitivityToDistraction (Cursor interprets scale)
+
+C) “Should Ovelo be strict or gentle detecting drift?”
+Options:
+- Strict
+- Balanced
+- Gentle
+
+Save:
+- driftDetectionStyle
+
+Cursor should map this to drift thresholds and tolerance.
+
+------------------------------------------------------------
+FOCUS PROFILE OBJECT (Cursor must build)
+------------------------------------------------------------
+
+Cursor should generate a structured FocusProfile object like:
+
+FocusProfile {
+  userName: string;
+  workArchetype: string;
+  primaryGoal: string;
+  priorityCategory: string | null;
+
+  preferredFocusLengthMinutes: number;
+  sensitivityToDistraction: number;
+  driftDetectionStyle: string;
+
+  typingWeight: number;
+  mouseStillnessWeight: number;
+  microSwitchTolerance: number;
+  idleInterpretation: string;
+
+  categoryFocusMultiplier: Record<string, number>;
+
+  // Cursor may add additional fields if helpful.
+}
+
+All values are intentionally left open for Cursor’s interpretation.
+
+------------------------------------------------------------
+UX REQUIREMENTS
+------------------------------------------------------------
+Cursor should implement:
+- 5-step flow with progress indicator
+- Calming gradient backgrounds
+- Simple illustrations for each archetype
+- Short, warm text
+- Single-choice inputs or sliders
+- Back/Next navigation
+- Store FocusProfile to local config
+
+Tone examples:
+- “Help us understand your version of focus.”
+- “Everyone focuses differently — let’s find your rhythm.”
+
+This file contains the 5 selected reflection personas and the exact behavior, tone, and rules Cursor should implement.
+
+------------------------------------------------------------
+1) CALM COACH (Soft, supportive)
+------------------------------------------------------------
+Tone:
+- Warm, encouraging, non-judgmental.
+- Reflects patterns gently.
+- Focuses on self-awareness and rhythm.
+
+Rules:
+- Use soft language (“seems,” “likely,” “gently,” “might help”).
+- Reference yesterday + long-term patterns.
+- Offer 1–2 actionable, gentle suggestions.
+
+Example Output:
+“Your attention settled beautifully between 10:00–11:20 today. Your afternoon drift was higher than your weekly average, which often happens when your mornings are strong. Try protecting a small window tomorrow morning while your energy is naturally high.”
+
+Data Used:
+- Yesterday’s highest streak (minutes)
+- Lowest streak or drift clusters (minutes)
+- Weekly best hour
+- Typical drift triggers
+- Priority app category
+
+------------------------------------------------------------
+2) SCIENTIST MODE (Analytical, objective)
+------------------------------------------------------------
+Tone:
+- Neutral, factual, data-driven.
+- No emotional language.
+- Reads like a lab report or systems analysis.
+
+Rules:
+- Highlight correlations (“X correlates with Y”).
+- Compare yesterday to historical averages.
+- Use percentages, ranges, and counts without judgment.
+
+Example Output:
+“You completed 42 minutes of deep focus, which is 12% below your 7-day baseline. Drift clustered at 15:20 and 16:05, aligning with your recurring afternoon instability window. Your most stable interval remains 09:40–10:20.”
+
+Data Used:
+- 7/14/30-day averages
+- Drift-hour correlation clusters
+- Peak window consistency
+- App-category distribution
+- Micro-leak rate
+
+------------------------------------------------------------
+3) NO-BULLSHIT MODE (Direct, honest)
+------------------------------------------------------------
+Tone:
+- Straightforward, blunt but not insulting.
+- Calls out avoidance patterns.
+- Offers tough-love grounding.
+
+Rules:
+- Do not shame identity. Only behavior.
+- Directly point out patterns the user keeps repeating.
+- End with a practical instruction.
+
+Example Output:
+“You lost 94 minutes to drift today, mostly after lunch. That wasn’t ‘rest’ — it was avoidance. You already know your best work happens before noon. Protect your first 60 minutes tomorrow and get your hardest task done before touching the browser.”
+
+Data Used:
+- Longest afternoon drift window (minutes)
+- Daily vs weekly averages
+- App switching volume
+- Highest-value focus block
+
+------------------------------------------------------------
+4) UNHINGED MODE (Viral, chaotic, funny)
+------------------------------------------------------------
+Tone:
+- Dramatic, unfiltered, meme-like.
+- Savage but still safe and human-friendly.
+- The tone should imply: “I care about you but I will roast your behavior.”
+
+Safety:
+- Never comment on identity, intelligence, health, or personal traits.
+- ONLY comment on actions, apps, patterns, habits.
+
+Rules:
+- Be funny.
+- Use exaggeration, emojis, dramatic phrasing.
+- Highlight the most chaotic behaviors.
+- Point out obvious procrastination moments.
+
+Example Output:
+“HELLO?? You peaked at 10:00 and then immediately opened six Chrome tabs like a feral raccoon. And explain to me why you spent 70 minutes pretending that scrolling counts as ‘thinking.’ Also stop opening Minecraft at 14:10. You are not a medieval farmer — finish your tasks.”
+
+Data Used:
+- App-triggered drift events
+- Long idle gaps
+- Tab-switch spikes
+- Historical cringe patterns
+
+------------------------------------------------------------
+5) CEO MODE (Strategic, results-oriented)
+------------------------------------------------------------
+Tone:
+- Professional, sharp, high-performance.
+- Treats the user like an operator optimizing output.
+- Speaks in goals, bottlenecks, and leverage points.
+
+Rules:
+- Focus on the highest-impact 1–2 improvements.
+- Use language like “optimize,” “throughput,” “efficiency window.”
+- Show where the biggest time losses happened in minutes.
+
+Example Output:
+“Your productivity bottleneck today was the 14:00–15:00 block, where you lost 62 minutes to drift. If you protect your 09:40–10:20 peak window and eliminate that single bottleneck, your weekly throughput increases by ~12%. Tomorrow: lock your priority task before noon.”
+
+Data Used:
+- Efficiency windows (minutes)
+- Bottleneck hours
+- Priority app category time
+- Stability trend
+- Drift ratio vs deep focus
+
+------------------------------------------------------------
+END OF SPEC
+------------------------------------------------------------

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Replay - Ovelo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="replay.css">
+</head>
+
+<body>
+    <div class="replay-container">
+        <canvas id="replay-canvas"></canvas>
+
+        <div id="loading" class="loading-overlay">
+            <div class="loading-spinner"></div>
+            <p>Generating your Focus Replay...</p>
+        </div>
+
+        <div class="controls-overlay" id="controls">
+            <div class="playback-controls">
+                <button id="restart-btn" class="control-btn" title="Restart">
+                    <span>↻</span>
+                </button>
+                <button id="play-pause-btn" class="control-btn primary" title="Play/Pause">
+                    <span id="play-icon">▶</span>
+                </button>
+                <div class="speed-controls">
+                    <button class="speed-btn" data-speed="0.5">0.5×</button>
+                    <button class="speed-btn active" data-speed="1">1×</button>
+                    <button class="speed-btn" data-speed="1.5">1.5×</button>
+                    <button class="speed-btn" data-speed="2">2×</button>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress"></div>
+                </div>
+                <div class="progress-time">
+                    <span id="current-time">0:00</span>
+                    <span id="total-time">1:30</span>
+                </div>
+            </div>
+
+            <button id="export-btn" class="export-btn">
+                📹 Export Replay
+            </button>
+        </div>
+
+        <div class="export-modal" id="export-modal">
+            <div class="modal-content">
+                <h2>Exporting Replay</h2>
+                <div class="export-progress">
+                    <div class="export-progress-bar">
+                        <div class="export-progress-fill" id="export-progress"></div>
+                    </div>
+                    <p id="export-status">Preparing...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="replay-engine.js"></script>
+</body>
+
+</html>

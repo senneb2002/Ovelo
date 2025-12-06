@@ -1,0 +1,227 @@
+Concept:
+--------
+Ovelo Passport is a Flighty-style, highly visual, shareable "focus passport" summary.
+It compresses a user's attention patterns into a futuristic passport/boarding-pass card.
+It is designed to be exported as a 1080x1920 PNG for social media.
+
+It should look premium, data-rich, and fun.
+
+------------------------------------------------------------
+1. OUTPUT FORMAT
+------------------------------------------------------------
+- React component inside app
+- Export function: 1080x1920 PNG (vertical, social-media-friendly)
+
+exportOveloPassportImage(data, options?) → Blob
+
+------------------------------------------------------------
+2. DATA SHAPE (INPUT TO PASSPORT)
+------------------------------------------------------------
+type AppCategory =
+  | "editor"
+  | "browser"
+  | "messaging"
+  | "video"
+  | "game"
+  | "notes"
+  | "design"
+  | "other";
+
+interface OveloPassportData {
+  periodLabel: string;
+  username?: string;
+
+  totalFocusHours: number;
+  totalDriftHours: number;
+  totalIdleHours: number;
+  totalRecoveryPoints: number;
+  longestFocusStreakMinutes: number;
+  averageDailyFocusMinutes: number;
+  attentionStabilityScore: number; // 0–1
+  microLeakEvents: number;
+  daysTracked: number;
+
+  bestHourOfDay: number;      // 0–23
+  toughestHourOfDay: number;  // 0–23
+
+  focusByCategory: {
+    category: AppCategory;
+    share: number;
+  }[];
+
+  nemesisCategory: AppCategory | null;
+
+  focusTrendPercent: number;  // +/- %
+}
+
+------------------------------------------------------------
+3. VISUAL STYLE
+------------------------------------------------------------
+BACKGROUND:
+- Vertical gradient (top to bottom)
+  - #2B1B5B → #090B1F (deep indigo to navy-black)
+
+ACCENT COLORS:
+- Focus: #00D9C0 (teal)
+- Drift: #FF4F9A (magenta)
+- Recovery: #FFC857 (yellow)
+- Idle: #4F7DFF (soft blue)
+
+TYPE:
+- Headings: Inter or Satoshi (uppercase, spaced)
+- Body: Inter regular
+- Passport strip: monospaced (JetBrains Mono style)
+
+------------------------------------------------------------
+4. LAYOUT (TOP TO BOTTOM)
+------------------------------------------------------------
+
+=========================
+A) HEADER BAR (10–12% height)
+=========================
+- Background slightly brighter (#351C70)
+- Left: “OVELO” logo/text
+- Center: periodLabel (e.g., “2025 OVELO PASSPORT”)
+- Right: small "focus glyph" (circle with 3 dots)
+
+=========================
+B) HERO GRAPHIC — ATTENTION ORBIT MAP
+=========================
+A stylized circular “map” of the user's day rhythms.
+
+IMPLEMENTATION:
+- Large circle centered near top of card.
+- 24 radial segments (one per hour).
+- Use data to color each hour by dominant zone:
+  Focus Peak → teal
+  Drift → magenta
+  Idle → blue
+- Radius = focus intensity
+- Glow halo on bestHourOfDay
+- Turbulence/glitch marker on toughestHourOfDay
+- Little nodes shown as “Focus Ports”
+
+Label: “Your Attention Orbit”
+Sub-label: “Most stable: 09–11 · Most chaotic: 14–15”
+
+=========================
+C) FOCUS FLAGS ROW — APP TERRITORY VISITED
+=========================
+Row of circular icons representing focusByCategory.
+Not exact apps — only categories.
+
+Examples:
+- editor → 💻 teal background
+- browser → 🌐 blue
+- messaging → 💬 magenta
+- video → ▶️ soft blue
+- game → 🎮 yellow
+- notes → 📝 teal
+- design → 🎨 pink
+
+Caption: “FOCUS TERRITORY VISITED”
+
+=========================
+D) STATS GRID — HERO METRICS
+=========================
+
+ROW 1 (BIG NUMBERS):
+1. DEEP FOCUS — totalFocusHours
+2. DRIFT WEATHER — totalDriftHours
+3. RECOVERY POINTS — totalRecoveryPoints
+4. DAYS LOGGED — daysTracked
+
+ROW 2:
+1. LONGEST STREAK — longestFocusStreakMinutes
+2. DAILY AVG FOCUS — averageDailyFocusMinutes
+3. MICRO-LEAKS — microLeakEvents
+4. STABILITY — attentionStabilityScore → xx%
+
+TREND CHIP:
+If positive → ▲ +X% vs last period (teal)
+If negative → ▼ -X% vs last period (magenta)
+
+=========================
+E) NEMESIS & HABITAT BADGES
+=========================
+Two pill elements:
+
+1. FOCUS HABITAT (category with highest share)
+   Example: “Most deep work in: 💻 Editor”
+
+2. DISTRACTION NEMESIS (nemesisCategory)
+   Example: “Most drifts begin in: 🌐 Browser”
+
+Hide nemesis if null.
+
+=========================
+F) PASSPORT STRIP (BOTTOM 10%)
+=========================
+Passport-style machine-readable line:
+
+Example:
+2025<<OVELO<<MARKUS<<FOCUS148H<<DRIFT62H<<RECOV421<<STAB82PCT<<PEAK09H<<NEMESIS:BROWSER<<OVELO.APP<<
+
+STYLE:
+- Monospaced
+- Light glitch scan effect
+- Horizontal fidelity marks
+
+------------------------------------------------------------
+5. EXPORT REQUIREMENTS
+------------------------------------------------------------
+Provide export function:
+
+async function exportOveloPassportImage(
+  data: OveloPassportData,
+  options?: { width?: number; height?: number }
+): Promise<Blob>;
+
+Default:
+- width: 1080
+- height: 1920
+
+Use HTML canvas, offscreen canvas, or html2canvas.
+
+------------------------------------------------------------
+6. DESIGN INTENTION
+------------------------------------------------------------
+The Ovelo Passport should:
+- Look premium, like a futuristic boarding pass.
+- Be highly shareable on social media.
+- Give a “proud achievement” feeling.
+- Summarize identity: how the user focuses.
+- Maintain privacy (categories only, no app names).
+
+------------------------------------------------------------
+7. EXAMPLE INPUT
+------------------------------------------------------------
+
+const examplePassport: OveloPassportData = {
+  periodLabel: "2025 OVELO PASSPORT",
+  username: "MARKUS",
+  totalFocusHours: 148,
+  totalDriftHours: 62,
+  totalIdleHours: 90,
+  totalRecoveryPoints: 421,
+  longestFocusStreakMinutes: 82,
+  averageDailyFocusMinutes: 42,
+  attentionStabilityScore: 0.82,
+  microLeakEvents: 2913,
+  daysTracked: 127,
+  bestHourOfDay: 10,
+  toughestHourOfDay: 14,
+  focusByCategory: [
+    { category: "editor", share: 0.41 },
+    { category: "browser", share: 0.29 },
+    { category: "messaging", share: 0.14 },
+    { category: "notes", share: 0.09 },
+    { category: "design", share: 0.07 }
+  ],
+  nemesisCategory: "browser",
+  focusTrendPercent: 8
+};
+
+------------------------------------------------------------
+END OF SPEC
+------------------------------------------------------------

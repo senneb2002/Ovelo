@@ -1,0 +1,7 @@
+flask
+pynput
+pywin32
+pystray
+pillow
+pillow
+google-genai

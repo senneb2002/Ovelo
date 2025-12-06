@@ -1,0 +1,63 @@
+name: Release
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [windows-latest]
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-msvc
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python Dependencies
+        run: |
+          pip install pyinstaller pywin32 pynput flask flask_cors requests
+          # Ensure pyinstaller is on path
+          
+      - name: Build Python Backend
+        run: |
+          pyinstaller --clean --noconsole --onefile --name ovelo_server --hidden-import win32timezone --hidden-import win32gui --hidden-import win32api --hidden-import win32con --hidden-import pynput.keyboard._win32 --hidden-import pynput.mouse._win32 python/server.py
+          
+      - name: Prepare Resources
+        run: |
+          New-Item -ItemType Directory -Force -Path src-tauri\resources
+          Copy-Item -Force dist\ovelo_server.exe src-tauri\resources\
+
+      - name: install frontend dependencies
+        run: npm install
+
+      - name: Build and Release
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_KEY_PASSWORD }}
+        with:
+          tagName: __VERSION__ # This wraps the tag name
+          releaseName: 'App v__VERSION__'
+          releaseBody: 'See the assets to download this version and install.'
+          releaseDraft: true
+          prerelease: false

@@ -1,0 +1,262 @@
+Ovelo – Behavioral Focus Day Overview App
+===========================================
+
+Working name / brand: Ovelo
+Tagline: “See how your day felt, not just what you did.”
+
+Ovelo is a privacy-first desktop app that gives you a clear, emotionally honest overview of how your focus actually behaved during the day — without tracking what you do, only how you show up.
+
+Instead of logging screenshots, URLs, or keystrokes, Ovelo observes subtle behavioral signals like app switching, typing rhythm, mouse stillness, and idle patterns. At the end of the day, it turns those invisible rhythms into a simple, readable “focus day overview” and a short narrative reflection.
+
+The goal: help you understand why some days feel sharp and satisfying and others feel scattered and empty, even when the same number of hours go by.
+
+------------------------------------------------------------
+1. Brand & Positioning
+------------------------------------------------------------
+
+Name: Ovelo
+Meaning / Feel:
+- Short, smooth, and easy to say.
+- Feels like “oval / orbit / flow” – something continuous, cyclical, and calm.
+- Abstract enough to grow beyond a single feature, but memorable.
+
+Tagline:
+“See how your day felt, not just what you did.”
+
+Core Brand Ideas:
+- Behavioral rhythm instead of time tracking.
+- Reflection instead of judgment.
+- Privacy instead of surveillance.
+- Emotional truth instead of productivity guilt.
+
+Tone of Voice:
+- Calm, curious, and honest.
+- Coach-like but not cheesy.
+- Respectful of the user’s autonomy.
+- No hype, no shaming, no hustle propaganda.
+
+Visual Direction (high-level):
+- Colors: deep indigo or slate as a base, with a soft mint or teal accent.
+- Shapes: smooth curves, waveforms, and simple circles to suggest rhythms and cycles.
+- Typography: clean modern sans-serif for UI (e.g. Inter), with an optional softer serif for reflections.
+
+------------------------------------------------------------
+2. Core Concept
+------------------------------------------------------------
+
+Ovelo answers a simple but difficult question:
+
+“Why do some days feel focused and meaningful while others feel fragmented — even when I work the same number of hours?”
+
+It does this by:
+- Tracking HOW you interact with your computer, not WHAT you do.
+- Turning those hidden interaction patterns into a daily overview of your attention.
+- Giving you a short, AI-generated reflection that feels like a tiny journal entry written from the outside.
+
+No to:
+- Time sheets
+- “Productive vs unproductive” labels
+- Strict blocking or parental control
+- Scary privacy trade-offs
+
+Yes to:
+- A simple picture of your day’s focus rhythm
+- One clear insight about what supported or hurt your focus
+- A gentle suggestion for tomorrow
+
+------------------------------------------------------------
+3. The Super-Original Function: “Day Trace”
+------------------------------------------------------------
+
+Signature Feature Name: Day Trace
+
+Day Trace is the signature, original function of Ovelo. It is the part that makes the app feel magical and different from time trackers or dashboards.
+
+What Day Trace Does:
+- It reconstructs your day as a single continuous “focus ribbon” — a horizontal band that changes thickness and color depending on how stable or fragmented your attention was.
+- It marks three kinds of moments:
+  1) Focus Peaks – stretches where your behavior looked steady and deeply engaged.
+  2) Drift Zones – stretches where your attention fragmented (lots of micro-switches, restless cursor, irregular typing).
+  3) Recovery Points – where you came back from a drift into renewed engagement.
+
+This ribbon is paired with a short AI-generated narrative, written as if someone watched your day from the outside:
+
+Example:
+“Today your attention settled into a strong groove late morning between 10:00 and 11:30. After lunch your focus scattered into short bursts that never quite linked up, especially between 14:00 and 16:00. You did, however, manage to recover and end with a late focused stretch around 17:00. Tomorrow, try protecting that late-morning window and leaving errands or reactive work for mid-afternoon.”
+
+Why Day Trace is Original:
+- It doesn’t just show “time in app”; it shows the *shape* of your attention.
+- It doesn’t reduce everything to a single score; it highlights patterns and turning points.
+- It gives you language for things you normally only feel: drifting, recovering, streaks of real presence.
+- It does this entirely from behavioral metrics that don’t reveal content.
+
+Day Trace = “Your day’s attention story, compressed into one ribbon and one paragraph.”
+
+------------------------------------------------------------
+4. Behavioral Signals (What Ovelo Actually Tracks)
+------------------------------------------------------------
+
+Ovelo is strictly content-blind. It never records what you type, what you read, or what’s on your screen.
+
+Instead, it tracks:
+
+1) App Stickiness
+- How often you switch between applications in short bursts.
+- How long you stay in the same app without hopping.
+- Pattern: fewer switches and longer stretches usually correlate with deeper engagement.
+
+2) Micro-Switch Frequency
+- Tiny, rapid changes (tab switches, quick app toggles, flicking between windows).
+- Pattern: high micro-switching often signals fragmented attention or anxiety-driven checking.
+
+3) Typing Rhythm (Timing Only)
+- How many keystrokes you make.
+- The timing gaps between keystrokes.
+- The length and frequency of “typing bursts” (sustained runs of typing).
+- Pattern: smooth, consistent bursts followed by short pauses often indicate deep work; jittery, stop-and-start patterns hint at distraction or uncertainty.
+
+4) Mouse Movement & Stillness
+- How much and how far the cursor moves.
+- How often it stops completely (stillness).
+- How often you click (without tracking *where*).
+- Pattern: long stretches of stillness with occasional deliberate movements can map to focus; constant jittery movement maps to restless attention.
+
+5) Idle Time
+- Periods with no keyboard or mouse input.
+- Whether idle appears as long breaks or constant micro-idle (a few seconds here and there).
+- Pattern: long, deliberate breaks often support better focus later; micro-idle scattered everywhere often correlates with “leaky” attention.
+
+None of these data sources contain personal content. They are like the body language of your workday.
+
+------------------------------------------------------------
+5. Daily Focus Overview
+------------------------------------------------------------
+
+Once per day (for example at 18:00), Ovelo:
+
+1) Aggregates all behavioral metrics into intervals (e.g. every 5 minutes).
+2) Builds the Day Trace ribbon:
+   - Focus Peaks
+   - Drift Zones
+   - Recovery Points
+3) Computes simple, interpretable stats like:
+   - “Most stable hour of the day”
+   - “Most fragmented hour of the day”
+   - “Total minutes in Focus Peaks”
+   - “Number of Recovery Points” (times you got back on track)
+4) Sends a compact, anonymized summary of these metrics to an AI model (e.g. via OpenAI).
+
+The AI then generates:
+- A short reflection (2–4 sentences) describing how your attention behaved.
+- One gentle suggestion for tomorrow (when to protect a window, when to avoid context-heavy work, etc.).
+
+You don’t see raw numbers unless you want to. The default experience is:
+- Day Trace ribbon
+- Reflection text
+- One actionable suggestion
+
+------------------------------------------------------------
+6. Privacy & Trust
+------------------------------------------------------------
+
+Principles:
+- Content-Blind: no screenshots, no URLs, no keystroke content, no file paths.
+- Local-First: all raw data is stored locally on your device.
+- Transparent: you can open a “What Ovelo Knows” panel to see the exact type of data being tracked.
+- Erasable: one button wipes all data immediately.
+- Minimal Cloud: only condensed, behavioral summary stats are sent to the AI service, and only for the purpose of generating that day’s reflection.
+
+Example of What Might Be Sent to AI:
+- “Between 09:00–12:00, low micro-switching, high typing bursts, high mouse stillness.”
+- “Between 14:00–16:00, high micro-switching, low typing bursts, fragmented idle.”
+- “Total Focus Peaks: 3. Total Drift Zones: 5. Recovery Points: 2.”
+
+No app names, no text, no websites.
+
+------------------------------------------------------------
+7. Key Screens / User Experience
+------------------------------------------------------------
+
+Ovelo is almost invisible most of the time. It lives in the system tray/menu bar and only surfaces when you want to check in.
+
+Main pieces of UI:
+
+1) Tray/Menu Icon
+- Indicates whether tracking is ON (small glowing dot) or PAUSED.
+- Right-click / click options:
+  - Open Ovelo
+  - Pause / Resume tracking
+  - Show Today’s Overview
+  - Settings
+  - Quit
+
+2) Today Overview Screen
+- The Day Trace ribbon for that day.
+- Key stats:
+  - “Best focus stretch: 10:10–11:25”
+  - “Most fragmented: 14:00–15:30”
+  - “Focus Peaks: 3 · Drift Zones: 5 · Recovery Points: 2”
+- Reflection paragraph from AI.
+- One suggestion block: “Tomorrow, try…”
+
+3) History Screen (Optional v1 or v2)
+- Small list of previous days showing:
+  - A tiny, compressed Day Trace ribbon.
+  - One-line summary (“Mostly stable morning, scattered afternoon.”)
+- Clicking a day opens that day’s full overview.
+
+4) Settings Screen
+- Set daily overview time.
+- Toggle auto-open overview at that time.
+- Enter/edit AI API key (if needed).
+- Privacy overview.
+- “Delete my data” button.
+- “Show sample of raw data” button.
+
+------------------------------------------------------------
+8. How Ovelo Is Different from Other Productivity Tools
+------------------------------------------------------------
+
+It is NOT:
+- A time tracker
+- A “productive vs unproductive” classifier
+- A blocker that tries to control your behavior
+- A dashboard with 50 charts
+
+Instead, Ovelo:
+- Treats your attention as a living rhythm, not a number.
+- Focuses on how the day felt and flowed, not how much you did.
+- Gives you language for your experience: peaks, drifts, recoveries.
+- Helps you recognize the conditions that support your best work.
+
+Where others say:
+“You spent 2 hours on X and 3 hours on Y.”
+
+Ovelo says:
+“You had one solid focus arc late morning, then leaked attention in the afternoon, and still managed to recover once before the day ended.”
+
+------------------------------------------------------------
+9. Future Possibilities (Without Changing the Core Concept)
+------------------------------------------------------------
+
+Ideas for later versions that still honor the brand and concept:
+
+- Weekly Rhythm Maps:
+  - See recurring patterns across days (e.g. “Tuesdays are always fragmented afternoons,” “Fridays have strong morning peaks and early shutdowns.”)
+
+- Personal Focus Ritual Suggestions:
+  - Based on repeated patterns, Ovelo suggests little experiments like:
+    “Try a 10-minute break before your usual 10:00 focus peak.”
+    “Consider blocking Slack from 09:30–11:00 on the days you typically focus well.”
+
+- Gentle Forecast:
+  - After enough data, Ovelo predicts which part of tomorrow is most likely to become a Focus Peak and suggests protecting that window.
+
+All of these build on the same foundation: behavioral rhythms + privacy + reflective narrative.
+
+------------------------------------------------------------
+10. One-Sentence Summary
+------------------------------------------------------------
+
+Ovelo is a privacy-first desktop app that reads the body language of your workday — app switches, typing cadence, mouse stillness, idle patterns — and turns it into a simple Day Trace and reflection so you can finally see how your attention actually lived through the day, not just what you got done.
+

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Ovelo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="settings.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">Ovelo</div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <a href="index.html" class="back-link">← Back to Dashboard</a>
+            </div>
+        </header>
+
+        <main>
+            <section class="settings-section">
+                <h1 class="settings-title">Settings</h1>
+
+                <!-- Profile Section -->
+                <div class="settings-card">
+                    <div class="settings-card-header">
+                        <h2>👤 Profile</h2>
+                        <p class="settings-subtitle">Manage your personal information</p>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <label for="user-name">Display Name</label>
+                            <p class="settings-item-description">This is how you'll be identified in the app</p>
+                        </div>
+                        <div class="settings-item-control">
+                            <input type="text" id="user-name" class="settings-input" placeholder="Your Name">
+                            <button class="settings-btn settings-btn-primary" onclick="updateName()">Save</button>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <label for="persona-select">Reflection Persona</label>
+                            <p class="settings-item-description">Choose the AI's personality for daily reflections</p>
+                        </div>
+                        <div class="settings-item-control">
+                            <select id="persona-select" class="settings-select">
+                                <option value="calm_coach">Calm Coach 🌿</option>
+                                <option value="scientist">Scientist 🔬</option>
+                                <option value="no_bullshit">No-Bullshit 🚫</option>
+                                <option value="unhinged">Unhinged 🤪</option>
+                                <option value="ceo">CEO 💼</option>
+                            </select>
+                            <button class="settings-btn settings-btn-primary" onclick="updatePersona()">Save</button>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <label for="language-select">Language</label>
+                            <p class="settings-item-description">Choose your preferred language</p>
+                        </div>
+                        <div class="settings-item-control">
+                            <select id="language-select" class="settings-select">
+                                <option value="en">English</option>
+                                <option value="es">Spanish</option>
+                                <option value="fr">French</option>
+                                <option value="de">German</option>
+                                <option value="nl">Dutch</option>
+                                <option value="it">Italian</option>
+                            </select>
+                            <button class="settings-btn settings-btn-primary" onclick="updateLanguage()">Save</button>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <label for="timezone-select">Time Zone</label>
+                            <p class="settings-item-description">Set your local time zone</p>
+                        </div>
+                        <div class="settings-item-control">
+                            <select id="timezone-select" class="settings-select">
+                                <option value="auto">Auto-detect</option>
+                                <option value="UTC">UTC</option>
+                                <option value="America/New_York">Eastern Time</option>
+                                <option value="America/Chicago">Central Time</option>
+                                <option value="America/Los_Angeles">Pacific Time</option>
+                                <option value="Europe/London">London</option>
+                                <option value="Europe/Paris">Paris</option>
+                                <option value="Asia/Tokyo">Tokyo</option>
+                            </select>
+                            <button class="settings-btn settings-btn-primary" onclick="updateTimezone()">Save</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Billing & Payments -->
+                <div class="settings-card">
+                    <div class="settings-card-header">
+                        <h2>💳 Billing & Payments</h2>
+                        <p class="settings-subtitle">Manage your subscription and payment methods</p>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <label>Current Plan</label>
+                            <p class="settings-item-description">Your subscription status</p>
+                        </div>
+                        <div class="settings-item-control">
+                            <span class="settings-badge">Free Plan</span>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <label>Payment Method</label>
+                            <p class="settings-item-description">Manage your payment details (via Stripe)</p>
+                        </div>
+                        <div class="settings-item-control">
+                            <button class="settings-btn settings-btn-secondary" onclick="managePayments()">
+                                Manage Payments
+                            </button>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <label>Billing History</label>
+                            <p class="settings-item-description">View past invoices and receipts</p>
+                        </div>
+                        <div class="settings-item-control">
+                            <button class="settings-btn settings-btn-secondary" onclick="viewBillingHistory()">
+                                View History
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div class="settings-card">
+                    <div class="settings-card-header">
+                        <h2>🔔 Notifications</h2>
+                        <p class="settings-subtitle">Control what notifications you receive</p>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <label for="focus-reminders">Focus Reminders</label>
+                            <p class="settings-item-description">Get reminded when you drift off task</p>
+                        </div>
+                        <div class="settings-item-control">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="focus-reminders" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <label for="daily-summary">Daily Summary</label>
+                            <p class="settings-item-description">Receive a daily focus report</p>
+                        </div>
+                        <div class="settings-item-control">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="daily-summary" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Privacy & Data -->
+                <div class="settings-card">
+                    <div class="settings-card-header">
+                        <h2>🔒 Privacy & Data</h2>
+                        <p class="settings-subtitle">Control your data and privacy settings</p>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <label for="data-collection">Activity Tracking</label>
+                            <p class="settings-item-description">Allow Ovelo to track your focus patterns</p>
+                        </div>
+                        <div class="settings-item-control">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="data-collection" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <p class="settings-subtitle">Manage your account status</p>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <label>Reset Account</label>
+                            <p class="settings-item-description">Clear all focus data and start fresh (keeps your
+                                account)</p>
+                        </div>
+                        <div class="settings-item-control">
+                            <button class="settings-btn settings-btn-warning" onclick="resetAccount()">
+                                Reset Account
+                            </button>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <label>Log Out</label>
+                            <p class="settings-item-description">Sign out of your account</p>
+                        </div>
+                        <div class="settings-item-control">
+                            <button class="settings-btn settings-btn-secondary" onclick="logout()">
+                                Log Out
+                            </button>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <label>Delete Account</label>
+                            <p class="settings-item-description">Permanently delete your account and all data</p>
+                        </div>
+                        <div class="settings-item-control">
+                            <button class="settings-btn settings-btn-danger" onclick="deleteAccount()">
+                                Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="settings.js"></script>
+</body>
+
+</html>

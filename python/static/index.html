@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Ovelo - Day Trace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="highlight.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">Ovelo</div>
+            <div class="date" id="current-date">Today</div>
+            <a href="settings.html" class="profile-btn" title="Settings">⚙️</a>
+        </header>
+
+        <main>
+            <section class="trace-section">
+                <h2>Day Trace</h2>
+                <div class="trace-container" id="trace-container">
+                    <canvas id="trace-canvas"></canvas>
+                    <div class="loading-state" id="loading">Waiting for data...</div>
+                    <div id="tooltip" class="tooltip" style="display: none;"></div>
+                </div>
+                <div class="legend">
+                    <span class="legend-item"><span class="dot focus"></span> Focus Peak</span>
+                    <span class="legend-item"><span class="dot drift"></span> Drift Zone</span>
+                    <span class="legend-item"><span class="dot recovery"></span> Recovery Point</span>
+                    <span class="legend-item"><span class="dot idle"></span> Idle</span>
+                </div>
+            </section>
+
+            <div class="replay-section" style="display: flex; gap: 20px;">
+                <!-- Stats Card -->
+                <div class="stats-card" style="flex: 1;">
+                    <span class="replay-icon">📊</span>
+                    <div class="replay-text">
+                        <h3 id="stats-focus">Focus: --</h3>
+                        <p id="stats-stability">Stability: --</p>
+                    </div>
+                </div>
+
+                <a href="/passport.html" class="replay-button"
+                    style="flex: 1; background: linear-gradient(135deg, rgba(53, 28, 112, 0.4) 0%, rgba(20, 184, 166, 0.1) 100%);">
+                    <span class="replay-icon">🎫</span>
+                    <div class="replay-text">
+                        <h3>Ovelo Passport</h3>
+                        <p>Focus Identity Card</p>
+                    </div>
+                </a>
+            </div>
+
+            <section class="reflection-section">
+                <h2>Reflection</h2>
+                <div class="reflection-card">
+                    <p id="reflection-text" class="reflection-text">
+                        Your day is still taking shape. Check back later for a reflection.
+                    </p>
+                    <div style="margin-top: 1.5rem; text-align: right;">
+                        <button id="generate-reflection-btn" class="action-btn" style="
+                            background: linear-gradient(135deg, #818CF8, #2DD4BF);
+                            border: none;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 8px;
+                            color: white;
+                            font-family: 'Inter', sans-serif;
+                            font-weight: 500;
+                            cursor: pointer;
+                            transition: opacity 0.2s;
+                        ">✨ Generate Reflection</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

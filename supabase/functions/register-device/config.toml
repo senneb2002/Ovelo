@@ -1,0 +1,2 @@
+[functions.register-device]
+verify_jwt = false

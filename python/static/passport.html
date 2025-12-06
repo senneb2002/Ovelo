@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ovelo Passport</title>
+    <link rel="stylesheet" href="passport.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">Ovelo</div>
+            <div class="header-controls">
+                <a href="/" class="nav-btn">Back to Dashboard</a>
+            </div>
+        </header>
+
+        <main>
+            <div class="passport-layout">
+                <div class="canvas-wrapper">
+                    <canvas id="passport-canvas"></canvas>
+                </div>
+
+                <div class="actions">
+                    <button id="export-btn" class="primary-btn">
+                        <span class="icon">⬇️</span> Download Passport
+                    </button>
+                </div>
+            </div>
+
+            <div id="loading" class="loading-overlay">
+                <div class="spinner"></div>
+                <p>Generating Focus Identity...</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="passport.js"></script>
+</body>
+
+</html>
