@@ -16,12 +16,19 @@ if getattr(sys, 'frozen', False):
         log_file = os.path.join(log_dir, 'server.log')
         logging.basicConfig(filename=log_file, level=logging.DEBUG, format='%(asctime)s [%(levelname)s] %(message)s')
         logging.info("Server Process Started (Frozen)")
-    except Exception:
+    except Exception as e:
+        # Fallback if logging setup fails
         pass
 
-from tracker import BehaviorTracker
-from analyzer import FocusAnalyzer
-from config import Config
+# Wrap imports to catch dependency errors
+try:
+    from tracker import BehaviorTracker
+    from analyzer import FocusAnalyzer
+    from config import Config
+except Exception as e:
+    if getattr(sys, 'frozen', False):
+        logging.fatal(f"Failed to import dependencies: {e}", exc_info=True)
+    raise e
 
 app = Flask(__name__, static_folder='static')
 analyzer = FocusAnalyzer()
