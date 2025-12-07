@@ -39,7 +39,7 @@ jobs:
           
       - name: Build Python Backend
         run: |
-          pyinstaller --clean --noconsole --onefile --name ovelo_server --hidden-import win32timezone --hidden-import win32gui --hidden-import win32api --hidden-import win32con --hidden-import pynput.keyboard._win32 --hidden-import pynput.mouse._win32 python/server.py
+          pyinstaller --clean --onefile --name ovelo_server --hidden-import win32timezone --hidden-import win32gui --hidden-import win32api --hidden-import win32con --hidden-import pynput.keyboard._win32 --hidden-import pynput.mouse._win32 python/server.py
           
       - name: Prepare Resources
         run: |

@@ -463,3 +463,31 @@ class OveloServer:
         thread = threading.Thread(target=self.run)
         thread.daemon = True
         thread.start()
+
+if __name__ == '__main__':
+    try:
+        # 1. Initialize Tracker
+        tracker = BehaviorTracker()
+        
+        # 2. Initialize Analyzer
+        analyzer = FocusAnalyzer()
+        
+        # 3. Initialize Server
+        server = OveloServer(tracker, analyzer)
+        
+        # 4. Start Tracker (Background Thread)
+        tracker.start()
+        
+        # 5. Start Server (Blocking Main Thread)
+        print("Starting Ovelo Server...")
+        server.run()
+        
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        logging.fatal(f"Fatal Startup Error: {e}", exc_info=True)
+        # Keep window open if in console mode
+        try:
+            input("Press Enter to exit...")
+        except:
+            pass
