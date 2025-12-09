@@ -279,21 +279,11 @@ class FocusAnalyzer:
         user_name = self.profile.get('userName', self.profile.get('name', 'User'))
         clock_format = self.profile.get('clockFormat', '12h')  # 12h or 24h
         
-        # --- Long-term Context ---
-        # Load past reflections to give the AI context on user's journey
-        past_reflections_text = ""
-        try:
-            history = self.profile.get('reflectionHistory', [])
-            if history:
-                # Get last 3 reflections
-                recent_history = history[-3:]
-                past_reflections_text = "PAST REFLECTIONS (Context for your response):\n"
-                for item in recent_history:
-                    ts = item.get('timestamp', '').split('T')[0]
-                    text = item.get('text', '').replace('\n', ' ')
-                    past_reflections_text += f"- [{ts}] {text[:150]}...\n"
-        except Exception as e:
-            print(f"Error loading history: {e}")
+        # --- Long-term Context (72h Raw Data) ---
+        # We now use the raw data from the last 3 days instead of past reflection text
+        # to avoid "style loops" where the AI mimics its own previous unhinged output.
+        past_reflections_text = "" 
+
 
         # --- Visual Context (Graph Summary) ---
         # "See" the graph for the user
@@ -333,44 +323,52 @@ class FocusAnalyzer:
             recovery_count = sum(1 for t in timeline if t['state'] == 'Recovery Point')
             visual_summary += f"- Total Recovery Points: {recovery_count} (Pink dots)\n"
 
-        # --- Format Raw Data for LLM (Optimized) ---
-        # Compact format: [HH:MM] App | State | Activity
-        
-        
-        # Limit to last 24h if raw_data is huge, but user asked for "full database" context for the day
-        # We'll assume raw_data passed here is the relevant day's data
-        
+        # --- Format Raw Data for LLM (Date-Aware) ---
         # Compress data by grouping consecutive entries with same App + Idle status
+        raw_data_str = ""
         compressed_lines = []
+        
         if raw_data:
+            # Sort data by timestamp just in case
+            raw_data.sort(key=lambda x: x.get('timestamp', 0))
+            
+            # Helper to format a block
+            def format_block(start_ts, end_ts, app_name, is_idle, avg_act):
+                s_dt = datetime.fromtimestamp(start_ts)
+                e_dt = datetime.fromtimestamp(end_ts)
+                
+                # If spanning days, just show date on start
+                date_str = s_dt.strftime('%Y-%m-%d')
+                time_range = f"{s_dt.strftime('%H:%M')}-{e_dt.strftime('%H:%M')}"
+                
+                state_lbl = "Idle" if is_idle else "Active"
+                return f"[{date_str} {time_range}] {app_name} | {state_lbl} | {avg_act}"
+
             current_start = raw_data[0].get('timestamp', 0)
             current_app = raw_data[0].get('active_window', 'Unknown')
             current_idle = raw_data[0].get('is_idle', False)
             current_activity_sum = 0
             count = 0
-
-            # Pre-pass: Calculate total activity per app to filter noise
+            
+            # Pre-pass for activity totals (SAME AS BEFORE)
             app_activity_totals = {}
             for d in raw_data:
                 app = d.get('active_window', 'Unknown')
-                activity = d.get('keystrokes', 0) + d.get('mouse_clicks', 0) + d.get('mouse_scrolls', 0)
-                app_activity_totals[app] = app_activity_totals.get(app, 0) + activity
+                act = d.get('keystrokes', 0) + d.get('mouse_clicks', 0) + d.get('mouse_scrolls', 0)
+                app_activity_totals[app] = app_activity_totals.get(app, 0) + act
                 
-            # Apps to always keep (media/passive consumption)
-            KEEP_APPS = ['youtube', 'netflix', 'vlc', 'spotify', 'twitch', 'player']
+            KEEP_APPS = ['youtube', 'netflix', 'vlc', 'spotify', 'twitch', 'player', 'code', 'chrome', 'firefox']
 
             for d in raw_data:
                 ts = d.get('timestamp', 0)
                 app = d.get('active_window', 'Unknown')
                 
                 # FILTER: Skip low-activity background apps
-                # If app has < 10 total actions AND is not a media app, treat as "System/Idle" or skip
-                # We'll treat it as "System" to maintain time continuity but hide the name
                 total_act = app_activity_totals.get(app, 0)
                 is_media = any(k in app.lower() for k in KEEP_APPS)
                 
                 if total_act < 10 and not is_media and not d.get('is_idle', False):
-                    app = "System" # Hide the name of background noise
+                    app = "System"
                 
                 is_idle = d.get('is_idle', False)
                 keys = d.get('keystrokes', 0)
@@ -378,25 +376,22 @@ class FocusAnalyzer:
                 scrolls = d.get('mouse_scrolls', 0)
                 activity = keys + clicks + scrolls
 
-                # Check if we should continue the current block
-                # We group if: Same App AND Same Idle Status
-                # We also break if the time gap is too large (> 5 mins), implying a missing chunk
-                time_gap = ts - (current_start + (count * 5)) # assuming 5s interval roughly
+                # Break block if: Different App OR Different State OR Time Gap > 5 mins OR Date Changed
+                curr_dt = datetime.fromtimestamp(ts)
+                prev_dt = datetime.fromtimestamp(current_start)
+                date_changed = curr_dt.date() != prev_dt.date()
                 
-                if app == current_app and is_idle == current_idle and time_gap < 300:
+                time_gap = ts - (current_start + (count * Config.TRACKING_INTERVAL)) 
+                
+                if app == current_app and is_idle == current_idle and time_gap < 300 and not date_changed:
                     current_activity_sum += activity
                     count += 1
                 else:
-                    # Write out the previous block
-                    start_dt = datetime.fromtimestamp(current_start)
-                    end_dt = datetime.fromtimestamp(current_start + (count * 5)) # approx end
-                    time_range = f"{start_dt.strftime('%H:%M')} - {end_dt.strftime('%H:%M')}"
+                    # Commit previous block
+                    end_ts = current_start + (count * Config.TRACKING_INTERVAL)
+                    avg_act = int(current_activity_sum / max(1, count))
                     
-                    state = "Idle" if current_idle else "Active"
-                    avg_activity = int(current_activity_sum / max(1, count))
-                    
-                    # Compact line format
-                    line = f"[{time_range}] {current_app} | {state} | {avg_activity}"
+                    line = format_block(current_start, end_ts, current_app, current_idle, avg_act)
                     compressed_lines.append(line)
 
                     # Start new block
@@ -406,16 +401,16 @@ class FocusAnalyzer:
                     current_activity_sum = activity
                     count = 1
 
-        # Append the final block
-        start_dt = datetime.fromtimestamp(current_start)
-        end_dt = datetime.fromtimestamp(current_start + (count * 5))
-        time_range = f"{start_dt.strftime('%H:%M')}-{end_dt.strftime('%H:%M')}"
-        state = "Idle" if current_idle else "Active"
-        avg_activity = int(current_activity_sum / max(1, count))
-        line = f"[{time_range}] {current_app} | {state} | {avg_activity}"
-        compressed_lines.append(line)
+            # Final block
+            end_ts = current_start + (count * Config.TRACKING_INTERVAL)
+            avg_act = int(current_activity_sum / max(1, count))
+            line = format_block(current_start, end_ts, current_app, current_idle, avg_act)
+            compressed_lines.append(line)
 
-        raw_data_str = "\n".join(compressed_lines)
+        raw_data_str = "\n".join(compressed_lines[-300:]) # Limit to last 300 lines to fit context context
+        if len(compressed_lines) > 300:
+             raw_data_str = f"... (Previous {len(compressed_lines)-300} lines truncated) ...\n" + raw_data_str
+
         print(f"DEBUG: Compressed data length: {len(raw_data_str)} chars, {len(compressed_lines)} lines", flush=True)
         
         # --- Persona Prompts ---
@@ -499,7 +494,13 @@ Produce all insight in sharp, executive-grade sections.
 USER NAME: {user_name}
 (Address the user by their name to make it personal)
 
-{past_reflections_text}
+
+# CONTEXT DATA:
+# The following log contains activity from the last 72 hours.
+# Use the older data to understand the user's baseline behavior and habits.
+# FOCUS YOUR ANALYSIS on the most recent 24 hours (Today/Yesterday).
+# Do NOT mimic the chaotic style of past reflections if they appear in your training data. Stick to the persona defined above.
+
 
 {visual_summary}
 

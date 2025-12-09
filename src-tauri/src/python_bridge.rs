@@ -4,6 +4,17 @@ use std::sync::Mutex;
 
 use tauri::Manager;
 
+#[cfg(target_os = "windows")]
+use std::ptr::null_mut;
+#[cfg(target_os = "windows")]
+use windows::Win32::System::JobObjects::{
+    AssignProcessToJobObject, CreateJobObjectW, JobObjectExtendedLimitInformation,
+    SetInformationJobObject, JOBOBJECT_EXTENDED_LIMIT_INFORMATION,
+    JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE,
+};
+#[cfg(target_os = "windows")]
+use windows::Win32::System::Threading::GetCurrentProcess;
+
 pub struct PythonSidecar {
     process: Mutex<Option<Child>>,
 }
@@ -48,6 +59,44 @@ impl PythonSidecar {
         match child_result {
             Ok(child) => {
                 println!("Python sidecar started with PID: {}", child.id());
+
+                #[cfg(target_os = "windows")]
+                {
+                    unsafe {
+                        use std::os::windows::io::AsRawHandle;
+                        if let Some(handle) = child.as_raw_handle() {
+                            // Create a Job Object
+                            let job = CreateJobObjectW(None, None).unwrap();
+
+                            // Configure it to kill processes on close
+                            let mut info = JOBOBJECT_EXTENDED_LIMIT_INFORMATION::default();
+                            info.BasicLimitInformation.LimitFlags =
+                                JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
+
+                            let _ = SetInformationJobObject(
+                                job,
+                                JobObjectExtendedLimitInformation,
+                                &info as *const _ as *const _,
+                                std::mem::size_of::<JOBOBJECT_EXTENDED_LIMIT_INFORMATION>() as u32,
+                            );
+
+                            // Assign the child process to the job
+                            let process_handle =
+                                windows::Win32::Foundation::HANDLE(handle as isize);
+                            let _ = AssignProcessToJobObject(job, process_handle);
+
+                            // We need to keep the job handle alive for the lifetime of the sidecar struct
+                            // But since we don't have a field for it and we want it to live until the main process dies,
+                            // we can leak it (it will be closed when main process dies anyway)
+                            // OR better: store it in the struct. For now, let's leak it to ensure it persists.
+                            // If we close the job handle, the job might be destroyed if no processes are in it yet?
+                            // Actually, if we close the handle, the job is destroyed primarily if it has no open handles.
+                            // So we MUST keep `job` open.
+                            Box::leak(Box::new(job));
+                        }
+                    }
+                }
+
                 *self.process.lock().unwrap() = Some(child);
             }
             Err(e) => {

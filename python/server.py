@@ -250,8 +250,8 @@ def trigger_reflection():
     # Filter for last 24 hours (rolling window)
     import time
     now = time.time()
-    twenty_four_hours_ago = now - (24 * 60 * 60)
-    last_24h_data = [d for d in raw_data if d.get('timestamp', 0) >= twenty_four_hours_ago]
+    three_days_ago = now - (72 * 60 * 60)
+    relevant_data = [d for d in raw_data if d.get('timestamp', 0) >= three_days_ago]
     
     # Reload analyzer profile to get latest persona selection
     analyzer.profile = analyzer.learning.load_profile()
@@ -276,7 +276,7 @@ def trigger_reflection():
             if (datetime.now() - last_ts).total_seconds() < 3600:
                 return jsonify({'reflection': last_reflection['text'], 'cached': True})
 
-    reflection = analyzer.generate_reflection(last_24h_data)
+    reflection = analyzer.generate_reflection(relevant_data)
     
     return jsonify({'reflection': reflection})
     
