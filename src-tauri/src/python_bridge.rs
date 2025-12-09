@@ -81,8 +81,7 @@ impl PythonSidecar {
                             );
 
                             // Assign the child process to the job
-                            let process_handle =
-                                windows::Win32::Foundation::HANDLE(handle as isize);
+                            let process_handle = windows::Win32::Foundation::HANDLE(handle);
                             let _ = AssignProcessToJobObject(job, process_handle);
 
                             // We need to keep the job handle alive for the lifetime of the sidecar struct
