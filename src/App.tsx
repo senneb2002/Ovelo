@@ -63,17 +63,38 @@ function App() {
     window.addEventListener('resize', handleResize);
 
     // Auto-update check
+    // Auto-update check
     const checkForUpdates = async () => {
       try {
         const update = await check();
         if (update?.available) {
+          sendNotification({
+            title: 'Update Available',
+            body: `Update to ${update.version} available! Downloading...`
+          });
           console.log(`Update to ${update.version} available! Downloading...`);
           await update.downloadAndInstall();
+
+          sendNotification({
+            title: 'Update Ready',
+            body: "Update installed, relaunching..."
+          });
           console.log("Update installed, relaunching...");
           await relaunch();
+        } else {
+          // Optional: Notify that no update was found (good for debugging, maybe remove later)
+          /* sendNotification({
+             title: 'No Update',
+             body: "You are on the latest version."
+          }); */
+          console.log("No update available.");
         }
       } catch (error) {
         console.error('Error checking for updates:', error);
+        sendNotification({
+          title: 'Update Check Failed',
+          body: `Error: ${error}`
+        });
       }
     };
     checkForUpdates();
