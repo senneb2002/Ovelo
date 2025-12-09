@@ -2,7 +2,7 @@
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Ovelo",
   "version": "0.1.11",
-  "identifier": "com.ovelo.app",
+  "identifier": "com.ovelo.desktop",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
@@ -25,7 +25,8 @@
     "createUpdaterArtifacts": true,
     "active": true,
     "targets": [
-      "nsis"
+      "nsis",
+      "dmg"
     ],
     "windows": {
       "nsis": {

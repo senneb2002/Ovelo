@@ -41,6 +41,7 @@ venv/
 
 # Tauri build
 src-tauri/target/
+src-tauri/resources/backend/
 
 # Supabase local
 .supabase/
