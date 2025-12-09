@@ -55,6 +55,8 @@ jobs:
           if [ "$RUNNER_OS" == "Windows" ]; then
             cp dist/ovelo_server.exe src-tauri/resources/backend/
           else
+            # Ad-hoc sign the binary for macOS
+            codesign -s - --force dist/ovelo_server
             cp dist/ovelo_server src-tauri/resources/backend/
           fi
         shell: bash
