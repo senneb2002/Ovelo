@@ -1,6 +1,9 @@
 import os
 import sys
-import win32com.client
+try:
+    import win32com.client
+except ImportError:
+    win32com = None
 
 def ensure_startup():
     """
@@ -17,6 +20,10 @@ def ensure_startup():
         
         if not os.path.exists(target_path):
             print(f"Startup Error: Could not find {target_path}")
+            return
+
+        if not win32com:
+            # On non-Windows or missing pywin32, skip shortcut creation
             return
 
         shell = win32com.client.Dispatch("WScript.Shell")

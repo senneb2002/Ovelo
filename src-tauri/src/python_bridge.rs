@@ -35,11 +35,25 @@ impl PythonSidecar {
         ));
 
         // 1. Try Bundled Executable (Production)
+        // 1. Try Bundled Executable (Production)
         if let Ok(resource_dir) = app_handle.path().resource_dir() {
-            let exe_path = resource_dir.join("ovelo_server.exe");
+            let binary_name = if cfg!(windows) {
+                "ovelo_server.exe"
+            } else {
+                "ovelo_server"
+            };
+            let exe_path = resource_dir.join("backend").join(binary_name);
+
             if exe_path.exists() {
                 println!("Found bundled sidecar: {:?}", exe_path);
                 child_result = Command::new(exe_path).spawn();
+            } else {
+                // Fallback for flat structure or legacy
+                let legacy_path = resource_dir.join("ovelo_server.exe");
+                if legacy_path.exists() {
+                    println!("Found legacy bundled sidecar: {:?}", legacy_path);
+                    child_result = Command::new(legacy_path).spawn();
+                }
             }
         }
 
@@ -82,7 +96,8 @@ impl PythonSidecar {
                             );
 
                             // Assign the child process to the job
-                            let process_handle = windows::Win32::Foundation::HANDLE(handle);
+                            let process_handle =
+                                windows::Win32::Foundation::HANDLE(handle as isize);
                             let _ = AssignProcessToJobObject(job, process_handle);
 
                             // We need to keep the job handle alive for the lifetime of the sidecar struct

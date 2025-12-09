@@ -7,8 +7,14 @@ class Config:
     
     import sys
     if getattr(sys, 'frozen', False):
-        # Running as compiled exe: use AppData
-        BASE_DIR = os.path.join(os.environ.get('APPDATA', '.'), 'Ovelo')
+        # Running as compiled exe: use system appropriate app data dir
+        if sys.platform == 'win32':
+            BASE_DIR = os.path.join(os.environ.get('APPDATA', '.'), 'Ovelo')
+        elif sys.platform == 'darwin':
+             BASE_DIR = os.path.expanduser('~/Library/Application Support/Ovelo')
+        else:
+             BASE_DIR = os.path.expanduser('~/.ovelo')
+        
         if not os.path.exists(BASE_DIR):
             os.makedirs(BASE_DIR)
     else:

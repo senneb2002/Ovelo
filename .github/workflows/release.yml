@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [windows-latest]
+        platform: [windows-latest, macos-latest]
     runs-on: ${{ matrix.platform }}
 
     steps:
@@ -25,7 +25,7 @@ jobs:
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: x86_64-pc-windows-msvc
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || 'x86_64-pc-windows-msvc' }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -34,17 +34,30 @@ jobs:
 
       - name: Install Python Dependencies
         run: |
-          pip install pyinstaller pywin32 pynput flask flask_cors requests
-          # Ensure pyinstaller is on path
-          
+          pip install pyinstaller pynput flask flask_cors requests
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            pip install pywin32
+          fi
+        shell: bash
+
       - name: Build Python Backend
         run: |
-          pyinstaller --clean --onefile --name ovelo_server --hidden-import win32timezone --hidden-import win32gui --hidden-import win32api --hidden-import win32con --hidden-import pynput.keyboard._win32 --hidden-import pynput.mouse._win32 python/server.py
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            pyinstaller --clean --onefile --name ovelo_server --hidden-import win32timezone --hidden-import win32gui --hidden-import win32api --hidden-import win32con --hidden-import pynput.keyboard._win32 --hidden-import pynput.mouse._win32 python/server.py
+          else
+            pyinstaller --clean --onefile --name ovelo_server python/server.py
+          fi
+        shell: bash
           
       - name: Prepare Resources
         run: |
-          New-Item -ItemType Directory -Force -Path src-tauri\resources
-          Copy-Item -Force dist\ovelo_server.exe src-tauri\resources\
+          mkdir -p src-tauri/resources/backend
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            cp dist/ovelo_server.exe src-tauri/resources/backend/
+          else
+            cp dist/ovelo_server src-tauri/resources/backend/
+          fi
+        shell: bash
 
       - name: install frontend dependencies
         run: npm install

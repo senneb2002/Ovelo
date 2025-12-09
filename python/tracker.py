@@ -4,11 +4,16 @@ import json
 import math
 import os
 import re
+import subprocess
+import sys
 from datetime import datetime
 from pynput import mouse, keyboard
 try:
-    import win32gui
-    import win32process
+    if sys.platform == 'win32':
+        import win32gui
+        import win32process
+    else:
+        win32gui = None
 except ImportError:
     win32gui = None
 
@@ -131,7 +136,9 @@ class BehaviorTracker:
             self.current_interval_data["keystrokes"] += 1
 
     def _get_active_window(self):
-        if win32gui:
+        if sys.platform == 'darwin':
+            return self._get_active_window_macos()
+        elif win32gui:
             try:
                 window = win32gui.GetForegroundWindow()
                 title = win32gui.GetWindowText(window)
@@ -147,6 +154,15 @@ class BehaviorTracker:
             except Exception:
                 return "Unknown"
         return "Unknown"
+
+    def _get_active_window_macos(self):
+        try:
+            # Use AppleScript to get the frontmost application name
+            script = 'tell application "System Events" to get name of first application process whose frontmost is true'
+            result = subprocess.check_output(['osascript', '-e', script], stderr=subprocess.DEVNULL)
+            return result.decode('utf-8').strip()
+        except Exception:
+            return "Unknown"
 
     def _loop(self):
         while self.running:

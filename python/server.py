@@ -10,7 +10,13 @@ from flask import Flask, jsonify, send_from_directory
 # Setup Logging (Frozen Debug)
 if getattr(sys, 'frozen', False):
     try:
-        log_dir = os.path.join(os.environ.get('APPDATA', '.'), 'Ovelo')
+        if sys.platform == 'win32':
+            log_dir = os.path.join(os.environ.get('APPDATA', '.'), 'Ovelo')
+        elif sys.platform == 'darwin':
+             log_dir = os.path.expanduser('~/Library/Application Support/Ovelo')
+        else:
+             log_dir = os.path.expanduser('~/.ovelo')
+             
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
         log_file = os.path.join(log_dir, 'server.log')
