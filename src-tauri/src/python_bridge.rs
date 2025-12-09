@@ -64,7 +64,8 @@ impl PythonSidecar {
                 {
                     unsafe {
                         use std::os::windows::io::AsRawHandle;
-                        if let Some(handle) = child.as_raw_handle() {
+                        let handle = child.as_raw_handle();
+                        {
                             // Create a Job Object
                             let job = CreateJobObjectW(None, None).unwrap();
 

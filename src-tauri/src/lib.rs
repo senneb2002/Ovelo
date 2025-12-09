@@ -1,7 +1,7 @@
 mod python_bridge;
 use python_bridge::PythonSidecar;
 use std::sync::Arc;
-use tauri::{Manager, State};
+use tauri::State;
 
 #[tauri::command]
 async fn get_today_state() -> Result<serde_json::Value, String> {
