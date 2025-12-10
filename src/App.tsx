@@ -54,6 +54,27 @@ function App() {
     }
   }
 
+  async function forceStartServer() {
+    try {
+      setLoading(true);
+      await invoke('force_start_server');
+      console.log("Force start command sent");
+      // Wait a bit before reloading data to give server time to start
+      setTimeout(() => {
+        setBackendError(false);
+        setLoading(false);
+        loadData();
+      }, 5000);
+    } catch (e) {
+      console.error("Failed to force start server", e);
+      setLoading(false);
+      sendNotification({
+        title: 'Force Start Failed',
+        body: `Error: ${e}`
+      });
+    }
+  }
+
   useEffect(() => {
     syncDeviceId();
     checkProfile();
@@ -546,9 +567,16 @@ function App() {
 
           <button
             onClick={() => window.location.reload()}
-            style={{ marginTop: '30px', padding: '10px 20px', background: '#334155', border: 'none', borderRadius: '6px', color: 'white', cursor: 'pointer', fontSize: '1em' }}
+            style={{ marginTop: '30px', padding: '10px 20px', background: '#334155', border: 'none', borderRadius: '6px', color: 'white', cursor: 'pointer', fontSize: '1em', marginRight: '10px' }}
           >
             Retry Connection
+          </button>
+
+          <button
+            onClick={forceStartServer}
+            style={{ marginTop: '30px', padding: '10px 20px', background: '#dc2626', border: 'none', borderRadius: '6px', color: 'white', cursor: 'pointer', fontSize: '1em' }}
+          >
+            {loading ? "Starting..." : "Force Start Server"}
           </button>
         </div>
       </div>

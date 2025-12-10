@@ -76,6 +76,15 @@ async fn logout() -> Result<serde_json::Value, String> {
     python_bridge::post_api("/api/logout", serde_json::json!({})).await
 }
 
+#[tauri::command]
+async fn force_start_server(
+    app_handle: tauri::AppHandle,
+    sidecar: State<'_, Arc<PythonSidecar>>,
+) -> Result<(), String> {
+    sidecar.start(&app_handle);
+    Ok(())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let sidecar = Arc::new(PythonSidecar::new());
@@ -109,7 +118,8 @@ pub fn run() {
             reset_account,
             delete_account,
             logout,
-            save_reflection
+            save_reflection,
+            force_start_server
         ])
         .build(tauri::generate_context!())
         .expect("error while building tauri application")

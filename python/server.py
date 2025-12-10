@@ -19,9 +19,12 @@ if getattr(sys, 'frozen', False):
              
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
-        log_file = os.path.join(log_dir, 'server.log')
+        # Use timestamped log file to avoid locking issues during debug
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        log_file = os.path.join(log_dir, f'server_{timestamp}.log')
         logging.basicConfig(filename=log_file, level=logging.DEBUG, format='%(asctime)s [%(levelname)s] %(message)s')
         logging.info("Server Process Started (Frozen)")
+        print(f"Logging to {log_file}")
     except Exception as e:
         # Fallback if logging setup fails
         pass
