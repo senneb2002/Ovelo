@@ -26,6 +26,70 @@ if getattr(sys, 'frozen', False):
         # Fallback if logging setup fails
         pass
 
+def cleanup_zombie_processes(port):
+    """
+    Checks if the given port is in use and kills the process using it.
+    Crucial for preventing 'Address already in use' errors after restarts.
+    """
+    import subprocess
+    import platform
+    
+    print(f"Checking for zombie processes on port {port}...")
+    
+    try:
+        system = platform.system()
+        
+        if system == "Windows":
+            # 1. Find PID using netstat
+            # Output format: "  TCP    0.0.0.0:5006           0.0.0.0:0              LISTENING       1234"
+            cmd = f'netstat -ano | findstr :{port}'
+            process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            stdout, _ = process.communicate()
+            
+            output = stdout.decode().strip()
+            if not output:
+                print("No zombie process found.")
+                return
+
+            lines = output.split('\n')
+            for line in lines:
+                parts = line.split()
+                # Check if it's actually listening on our port
+                if len(parts) >= 5 and f':{port}' in parts[1] and 'LISTENING' in parts[3]:
+                    pid = parts[-1]
+                    print(f"Found zombie process with PID: {pid}. Terminating...")
+                    
+                    # 2. Kill PID
+                    subprocess.run(f'taskkill /F /PID {pid}', shell=True)
+                    print("Zombie process terminated.")
+                    # Give it a moment to release the port
+                    time.sleep(1)
+                    
+        else:
+            # Linux/macOS
+            # 1. Find PID using lsof
+            cmd = f'lsof -t -i:{port}'
+            process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            stdout, _ = process.communicate()
+            
+            pid = stdout.decode().strip()
+            if pid:
+                print(f"Found zombie process with PID: {pid}. Terminating...")
+                subprocess.run(f'kill -9 {pid}', shell=True)
+                print("Zombie process terminated.")
+                time.sleep(1)
+            else:
+                print("No zombie process found.")
+                
+    except Exception as e:
+        print(f"Error during zombie cleanup: {e}")
+        # Log if possible, but don't crash startup
+        try:
+            logging.error(f"Zombie cleanup failed: {e}")
+        except:
+            pass
+
+
 # Wrap imports to catch dependency errors
 try:
     from tracker import BehaviorTracker
@@ -459,6 +523,9 @@ class OveloServer:
         analyzer = analyzer_instance
 
     def run(self):
+        # Prevent port conflicts by killing old instances
+        cleanup_zombie_processes(self.port)
+        
         # Disable Flask banner
         import logging
         log = logging.getLogger('werkzeug')
