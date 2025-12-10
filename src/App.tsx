@@ -482,6 +482,16 @@ function App() {
       // First get the prompt data from local backend
       const date = new Date().toISOString().split('T')[0];
       const localRes: any = await invoke("generate_reflection", { date, persona: currentPersona });
+
+      // FIX: If we have a cached reflection, display it directly. 
+      // Do NOT send it back to the API as a prompt (which causes "blandness").
+      if (localRes.cached && localRes.reflection) {
+        console.log("Using cached reflection");
+        setReflection(localRes.reflection);
+        setGenerating(false);
+        return;
+      }
+
       const prompt = localRes.prompt || localRes.reflection || "";
 
       // Call Supabase API which handles paywall
