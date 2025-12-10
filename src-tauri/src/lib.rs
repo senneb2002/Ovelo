@@ -86,13 +86,8 @@ async fn force_start_server(
 }
 
 #[tauri::command]
-async fn get_device_id(
-    sidecar: State<'_, Arc<PythonSidecar>>,
-) -> Result<serde_json::Value, String> {
-    sidecar
-        .req_get("/api/get_device_id")
-        .await
-        .map_err(|e| e.to_string())
+async fn get_device_id() -> Result<serde_json::Value, String> {
+    python_bridge::call_api("/api/get_device_id").await
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
