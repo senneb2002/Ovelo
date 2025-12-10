@@ -85,6 +85,16 @@ async fn force_start_server(
     Ok(())
 }
 
+#[tauri::command]
+async fn get_device_id(
+    sidecar: State<'_, Arc<PythonSidecar>>,
+) -> Result<serde_json::Value, String> {
+    sidecar
+        .req_get("/api/get_device_id")
+        .await
+        .map_err(|e| e.to_string())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let sidecar = Arc::new(PythonSidecar::new());
@@ -119,7 +129,8 @@ pub fn run() {
             delete_account,
             logout,
             save_reflection,
-            force_start_server
+            force_start_server,
+            get_device_id
         ])
         .build(tauri::generate_context!())
         .expect("error while building tauri application")

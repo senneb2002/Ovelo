@@ -443,10 +443,20 @@ def sync_device_id():
             f.write(device_id)
         
         print(f"[Server] Device ID synced: {device_id}")
+        print(f"[Server] Device ID synced: {device_id}")
         return jsonify({'success': True, 'deviceId': device_id})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+@app.route('/api/get_device_id', methods=['GET'])
+def get_device_id_endpoint():
+    """Get the persistent device ID from the backend."""
+    try:
+        # Create if not exists
+        device_id = analyzer._get_device_id()
+        return jsonify({'success': True, 'deviceId': device_id})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/get_profile')
 def get_profile():

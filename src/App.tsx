@@ -42,15 +42,24 @@ function App() {
   // Sync device ID with backend on startup
   async function syncDeviceId() {
     try {
-      let deviceId = localStorage.getItem("machine_fingerprint");
-      if (!deviceId) {
-        deviceId = crypto.randomUUID();
-        localStorage.setItem("machine_fingerprint", deviceId);
+      // FETCH from backend first (Hardware ID)
+      const res: any = await invoke("get_device_id");
+      if (res && res.success && res.deviceId) {
+        // Update local storage to match the persistent hardware ID
+        console.log("Synced Hardware Device ID:", res.deviceId);
+        localStorage.setItem("machine_fingerprint", res.deviceId);
+      } else {
+        // Fallback (should typically not happen if backend is running)
+        let deviceId = localStorage.getItem("machine_fingerprint");
+        if (!deviceId) {
+          deviceId = crypto.randomUUID();
+          localStorage.setItem("machine_fingerprint", deviceId);
+        }
+        await invoke("sync_device_id", { deviceId });
       }
-      await invoke("sync_device_id", { deviceId });
     } catch (error) {
       console.error('Error syncing device ID:', error);
-      setBackendError(true);
+      // Don't show backend error immediately on this, wait for loadData
     }
   }
 

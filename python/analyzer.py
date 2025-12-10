@@ -13,7 +13,37 @@ class FocusAnalyzer:
         self.activity_multiplier = self.thresholds.get('activity_multiplier', 1.0)
     
     def _get_device_id(self) -> str:
-        """Get device ID from file or generate one."""
+        """Get immutable device ID from hardware (Motherboard UUID) or fallback to file."""
+        import subprocess
+        import platform
+        import re
+        
+        # 1. Try Hardware UUID (Windows) - This is immutable across clean installs
+        try:
+            if platform.system() == "Windows":
+                # Run wmic command
+                cmd = "wmic csproduct get uuid"
+                # Use explicit encoding to handle Windows output potentially
+                process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                stdout, _ = process.communicate()
+                output = stdout.decode('utf-8', errors='ignore').strip()
+                
+                # Parse output (format is usually "UUID \n <GUID>")
+                lines = output.split('\n')
+                for line in lines:
+                    clean_line = line.strip()
+                    # Check if it looks like a UUID
+                    if len(clean_line) > 20 and "UUID" not in clean_line:
+                         # Normalize
+                         hw_id = clean_line.replace('-', '').lower()
+                         # Valid UUIDs shouldn't be all F's or 0's if valid (simple check)
+                         if '00000000' not in hw_id and 'ffffffff' not in hw_id:
+                             print(f"[DeviceID] Using Hardware UUID: {clean_line}")
+                             return clean_line
+        except Exception as e:
+            print(f"[DeviceID] Hardware UUID failed: {e}")
+
+        # 2. Fallback: File-based persistence (for Mac/Linux or wmic failure)
         device_file = os.path.join(Config.BASE_DIR, "device_id.txt")
         
         # Try to read from file
@@ -23,11 +53,14 @@ class FocusAnalyzer:
                 if device_id:
                     return device_id
         
-        # Generate new UUID and save it
+        # 3. Generate new random UUID and save it
         import uuid
         device_id = str(uuid.uuid4())
-        with open(device_file, 'w') as f:
-            f.write(device_id)
+        try:
+            with open(device_file, 'w') as f:
+                f.write(device_id)
+        except:
+            pass
         
         return device_id
     
