@@ -346,6 +346,7 @@ class FocusAnalyzer:
                         elif current_block_state == 'Drift Zone': desc = "Drift/Distraction (Orange)"
                         elif current_block_state == 'Recovery Point': desc = "Recovery Break (Pink)"
                         elif current_block_state == 'Idle': desc = "Idle/Away (Grey)"
+                        elif current_block_state == 'IdleGap': desc = "System Offline / Gap"
                         
                         visual_summary += f"- {start_time}-{end_time}: {desc}\n"
                     
@@ -440,9 +441,9 @@ class FocusAnalyzer:
             line = format_block(current_start, end_ts, current_app, current_idle, avg_act)
             compressed_lines.append(line)
 
-        raw_data_str = "\n".join(compressed_lines[-300:]) # Limit to last 300 lines to fit context context
-        if len(compressed_lines) > 300:
-             raw_data_str = f"... (Previous {len(compressed_lines)-300} lines truncated) ...\n" + raw_data_str
+        raw_data_str = "\n".join(compressed_lines[-5000:]) # Limit to last 5000 lines (Gemini has large context)
+        if len(compressed_lines) > 5000:
+             raw_data_str = f"... (Previous {len(compressed_lines)-5000} lines truncated) ...\n" + raw_data_str
 
         print(f"DEBUG: Compressed data length: {len(raw_data_str)} chars, {len(compressed_lines)} lines", flush=True)
         
@@ -487,7 +488,7 @@ Deliver all insight in sharp, ruthless sections.
             """,
             'unhinged': f"""
 You are OVELO, a CHAOTIC ROAST-BOT who is allergic to boredom.
-Your ONLY goal is to ROAST the user's specific data from today.
+Your ONLY goal is to ROAST the user's specific data from today. be nice if the user did something good.
 
 RULES:
 1. NO POETRY. NO PHILOSOPHY. NO ABSTRACT METAPHORS.
@@ -554,6 +555,17 @@ CRITICAL FORMATTING CHECKLIST (MUST FOLLOW):
 2. USE HEADINGS AND SEPARATE PARAGRAPHS.
 3. DO NOT WRITE A WALL OF TEXT.
 """
+
+"""
+
+        # Debug: Save prompt to file to verify content
+        try:
+            dump_file = os.path.join(Config.BASE_DIR, "last_prompt.txt")
+            with open(dump_file, "w", encoding="utf-8") as f:
+                f.write(full_prompt)
+            print(f"DEBUG: Saved full prompt to {dump_file}")
+        except Exception as e:
+            print(f"DEBUG: Failed to save prompt: {e}")
 
         return full_prompt
 
