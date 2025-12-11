@@ -556,7 +556,7 @@ CRITICAL FORMATTING CHECKLIST (MUST FOLLOW):
 3. DO NOT WRITE A WALL OF TEXT.
 """
 
-"""
+
 
         # Debug: Save prompt to file to verify content
         try:

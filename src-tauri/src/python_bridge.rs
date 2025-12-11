@@ -5,13 +5,11 @@ use std::sync::Mutex;
 use tauri::Manager;
 
 #[cfg(target_os = "windows")]
-#[cfg(target_os = "windows")]
 use windows::Win32::System::JobObjects::{
     AssignProcessToJobObject, CreateJobObjectW, JobObjectExtendedLimitInformation,
     SetInformationJobObject, JOBOBJECT_EXTENDED_LIMIT_INFORMATION,
     JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE,
 };
-#[cfg(target_os = "windows")]
 
 pub struct PythonSidecar {
     process: Mutex<Option<Child>>,

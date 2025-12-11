@@ -8,26 +8,36 @@ import logging
 from flask import Flask, jsonify, send_from_directory
 
 # Setup Logging (Frozen Debug)
-if getattr(sys, 'frozen', False):
-    try:
-        if sys.platform == 'win32':
-            log_dir = os.path.join(os.environ.get('APPDATA', '.'), 'Ovelo')
-        elif sys.platform == 'darwin':
-             log_dir = os.path.expanduser('~/Library/Application Support/Ovelo')
-        else:
-             log_dir = os.path.expanduser('~/.ovelo')
-             
-        if not os.path.exists(log_dir):
-            os.makedirs(log_dir)
-        # Use timestamped log file to avoid locking issues during debug
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        log_file = os.path.join(log_dir, f'server_{timestamp}.log')
-        logging.basicConfig(filename=log_file, level=logging.DEBUG, format='%(asctime)s [%(levelname)s] %(message)s')
-        logging.info("Server Process Started (Frozen)")
-        print(f"Logging to {log_file}")
-    except Exception as e:
-        # Fallback if logging setup fails
-        pass
+# Setup Logging (Universal Debug)
+try:
+    if sys.platform == 'win32':
+        log_dir = os.path.join(os.environ.get('APPDATA', '.'), 'Ovelo')
+    elif sys.platform == 'darwin':
+            log_dir = os.path.expanduser('~/Library/Application Support/Ovelo')
+    else:
+            log_dir = os.path.expanduser('~/.ovelo')
+            
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+        
+    # Use timestamped log file to avoid locking issues during debug
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    frozen_status = "Frozen" if getattr(sys, 'frozen', False) else "Dev"
+    log_file = os.path.join(log_dir, f'server_{timestamp}_{frozen_status}.log')
+    
+    # Configure logging to write to file AND stdout
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s [%(levelname)s] %(message)s',
+        handlers=[
+            logging.FileHandler(log_file),
+            logging.StreamHandler(sys.stdout)
+        ]
+    )
+    logging.info(f"Server Process Started ({frozen_status})")
+    print(f"Logging to {log_file}")
+except Exception as e:
+    print(f"Failed to setup logging: {e}")
 
 def cleanup_zombie_processes(port):
     """
@@ -61,10 +71,12 @@ def cleanup_zombie_processes(port):
                 if len(parts) >= 5 and f':{port}' in parts[1] and 'LISTENING' in parts[3]:
                     pid = parts[-1]
                     print(f"Found zombie process with PID: {pid}. Terminating...")
+                    logging.info(f"Found zombie process with PID: {pid}. Terminating...")
                     
                     # 2. Kill PID
                     subprocess.run(f'taskkill /F /PID {pid}', shell=True)
                     print("Zombie process terminated.")
+                    logging.info("Zombie process terminated.")
                     # Give it a moment to release the port
                     time.sleep(1)
                     
