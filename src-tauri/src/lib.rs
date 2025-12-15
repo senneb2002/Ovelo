@@ -2,6 +2,11 @@ mod python_bridge;
 use python_bridge::PythonSidecar;
 use std::sync::Arc;
 use tauri::State;
+use tauri::{
+    menu::{Menu, MenuItem},
+    tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
+    Manager,
+};
 
 #[tauri::command]
 async fn get_today_state() -> Result<serde_json::Value, String> {
@@ -77,6 +82,15 @@ async fn logout() -> Result<serde_json::Value, String> {
 }
 
 #[tauri::command]
+async fn save_reflection(text: String, persona: String) -> Result<serde_json::Value, String> {
+    let body = serde_json::json!({
+        "text": text,
+        "persona": persona
+    });
+    python_bridge::post_api("/api/save_reflection", body).await
+}
+
+#[tauri::command]
 async fn force_start_server(
     app_handle: tauri::AppHandle,
     sidecar: State<'_, Arc<PythonSidecar>>,
@@ -88,6 +102,11 @@ async fn force_start_server(
 #[tauri::command]
 async fn get_device_id() -> Result<serde_json::Value, String> {
     python_bridge::call_api("/api/get_device_id").await
+}
+
+#[tauri::command]
+async fn get_reflection_history() -> Result<serde_json::Value, String> {
+    python_bridge::call_api("/api/reflection_history").await
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -108,6 +127,45 @@ pub fn run() {
         .manage(sidecar) // This manages Arc<PythonSidecar>
         .setup(move |app| {
             sidecar_setup.start(&app.handle());
+
+            // Create tray menu
+            let show_item = MenuItem::with_id(app, "show", "Show Ovelo", true, None::<&str>)?;
+            let quit_item = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
+            let menu = Menu::with_items(app, &[&show_item, &quit_item])?;
+
+            // Build system tray
+            let _tray = TrayIconBuilder::new()
+                .icon(app.default_window_icon().unwrap().clone())
+                .menu(&menu)
+                .menu_on_left_click(false)
+                .tooltip("Ovelo - Focus Tracker")
+                .on_menu_event(|app, event| match event.id.as_ref() {
+                    "show" => {
+                        if let Some(window) = app.get_webview_window("main") {
+                            let _ = window.show();
+                            let _ = window.set_focus();
+                        }
+                    }
+                    "quit" => {
+                        app.exit(0);
+                    }
+                    _ => {}
+                })
+                .on_tray_icon_event(|tray, event| {
+                    if let TrayIconEvent::Click {
+                        button: MouseButton::Left,
+                        button_state: MouseButtonState::Up,
+                        ..
+                    } = event
+                    {
+                        if let Some(window) = tray.app_handle().get_webview_window("main") {
+                            let _ = window.show();
+                            let _ = window.set_focus();
+                        }
+                    }
+                })
+                .build(app)?;
+
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -125,22 +183,30 @@ pub fn run() {
             logout,
             save_reflection,
             force_start_server,
-            get_device_id
+            get_device_id,
+            get_reflection_history
         ])
         .build(tauri::generate_context!())
         .expect("error while building tauri application")
-        .run(move |_app_handle, event| {
-            if let tauri::RunEvent::Exit = event {
-                sidecar_exit.stop();
+        .run(move |app_handle, event| {
+            match event {
+                tauri::RunEvent::Exit => {
+                    sidecar_exit.stop();
+                }
+                tauri::RunEvent::WindowEvent {
+                    label,
+                    event: tauri::WindowEvent::CloseRequested { api, .. },
+                    ..
+                } => {
+                    // Minimize to tray instead of closing
+                    if label == "main" {
+                        api.prevent_close();
+                        if let Some(window) = app_handle.get_webview_window("main") {
+                            let _ = window.hide();
+                        }
+                    }
+                }
+                _ => {}
             }
         });
-}
-
-#[tauri::command]
-async fn save_reflection(text: String, persona: String) -> Result<serde_json::Value, String> {
-    let body = serde_json::json!({
-        "text": text,
-        "persona": persona
-    });
-    python_bridge::post_api("/api/save_reflection", body).await
 }

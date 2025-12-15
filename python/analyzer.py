@@ -323,42 +323,57 @@ class FocusAnalyzer:
         processed = self.process_day(raw_data)
         timeline = processed.get('timeline', [])
         
-        visual_summary = "VISUAL CONTEXT (What the user sees on their graph):\n"
+        visual_summary = "VISUAL CONTEXT (Your day at a glance):\n"
         if not timeline:
             visual_summary += "- Empty graph (no data).\n"
         else:
-            # Summarize the day in blocks
+            # Summarize the day in blocks - ONLY meaningful activity, not idle/offline noise
             # e.g. "09:00-11:00: Solid Focus Block (Teal)"
             current_block_state = timeline[0]['state']
             block_start_ts = timeline[0]['timestamp']
+            
+            # Track totals for idle/offline to summarize at end
+            total_idle_mins = 0
+            total_offline_mins = 0
             
             for t in timeline:
                 if t['state'] != current_block_state:
                     # End of block
                     duration_mins = (t['timestamp'] - block_start_ts) / 60
-                    if duration_mins > 10: # Only mention blocks > 10 mins
+                    
+                    # Accumulate idle/offline time instead of listing each block
+                    if current_block_state == 'Idle':
+                        total_idle_mins += duration_mins
+                    elif current_block_state == 'IdleGap':
+                        total_offline_mins += duration_mins
+                    elif duration_mins > 10:  # Only mention non-idle blocks > 10 mins
                         start_time = datetime.fromtimestamp(block_start_ts).strftime('%H:%M')
                         end_time = datetime.fromtimestamp(t['timestamp']).strftime('%H:%M')
                         
                         desc = ""
-                        if current_block_state == 'Focus Peak': desc = "Solid Focus Block (Teal)"
-                        elif current_block_state == 'Light Focus': desc = "Light Work (Teal)"
-                        elif current_block_state == 'Drift Zone': desc = "Drift/Distraction (Orange)"
-                        elif current_block_state == 'Recovery Point': desc = "Recovery Break (Pink)"
-                        elif current_block_state == 'Idle': desc = "Idle/Away (Grey)"
-                        elif current_block_state == 'IdleGap': desc = "System Offline / Gap"
+                        if current_block_state == 'Focus Peak': desc = "🟢 Deep Focus"
+                        elif current_block_state == 'Light Focus': desc = "Light Work"
+                        elif current_block_state == 'Drift Zone': desc = "🟠 Drift/Distraction"
+                        elif current_block_state == 'Recovery Point': desc = "🩷 Recovery Break"
                         
-                        visual_summary += f"- {start_time}-{end_time}: {desc}\n"
+                        if desc:  # Only add if we have a description
+                            visual_summary += f"- {start_time}-{end_time}: {desc}\n"
                     
                     current_block_state = t['state']
                     block_start_ts = t['timestamp']
             
-            # Add stats
+            # Add summary stats instead of listing every block
             recovery_count = sum(1 for t in timeline if t['state'] == 'Recovery Point')
-            visual_summary += f"- Total Recovery Points: {recovery_count} (Pink dots)\n"
+            if recovery_count > 0:
+                visual_summary += f"- Total Recovery Points: {recovery_count}\n"
+            if total_idle_mins > 30:  # Only mention if substantial
+                visual_summary += f"- Time Away/Idle: ~{int(total_idle_mins/60)}h {int(total_idle_mins%60)}m\n"
+            if total_offline_mins > 60:  # Only mention if substantial
+                visual_summary += f"- System Offline: ~{int(total_offline_mins/60)}h {int(total_offline_mins%60)}m\n"
 
         # --- Format Raw Data for LLM (Date-Aware) ---
         # Compress data by grouping consecutive entries with same App + Idle status
+        # SKIP: Idle entries with 0 activity, Unknown entries, and System entries
         raw_data_str = ""
         compressed_lines = []
         
@@ -375,8 +390,7 @@ class FocusAnalyzer:
                 date_str = s_dt.strftime('%Y-%m-%d')
                 time_range = f"{s_dt.strftime('%H:%M')}-{e_dt.strftime('%H:%M')}"
                 
-                state_lbl = "Idle" if is_idle else "Active"
-                return f"[{date_str} {time_range}] {app_name} | {state_lbl} | {avg_act}"
+                return f"[{date_str} {time_range}] {app_name} | {avg_act} activity"
 
             current_start = raw_data[0].get('timestamp', 0)
             current_app = raw_data[0].get('active_window', 'Unknown')
@@ -396,19 +410,29 @@ class FocusAnalyzer:
             for d in raw_data:
                 ts = d.get('timestamp', 0)
                 app = d.get('active_window', 'Unknown')
-                
-                # FILTER: Skip low-activity background apps
-                total_act = app_activity_totals.get(app, 0)
-                is_media = any(k in app.lower() for k in KEEP_APPS)
-                
-                if total_act < 10 and not is_media and not d.get('is_idle', False):
-                    app = "System"
-                
                 is_idle = d.get('is_idle', False)
                 keys = d.get('keystrokes', 0)
                 clicks = d.get('mouse_clicks', 0)
                 scrolls = d.get('mouse_scrolls', 0)
                 activity = keys + clicks + scrolls
+                
+                # FILTER: Skip entries that provide no insight
+                # 1. Skip Unknown entries entirely
+                # 2. Skip Idle entries with 0 activity
+                # 3. Skip System entries with 0 activity
+                if app.lower() == 'unknown':
+                    continue
+                if is_idle and activity == 0:
+                    continue
+                if app.lower() == 'system' and activity < 3:
+                    continue
+                
+                # FILTER: Skip low-activity background apps
+                total_act = app_activity_totals.get(app, 0)
+                is_media = any(k in app.lower() for k in KEEP_APPS)
+                
+                if total_act < 10 and not is_media and not is_idle:
+                    continue  # Skip entirely instead of labeling as "System"
 
                 # Break block if: Different App OR Different State OR Time Gap > 5 mins OR Date Changed
                 curr_dt = datetime.fromtimestamp(ts)
@@ -421,12 +445,15 @@ class FocusAnalyzer:
                     current_activity_sum += activity
                     count += 1
                 else:
-                    # Commit previous block
-                    end_ts = current_start + (count * Config.TRACKING_INTERVAL)
-                    avg_act = int(current_activity_sum / max(1, count))
-                    
-                    line = format_block(current_start, end_ts, current_app, current_idle, avg_act)
-                    compressed_lines.append(line)
+                    # Commit previous block only if it has meaningful data
+                    if count > 0 and (current_activity_sum > 0 or not current_idle):
+                        end_ts = current_start + (count * Config.TRACKING_INTERVAL)
+                        avg_act = int(current_activity_sum / max(1, count))
+                        
+                        # Only add if there was actual activity
+                        if avg_act > 0 or not current_idle:
+                            line = format_block(current_start, end_ts, current_app, current_idle, avg_act)
+                            compressed_lines.append(line)
 
                     # Start new block
                     current_start = ts
@@ -435,11 +462,13 @@ class FocusAnalyzer:
                     current_activity_sum = activity
                     count = 1
 
-            # Final block
-            end_ts = current_start + (count * Config.TRACKING_INTERVAL)
-            avg_act = int(current_activity_sum / max(1, count))
-            line = format_block(current_start, end_ts, current_app, current_idle, avg_act)
-            compressed_lines.append(line)
+            # Final block - only if meaningful
+            if count > 0 and (current_activity_sum > 0 or not current_idle):
+                end_ts = current_start + (count * Config.TRACKING_INTERVAL)
+                avg_act = int(current_activity_sum / max(1, count))
+                if avg_act > 0 or not current_idle:
+                    line = format_block(current_start, end_ts, current_app, current_idle, avg_act)
+                    compressed_lines.append(line)
 
         raw_data_str = "\n".join(compressed_lines[-5000:]) # Limit to last 5000 lines (Gemini has large context)
         if len(compressed_lines) > 5000:
@@ -538,7 +567,7 @@ USER NAME: {user_name}
 
 {visual_summary}
 
-RAW ACTIVITY LOG (Last 24h):
+RAW ACTIVITY LOG (Last 72h):
 {raw_data_str}
 
 IMPORTANT: Your response should be ONLY the reflection text itself. Do NOT include any labels like "Reflection:" or "Suggestion:".
@@ -547,6 +576,14 @@ Format the output using Markdown:
 - Use "### Section Name" for section headings
 - Use bold (**text**) for emphasis
 - Use empty lines between paragraphs for readability.
+Describe what really happened today (with concrete references to time blocks and patterns).
+
+Compare today to their usual behaviour (from Focus Profile).
+
+Offer one honest, slightly playful roast paragraph.
+
+Offer one clear, non‑overwhelming suggestion for tomorrow.
+
 Address the user by their name ({user_name}) naturally.
 Reference specific times using {clock_format} format (e.g. {"2:30 PM" if clock_format == "12h" else "14:30"}).
 
@@ -845,10 +882,12 @@ Output ONLY the number, nothing else."""
         if nemesis_category:
             apps = nemesis_apps.get(nemesis_category, {})
             nemesis_app = max(apps, key=apps.get) if apps else 'Unknown'
+        # Get username from profile
+        user_name = self.profile.get('name', 'USER') if self.profile else 'USER'
         
         return {
             "periodLabel": "2025 OVELO PASSPORT",
-            "username": "USER", # Could be configurable
+            "username": user_name,
             "totalFocusHours": round(total_focus_hours, 1),
             "totalDriftHours": round(total_drift_hours, 1),
             "totalIdleHours": round(total_idle_hours, 1),

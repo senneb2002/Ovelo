@@ -118,6 +118,14 @@ except Exception as e:
 app = Flask(__name__, static_folder='static')
 analyzer = FocusAnalyzer()
 
+# Enable CORS for all routes
+@app.after_request
+def add_cors_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    return response
+
 # This will be set by OveloServer
 current_tracker = None
 
@@ -363,7 +371,8 @@ def trigger_reflection():
 
     reflection = analyzer.generate_reflection(relevant_data)
     
-    return jsonify({'reflection': reflection})
+    # NOTE: This returns the PROMPT for the frontend to send to Supabase/Gemini API
+    # The actual AI response is received by the frontend, which should save it
     
     return jsonify({'reflection': reflection})
 
@@ -469,6 +478,70 @@ def get_device_id_endpoint():
         return jsonify({'success': True, 'deviceId': device_id})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/save_reflection', methods=['POST'])
+def save_reflection():
+    """Save a reflection to a dedicated history file for persistence"""
+    try:
+        from flask import request
+        data = request.get_json()
+        text = data.get('text', '')
+        persona = data.get('persona', 'calm_coach')
+        
+        # Use dedicated file at same location as ovelo_data.json
+        history_file = os.path.join(Config.BASE_DIR, "reflection_history.json")
+        print(f"[DEBUG] Saving reflection to: {history_file}")
+        
+        # Load existing history
+        history = []
+        if os.path.exists(history_file):
+            try:
+                with open(history_file, 'r') as f:
+                    history = json.load(f)
+            except:
+                pass
+        
+        # Add new reflection
+        reflection_entry = {
+            'text': text,
+            'persona': persona,
+            'timestamp': datetime.now().isoformat()
+        }
+        history.append(reflection_entry)
+        
+        # Keep only last 30 reflections
+        history = history[-30:]
+        
+        print(f"[DEBUG] Saved reflection #{len(history)} for persona {persona}")
+        
+        # Save to dedicated file
+        with open(history_file, 'w') as f:
+            json.dump(history, f, indent=2)
+        
+        return jsonify({'success': True})
+    except Exception as e:
+        print(f"Error saving reflection: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/reflection_history')
+def get_reflection_history():
+    """Get past reflections for history view"""
+    # Use dedicated file at same location as ovelo_data.json
+    history_file = os.path.join(Config.BASE_DIR, "reflection_history.json")
+    print(f"[DEBUG] Loading reflection history from: {history_file}")
+    
+    if os.path.exists(history_file):
+        try:
+            with open(history_file, 'r') as f:
+                history = json.load(f)
+                print(f"[DEBUG] Loaded {len(history)} reflections")
+                # Return in reverse chronological order (newest first)
+                return jsonify({'history': list(reversed(history))})
+        except Exception as e:
+            print(f"Error reading reflection history: {e}")
+            return jsonify({'history': []})
+    print("[DEBUG] No reflection history file found")
+    return jsonify({'history': []})
 
 @app.route('/api/get_profile')
 def get_profile():

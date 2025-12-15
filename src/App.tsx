@@ -5,6 +5,7 @@ import { isPermissionGranted, requestPermission, sendNotification } from '@tauri
 import { generateReflectionApi } from './services/api';
 import { check } from '@tauri-apps/plugin-updater';
 import { relaunch } from '@tauri-apps/plugin-process';
+import { openUrl } from '@tauri-apps/plugin-opener';
 import "./App.css";
 
 // Configuration
@@ -29,6 +30,11 @@ function App() {
   const [tooltip, setTooltip] = useState<{ show: boolean, x: number, y: number, content: string }>({ show: false, x: 0, y: 0, content: "" });
   const [currentPersona, setCurrentPersona] = useState<string>("calm_coach");
   const [backendError, setBackendError] = useState(false);
+
+  // History state
+  const [showHistory, setShowHistory] = useState(false);
+  const [reflectionHistory, setReflectionHistory] = useState<any[]>([]);
+  const [selectedReflection, setSelectedReflection] = useState<any>(null);
 
   // Paywall state
   const [freeRemaining, setFreeRemaining] = useState<number | null>(null);
@@ -490,13 +496,49 @@ function App() {
       // First get the prompt data from local backend
       // First get the prompt data from local backend
       const date = new Date().toISOString().split('T')[0];
+      console.log('[DEBUG] Calling generate_reflection...');
       const localRes: any = await invoke("generate_reflection", { date, persona: currentPersona });
+      console.log('[DEBUG] generate_reflection returned:', localRes?.cached ? 'CACHED' : 'NEW PROMPT');
+
+      // Helper function to save reflection to localStorage (reliable storage)
+      const saveReflectionToHistory = (text: string, persona: string) => {
+        console.log('[DEBUG] Saving reflection to localStorage...');
+        try {
+          const historyKey = 'ovelo_reflection_history';
+          const existing = localStorage.getItem(historyKey);
+          let history: any[] = [];
+          if (existing) {
+            try { history = JSON.parse(existing); } catch { }
+          }
+
+          // Add new reflection
+          history.push({
+            text,
+            persona,
+            timestamp: new Date().toISOString()
+          });
+
+          // Keep only last 30
+          history = history.slice(-30);
+
+          // Save to localStorage
+          localStorage.setItem(historyKey, JSON.stringify(history));
+          console.log('[DEBUG] Saved reflection #', history.length, 'to localStorage');
+
+          // Also update state
+          setReflectionHistory([...history].reverse());
+        } catch (saveError) {
+          console.error('[DEBUG] Save reflection error:', saveError);
+        }
+      };
 
       // FIX: If we have a cached reflection, display it directly. 
       // Do NOT send it back to the API as a prompt (which causes "blandness").
       if (localRes.cached && localRes.reflection) {
         console.log("Using cached reflection");
         setReflection(localRes.reflection);
+        // Still save cached reflections to history
+        saveReflectionToHistory(localRes.reflection, currentPersona);
         setGenerating(false);
         return;
       }
@@ -504,7 +546,9 @@ function App() {
       const prompt = localRes.prompt || localRes.reflection || "";
 
       // Call Supabase API which handles paywall
+      console.log('[DEBUG] Calling Supabase API...');
       const res = await generateReflectionApi(prompt, currentPersona, date);
+      console.log('[DEBUG] Supabase API returned');
 
       // Update paywall state
       setFreeRemaining(res.freeRemaining);
@@ -518,14 +562,79 @@ function App() {
 
       setReflection(cleanText);
 
-      // Save for persistence across reloads
-      await invoke("save_reflection", { text: cleanText, persona: currentPersona });
+      // Save for persistence across reloads - call Flask API directly
+      saveReflectionToHistory(cleanText, currentPersona);
     } catch (e) {
       console.error("Error generating reflection", e);
       setReflection("Error generating reflection.");
     } finally {
       setGenerating(false);
     }
+  }
+
+  // Load reflection history from localStorage
+  function loadReflectionHistory() {
+    try {
+      const historyKey = 'ovelo_reflection_history';
+      const existing = localStorage.getItem(historyKey);
+      if (existing) {
+        const history = JSON.parse(existing);
+        // Return in reverse order (newest first)
+        setReflectionHistory([...history].reverse());
+        console.log('[DEBUG] Loaded', history.length, 'reflections from localStorage');
+      }
+    } catch (e) {
+      console.error("Error loading reflection history:", e);
+    }
+  }
+
+  // Toggle history view
+  function toggleHistory() {
+    if (!showHistory) {
+      loadReflectionHistory();
+    }
+    setShowHistory(!showHistory);
+  }
+
+  // View a specific past reflection
+  function viewHistoryItem(item: any) {
+    setReflection(item.text);
+    setSelectedReflection(item);
+    setShowHistory(false);
+  }
+
+  // Format date for display
+  function formatDate(isoString: string) {
+    const date = new Date(isoString);
+    return date.toLocaleDateString(undefined, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+
+  // Get persona display name
+  function getPersonaName(persona: string) {
+    const names: Record<string, string> = {
+      'calm_coach': '🧘 Calm Coach',
+      'scientist': '🔬 Scientist',
+      'no_bullshit': '💪 No BS',
+      'unhinged': '🔥 Unhinged',
+      'ceo': '👔 CEO'
+    };
+    return names[persona] || persona;
+  }
+
+  // Strip markdown for clean preview text
+  function stripMarkdown(text: string): string {
+    return text
+      .replace(/^#{1,3}\s+/gm, '')  // Remove headers (##, ###)
+      .replace(/\*\*(.*?)\*\*/g, '$1')  // Remove bold **
+      .replace(/\*(.*?)\*/g, '$1')  // Remove italic *
+      .replace(/\n+/g, ' ')  // Replace newlines with spaces
+      .trim();
   }
 
   // Helper to render reflection with highlights and paragraphs
@@ -659,23 +768,107 @@ function App() {
 
         <section className="reflection-section">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-            <h2 style={{ margin: 0 }}>Reflection</h2>
-            {freeRemaining !== null && (
-              <span style={{
-                padding: '0.25rem 0.75rem',
-                borderRadius: '12px',
-                fontSize: '0.75rem',
-                fontWeight: 500,
-                background: freeRemaining > 0
-                  ? 'linear-gradient(135deg, rgba(20, 184, 166, 0.2), rgba(20, 184, 166, 0.1))'
-                  : 'linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.1))',
-                color: freeRemaining > 0 ? '#14b8a6' : '#f59e0b',
-                border: `1px solid ${freeRemaining > 0 ? 'rgba(20, 184, 166, 0.3)' : 'rgba(245, 158, 11, 0.3)'}`
-              }}>
-                {freeRemaining > 0 ? `${freeRemaining} free left` : 'Free reflections used'}
-              </span>
-            )}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <h2 style={{
+                margin: 0,
+                background: 'linear-gradient(135deg, #818CF8, #2DD4BF)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}>Ovelo Reflection</h2>
+              {selectedReflection && (
+                <span style={{ fontSize: '0.75rem', color: '#64748b' }}>
+                  {formatDate(selectedReflection.timestamp)}
+                </span>
+              )}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              {freeRemaining !== null && (
+                <span style={{
+                  padding: '0.25rem 0.75rem',
+                  borderRadius: '12px',
+                  fontSize: '0.75rem',
+                  fontWeight: 500,
+                  background: freeRemaining > 0
+                    ? 'linear-gradient(135deg, rgba(20, 184, 166, 0.2), rgba(20, 184, 166, 0.1))'
+                    : 'linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.1))',
+                  color: freeRemaining > 0 ? '#14b8a6' : '#f59e0b',
+                  border: `1px solid ${freeRemaining > 0 ? 'rgba(20, 184, 166, 0.3)' : 'rgba(245, 158, 11, 0.3)'}`
+                }}>
+                  {freeRemaining > 0 ? `${freeRemaining} free left` : 'Free reflections used'}
+                </span>
+              )}
+              <button
+                onClick={toggleHistory}
+                title="View past reflections"
+                style={{
+                  background: showHistory ? 'rgba(20, 184, 166, 0.2)' : 'rgba(100, 116, 139, 0.2)',
+                  border: 'none',
+                  borderRadius: '8px',
+                  padding: '0.5rem 0.75rem',
+                  cursor: 'pointer',
+                  fontSize: '0.875rem',
+                  color: showHistory ? '#14b8a6' : '#94a3b8',
+                  transition: 'all 0.2s'
+                }}
+              >
+                📜 {showHistory ? 'Hide' : 'History'}
+              </button>
+            </div>
           </div>
+
+          {/* History Panel */}
+          {showHistory && (
+            <div className="reflection-history-panel" style={{
+              background: 'rgba(30, 41, 59, 0.8)',
+              borderRadius: '12px',
+              padding: '1rem',
+              marginBottom: '1rem',
+              maxHeight: '300px',
+              overflowY: 'auto',
+              border: '1px solid rgba(100, 116, 139, 0.2)'
+            }}>
+              <h4 style={{ margin: '0 0 0.75rem 0', color: '#94a3b8', fontSize: '0.875rem' }}>Past Reflections</h4>
+              {reflectionHistory.length === 0 ? (
+                <p style={{ color: '#64748b', fontSize: '0.875rem' }}>No past reflections yet.</p>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  {reflectionHistory.slice(0, 5).map((item, index) => (
+                    <div
+                      key={index}
+                      onClick={() => viewHistoryItem(item)}
+                      style={{
+                        background: 'rgba(15, 23, 42, 0.6)',
+                        borderRadius: '8px',
+                        padding: '0.75rem',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                        border: '1px solid transparent'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.border = '1px solid rgba(20, 184, 166, 0.3)'}
+                      onMouseLeave={(e) => e.currentTarget.style.border = '1px solid transparent'}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
+                        <span style={{ fontSize: '0.75rem', color: '#14b8a6' }}>{getPersonaName(item.persona)}</span>
+                        <span style={{ fontSize: '0.7rem', color: '#64748b' }}>{formatDate(item.timestamp)}</span>
+                      </div>
+                      <p style={{
+                        margin: 0,
+                        fontSize: '0.8rem',
+                        color: '#cbd5e1',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
+                      }}>
+                        {stripMarkdown(item.text).substring(0, 80)}...
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="reflection-card" style={{ position: 'relative' }}>
             {renderReflectionContent()}
 

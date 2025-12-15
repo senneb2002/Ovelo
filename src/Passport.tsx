@@ -47,23 +47,6 @@ function Passport() {
         }
     }
 
-    const handleDownload = () => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-
-        canvas.toBlob((blob) => {
-            if (!blob) return;
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `ovelo-passport-${new Date().toISOString().split('T')[0]}.png`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        });
-    };
-
     return (
         <div className="app-container">
             <header>
@@ -77,12 +60,6 @@ function Passport() {
                 <div className="passport-layout">
                     <div className="canvas-wrapper">
                         <canvas id="passport-canvas" ref={canvasRef}></canvas>
-                    </div>
-
-                    <div className="actions">
-                        <button id="export-btn" className="primary-btn" onClick={handleDownload}>
-                            <span className="icon">⬇️</span> Download Passport
-                        </button>
                     </div>
                 </div>
 
@@ -385,18 +362,35 @@ async function renderPassport(ctx: CanvasRenderingContext2D, data: any) {
         ctx.fillRect(0, stripY + i, W, 1);
     }
 
-    // Adjusted font size and spacing to fit
-    ctx.font = '400 24px "JetBrains Mono", monospace';
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+    // MRZ Style text - fill the whole width
+    ctx.font = '500 26px "JetBrains Mono", monospace';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
     ctx.textAlign = 'left';
-    // ctx.letterSpacing = '2px'; // Canvas doesn't support letterSpacing easily in all browsers, skipping for now or use workaround
+    ctx.textBaseline = 'middle';
 
-    // Encode in MINUTES
-    const stripText1 = `2025<<OVELO<<${data.username}<<FOCUS${totalFocusMinutes}M<<DRIFT${totalDriftMinutes}M<<RECOV${data.totalRecoveryPoints}<<`;
-    const stripText2 = `STAB${Math.round(data.attentionStabilityScore * 100)}PCT<<PEAK${data.bestHourOfDay * 60}M<<OVELO.APP<<<<<<<<<<<<<<<<<<<<`;
+    // Get username
+    const userName = (data.username && data.username !== 'User') ? data.username.toUpperCase() : 'FOCUS_USER';
 
-    ctx.fillText(stripText1, 40, stripY + 60);
-    ctx.fillText(stripText2, 40, stripY + 110);
+    // Build text and pad with chevrons to fill width
+    const baseText1 = `OVELO<<${userName}<<FOCUS${totalFocusMinutes}M<<DRIFT${totalDriftMinutes}M<<RECOV${data.totalRecoveryPoints}`;
+    const baseText2 = `STAB${Math.round(data.attentionStabilityScore * 100)}PCT<<PEAK${data.bestHourOfDay}H<<OVELOLAB.COM`;
+
+    // Pad to fill width
+    const targetWidth = W - 80;
+    function padToWidth(text: string): string {
+        let result = text;
+        while (ctx.measureText(result).width < targetWidth) {
+            result += '<';
+        }
+        return result;
+    }
+
+    const stripText1 = padToWidth(baseText1);
+    const stripText2 = padToWidth(baseText2);
+
+    // Vertically center in the 160px strip
+    ctx.fillText(stripText1, 40, stripY + 55);
+    ctx.fillText(stripText2, 40, stripY + 115);
 }
 
 function drawStat(ctx: CanvasRenderingContext2D, label: string, value: any, x: number, y: number, isBig: boolean, color = '#F8FAFC') {
@@ -422,9 +416,9 @@ function drawBadge(ctx: CanvasRenderingContext2D, label: string, value: string, 
     // @ts-ignore
     if (ctx.roundRect) {
         // @ts-ignore
-        ctx.roundRect(x, y, 420, 90, 16);
+        ctx.roundRect(x, y, 440, 90, 16);
     } else {
-        ctx.rect(x, y, 420, 90);
+        ctx.rect(x, y, 440, 90);
     }
     ctx.fill();
 
@@ -437,11 +431,13 @@ function drawBadge(ctx: CanvasRenderingContext2D, label: string, value: string, 
     ctx.fillStyle = COLORS.textDim;
     ctx.fillText(label, x + 30, y + 35);
 
-    // Truncate if too long
+    // Truncate if too long - increased limit
     let displayValue = value.toUpperCase();
-    if (displayValue.length > 15) displayValue = displayValue.substring(0, 14) + '...';
+    if (displayValue.length > 22) displayValue = displayValue.substring(0, 21) + '…';
 
-    ctx.font = '700 28px Inter';
+    // Smaller font for longer names
+    const fontSize = displayValue.length > 15 ? 22 : 28;
+    ctx.font = `700 ${fontSize}px Inter`;
     ctx.fillStyle = COLORS.text;
     ctx.fillText(`${icon || '❓'} ${displayValue}`, x + 30, y + 70);
 }

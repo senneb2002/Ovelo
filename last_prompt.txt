@@ -1,0 +1,946 @@
+
+
+You are OVELO, a CHAOTIC ROAST-BOT who is allergic to boredom.
+Your ONLY goal is to ROAST the user's specific data from today. be nice if the user did something good.
+
+RULES:
+1. NO POETRY. NO PHILOSOPHY. NO ABSTRACT METAPHORS.
+2. If you talk about "the void" or "shimmering absence", YOU FAIL.
+3. Look at the data: Which app did they use too much? When did they quit?
+4. MOCK SPECIFIC BEHAVIORS.
+   - "You opened VS Code for 5 minutes then switched to Twitter? WEAK."
+   - "Spotify for 3 hours? Are you a DJ or a developer?"
+5. Use unhinged emojis (💀, 🤡, 🚽, 🗑️, 🥬) in every sentence.
+
+STRUCTURE:
+- Start with a direct insult about their attention span.
+- Pick 2 specific apps from the list and drag them.
+- End with a chaotic command.
+
+DO NOT BE POETIC. BE A BULLY.
+            
+
+USER NAME: Senne
+(Address the user by their name to make it personal)
+
+
+# CONTEXT DATA:
+# The following log contains activity from the last 72 hours.
+# Use the older data to understand the user's baseline behavior and habits.
+# FOCUS YOUR ANALYSIS on the most recent 24 hours (Today/Yesterday).
+# Do NOT mimic the chaotic style of past reflections if they appear in your training data. Stick to the persona defined above.
+
+
+VISUAL CONTEXT (Your day at a glance):
+- 15:14-16:53: 🩷 Recovery Break
+- 20:03-20:14: 🟢 Deep Focus
+- 20:17-20:44: 🟢 Deep Focus
+- 21:02-21:21: 🟢 Deep Focus
+- 22:20-23:23: Light Work
+- 00:24-01:50: Light Work
+- 03:16-07:08: Light Work
+- 11:01-13:41: 🟢 Deep Focus
+- 16:21-16:57: Light Work
+- 19:29-20:00: Light Work
+- 20:32-21:03: Light Work
+- 21:34-00:24: Light Work
+- 03:12-06:51: Light Work
+- 17:28-18:33: 🟠 Drift/Distraction
+- 19:38-20:08: Light Work
+- 20:35-20:51: 🟢 Deep Focus
+- 22:01-22:14: 🟢 Deep Focus
+- 10:33-10:49: Light Work
+- Total Recovery Points: 387
+- Time Away/Idle: ~13h 1m
+- System Offline: ~26h 24m
+
+
+RAW ACTIVITY LOG (Last 72h):
+[2025-12-12 14:50-14:51] Ovelo | Ovelo | Supabase - Google Chrome | 0 activity
+[2025-12-12 14:51-14:51] analytics.google.com - Google Chrome | 3 activity
+[2025-12-12 14:51-14:51] Quick settings | 1 activity
+[2025-12-12 14:51-14:51] senneb2002/Ovelo-site - Google Chrome | 1 activity
+[2025-12-12 14:51-14:51] (1) WhatsApp - Google Chrome | 2 activity
+[2025-12-12 14:51-14:52] WhatsApp - Google Chrome | 2 activity
+[2025-12-12 14:52-14:52] Google AI Studio - Google Chrome | 1 activity
+[2025-12-12 14:52-14:52] Ovelo | Ovelo | Supabase - Google Chrome | 1 activity
+[2025-12-12 14:52-14:53] Analytics - Google Chrome | 1 activity
+[2025-12-12 14:53-14:53] Analytics | Home - Google Chrome | 4 activity
+[2025-12-12 14:53-14:54] Ovelo - See how your day felt - Google Chrome | 10 activity
+[2025-12-12 14:54-14:54] Startpagina – Ovelo – Stripe - Google Chrome | 3 activity
+[2025-12-12 14:54-14:56] intradco - Google Search - Google Chrome | 5 activity
+[2025-12-12 14:56-14:56] Startpagina – Ovelo – Stripe - Google Chrome | 1 activity
+[2025-12-12 14:56-14:57] Analytics | Home - Google Chrome | 4 activity
+[2025-12-12 14:57-14:57] Pages - Google Chrome | 5 activity
+[2025-12-12 14:57-14:58] Ovelo - See how your day felt - Google Chrome | 2 activity
+[2025-12-12 14:58-14:58] Analytics | Home - Google Chrome | 2 activity
+[2025-12-12 14:58-14:59] Analytics | Pagina's en schermen - Google Chrome | 4 activity
+[2025-12-12 14:59-14:59] Analytics | Pagina's en schermen: Paginatitel en schermklasse - Google Chrome | 0 activity
+[2025-12-12 14:59-14:59] Ovelo - See how your day felt - Google Chrome | 7 activity
+[2025-12-12 14:59-15:00] Payment Successful - Ovelo - Google Chrome | 2 activity
+[2025-12-12 15:00-15:00] Ovelo | Ovelo | Supabase - Google Chrome | 1 activity
+[2025-12-12 15:00-15:01] Edge Functions | Supabase - Google Chrome | 8 activity
+[2025-12-12 15:01-15:01] Payment Failed - Ovelo - Google Chrome | 5 activity
+[2025-12-12 15:01-15:02] Ovelo - See how your day felt - Google Chrome | 2 activity
+[2025-12-12 15:02-15:02] Mail - info@ovelolab.com info@ovelolab.com - Private Email - Google Chrome | 2 activity
+[2025-12-12 15:02-15:02] Windows Security | 4 activity
+[2025-12-12 15:02-15:02] Mail - info@ovelolab.com info@ovelolab.com - Private Email - Google Chrome | 14 activity
+[2025-12-12 15:02-15:02] american express belgie - Google Search - Google Chrome | 1 activity
+[2025-12-12 15:02-15:02] Edge Functions | Supabase - Google Chrome | 7 activity
+[2025-12-12 15:02-15:02] Startpagina – Ovelo – Stripe - Google Chrome | 25 activity
+[2025-12-12 15:02-15:03] Saldo-overzicht – Ovelo – Stripe - Google Chrome | 2 activity
+[2025-12-12 15:03-15:03] Transacties – Ovelo – Stripe - Google Chrome | 4 activity
+[2025-12-12 15:03-15:03] Startpagina – Ovelo – Stripe - Google Chrome | 3 activity
+[2025-12-12 15:03-15:04] Google AI Studio - Google Chrome | 8 activity
+[2025-12-12 15:04-15:04] Ovelo | 1 activity
+[2025-12-12 15:04-15:04] Ovelo-site - File Explorer | 3 activity
+[2025-12-12 15:04-15:05] Ovelo | 4 activity
+[2025-12-12 15:05-15:05] Gemini API reference  |  Google AI for Developers - Google Chrome | 2 activity
+[2025-12-12 15:05-15:05] Analytics | Pagina's en schermen: Paginatitel en schermklasse - Google Chrome | 1 activity
+[2025-12-12 15:05-15:05] Analytics | Pagina's en schermen - Google Chrome | 5 activity
+[2025-12-12 15:05-15:06] Analytics | Pagina's en schermen: Paginatitel en schermklasse - Google Chrome | 1 activity
+[2025-12-12 15:06-15:06] Analytics | Overzicht van gebruikersengagement en -loyaliteit tonen - Google Chrome | 4 activity
+[2025-12-12 15:06-15:06] Analytics | Overzicht van inzicht krijgen in web- en/of app-verkeer - Google Chrome | 3 activity
+[2025-12-12 15:06-15:06] Boardman - Google Search - Google Chrome | 1 activity
+[2025-12-12 15:06-15:06] Analytics | Overzicht van inzicht krijgen in web- en/of app-verkeer - Google Chrome | 1 activity
+[2025-12-12 15:06-15:07] Analytics | Demografische gegevens: Land - Google Chrome | 0 activity
+[2025-12-12 15:07-15:07] Analytics | Pagina's en schermen: Paginapad en schermklasse - Google Chrome | 2 activity
+[2025-12-12 15:07-15:07] Analytics | Overzicht van gebruikerskenmerken - Google Chrome | 3 activity
+[2025-12-12 15:07-15:08] Analytics | Technisch overzicht - Google Chrome | 5 activity
+[2025-12-12 15:08-15:08] Analytics | Technische gegevens: Browser - Google Chrome | 1 activity
+[2025-12-12 15:08-15:08] Analytics | Realtime pagina's - Google Chrome | 3 activity
+[2025-12-12 15:08-15:08] Analytics | Home - Google Chrome | 5 activity
+[2025-12-12 15:08-15:08] Analytics | Verkeersacquisitie: Primaire kanaalgroep voor sessie(Standaard kanaalgroep) - Google Chrome | 4 activity
+[2025-12-12 15:08-15:08] Startpagina – Ovelo – Stripe - Google Chrome | 2 activity
+[2025-12-12 15:08-15:08] Why do I have days where I “work” 7 hours but feel like I got nothing done? : r/ProductivityApps - Google Chrome | 2 activity
+[2025-12-12 15:08-15:09] Ovelo | 2 activity
+[2025-12-12 15:09-15:09] Why do I have days where I “work” 7 hours but feel like I got nothing done? : r/ProductivityApps - Google Chrome | 5 activity
+[2025-12-12 15:09-15:09] Gemini API reference  |  Google AI for Developers - Google Chrome | 6 activity
+[2025-12-12 15:09-15:09] Pages - Google Chrome | 1 activity
+[2025-12-12 15:09-15:10] senneb2002/Ovelo-site - Google Chrome | 0 activity
+[2025-12-12 15:11-15:11] senneb2002 - Google Chrome | 0 activity
+[2025-12-12 15:11-15:11] senneb2002/Ovelo - Google Chrome | 0 activity
+[2025-12-12 15:11-15:11] Pulse · senneb2002/Ovelo - Google Chrome | 0 activity
+[2025-12-12 15:11-15:12] Traffic · senneb2002/Ovelo - Google Chrome | 2 activity
+[2025-12-12 15:12-15:12] Network Graph · senneb2002/Ovelo - Google Chrome | 1 activity
+[2025-12-12 15:12-15:12] Actions usage metrics - Google Chrome | 1 activity
+[2025-12-12 15:12-15:12] Actions performance metrics - Google Chrome | 0 activity
+[2025-12-12 15:12-15:12] Pulse · senneb2002/Ovelo - Google Chrome | 6 activity
+[2025-12-12 15:12-15:12] Ovelo - Antigravity - analyzer.py | 2 activity
+[2025-12-12 18:32-18:32] senneb2002/Ovelo-site - Google Chrome | 1 activity
+[2025-12-12 18:32-18:32] Ovelo | 2 activity
+[2025-12-12 18:32-18:32] Pulse · senneb2002/Ovelo - Google Chrome | 0 activity
+[2025-12-12 18:32-18:33] Ovelo | 3 activity
+[2025-12-12 18:33-18:33] Pulse · senneb2002/Ovelo - Google Chrome | 10 activity
+[2025-12-12 18:33-18:33] Analytics | Verkeersacquisitie: Primaire kanaalgroep voor sessie(Standaard kanaalgroep) - Google Chrome | 3 activity
+[2025-12-12 18:33-18:34] Analytics | Home - Google Chrome | 3 activity
+[2025-12-12 18:34-18:34] Edge Functions | Supabase - Google Chrome | 3 activity
+[2025-12-12 18:34-18:34] Ovelo | Ovelo | Supabase - Google Chrome | 2 activity
+[2025-12-12 18:34-18:34] Zoekresultaten - senne21bogaerts@gmail.com - Gmail - Google Chrome | 3 activity
+[2025-12-12 18:34-18:34] Vention Technologies Product Manager heeft onlangs iets geplaatst - senne21bogaerts@gmail.com - Gmail - Google Chrome | 1 activity
+[2025-12-12 18:34-18:34] Inbox (1.929) - senne21bogaerts@gmail.com - Gmail - Google Chrome | 3 activity
+[2025-12-12 18:35-18:35] Inbox (1.927) - senne21bogaerts@gmail.com - Gmail - Google Chrome | 1 activity
+[2025-12-12 18:35-18:35] Domain and hosting options - Google Chrome | 1 activity
+[2025-12-12 18:35-18:35] Google AI Studio - Google Chrome | 3 activity
+[2025-12-12 18:38-18:38] Ovelo | Ovelo | Supabase - Google Chrome | 2 activity
+[2025-12-12 18:38-18:38] Saldo-overzicht – Ovelo – Stripe - Google Chrome | 2 activity
+[2025-12-12 18:38-18:39] Abonnementen – Ovelo – Stripe - Google Chrome | 0 activity
+[2025-12-12 18:39-18:39] Klanten – Ovelo – Stripe - Google Chrome | 0 activity
+[2025-12-12 18:39-18:39] Transacties – Ovelo – Stripe - Google Chrome | 2 activity
+[2025-12-12 18:39-18:40] Saldo-overzicht – Ovelo – Stripe - Google Chrome | 2 activity
+[2025-12-12 18:40-18:40] Inbox (1.927) - senne21bogaerts@gmail.com - Gmail - Google Chrome | 1 activity
+[2025-12-12 18:40-18:40] Google AI Studio - Google Chrome | 6 activity
+[2025-12-12 18:40-18:40] ChatGPT - Google Chrome | 9 activity
+[2025-12-12 18:42-18:42] Stripe usage fee meaning - Google Chrome | 0 activity
+[2025-12-12 18:42-18:42] Stripe fee refund explanation - Google Chrome | 4 activity
+[2025-12-12 18:42-18:42] New Tab - Google Chrome | 16 activity
+[2025-12-12 18:42-18:42] google spreadsheets - Google Search - Google Chrome | 1 activity
+[2025-12-12 18:42-18:42] Google Sheets: Online Spreadsheets & Templates | Google Workspace - Google Chrome | 2 activity
+[2025-12-12 18:42-18:43] Expenses - Google Spreadsheets - Google Chrome | 1 activity
+[2025-12-12 18:44-18:45] New Tab - Google Chrome | 11 activity
+[2025-12-12 18:45-18:46] american express optima card - Google Search - Google Chrome | 1 activity
+[2025-12-12 18:46-18:47] American Express Optima card : r/CreditCards - Google Chrome | 2 activity
+[2025-12-12 18:48-18:48] american express optima card - Google Search - Google Chrome | 1 activity
+[2025-12-12 19:02-19:02] Log In to My Account | American Express US - Google Chrome | 2 activity
+[2025-12-12 19:02-19:02] Expenses - Google Spreadsheets - Google Chrome | 4 activity
+[2025-12-12 19:10-19:10] Expenses - Google Spreadsheets - Google Chrome | 1 activity
+[2025-12-12 19:10-19:10] Analytics | Home - Google Chrome | 3 activity
+[2025-12-12 19:10-19:10] Advanced DNS - Google Chrome | 4 activity
+[2025-12-12 19:10-19:10] Pulse · senneb2002/Ovelo - Google Chrome | 2 activity
+[2025-12-12 19:10-19:10] Analytics - Google Chrome | 1 activity
+[2025-12-12 19:10-19:10] Analytics | Realtime overzicht - Google Chrome | 2 activity
+[2025-12-12 19:12-19:12] Ovelo | Ovelo | Supabase - Google Chrome | 1 activity
+[2025-12-12 19:12-19:12] Saldo-overzicht – Ovelo – Stripe - Google Chrome | 13 activity
+[2025-12-12 19:12-19:12] New Tab - Google Chrome | 3 activity
+[2025-12-12 19:12-19:12] American Express BELUX - Google Chrome | 1 activity
+[2025-12-12 19:12-19:13] Amex BELUX | Ontdek Onze Kaarten | Uw Online Kaartrekening - Google Chrome | 4 activity
+[2025-12-12 19:13-19:13] Vergelijk de Kaarten | American Express BELUX - Google Chrome | 6 activity
+[2025-12-12 19:13-19:16] Amex België | Blue Kaartaanvraag - Google Chrome | 2 activity
+[2025-12-12 19:17-19:17] American Express uses Tink to check your finances - Google Chrome | 2 activity
+[2025-12-12 19:17-19:17] Loading - Google Chrome | 1 activity
+[2025-12-12 19:17-19:17] Authorisatieaanvraag - Google Chrome | 2 activity
+[2025-12-12 19:17-19:18] Touch - Google Chrome | 1 activity
+[2025-12-12 19:19-19:19] Amex België | Blue Kaartaanvraag - Google Chrome | 0 activity
+[2025-12-12 19:19-19:19] New Tab - Google Chrome | 2 activity
+[2025-12-12 19:19-19:19] idp.prd.itsme.services/spa/oidc?session=c0e2cef32c064c2dacde1e6253dd4414&language=nl - Google Chrome | 0 activity
+[2025-12-12 19:19-19:19] OIDC - Google Chrome | 0 activity
+[2025-12-12 19:19-19:20] Doccle - Google Chrome | 10 activity
+[2025-12-12 19:20-19:20] doccle_documents_2025-12-13-01-20 - File Explorer | 3 activity
+[2025-12-12 19:20-19:21] Open | 4 activity
+[2025-12-12 19:21-19:21] Amex België | Blue Kaartaanvraag - Google Chrome | 1 activity
+[2025-12-12 19:21-19:21] Zoekresultaten - senne21bogaerts@gmail.com - Gmail - Google Chrome | 8 activity
+[2025-12-12 19:21-19:21] Verkoop Wally - senne21bogaerts@gmail.com - Gmail - Google Chrome | 24 activity
+[2025-12-12 19:21-19:21] Open | 3 activity
+[2025-12-12 19:21-19:23] Amex België | Blue Kaartaanvraag - Google Chrome | 4 activity
+[2025-12-12 19:24-19:25] Connective eSignatures - Google Chrome | 9 activity
+[2025-12-12 19:25-19:25] Inbox (1.927) - senne21bogaerts@gmail.com - Gmail - Google Chrome | 3 activity
+[2025-12-12 19:25-19:25] Uw eenmalig e-mail wachtwoord - senne21bogaerts@gmail.com - Gmail - Google Chrome | 5 activity
+[2025-12-12 19:25-19:25] Connective eSignatures - Google Chrome | 3 activity
+[2025-12-12 19:25-19:26] Amex België | Blue Kaartaanvraag - Google Chrome | 1 activity
+[2025-12-12 19:26-19:26] Expenses - Google Spreadsheets - Google Chrome | 1 activity
+[2025-12-12 19:30-19:31] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 2 activity
+[2025-12-12 19:31-19:32] The Stocks to Watch When Supreme Court Rules on Trump’s Tariffs - Google Chrome | 2 activity
+[2025-12-12 19:34-19:34] Analytics | Realtime overzicht - Google Chrome | 8 activity
+[2025-12-12 19:34-19:34] Log In to My Account | American Express US - Google Chrome | 3 activity
+[2025-12-12 19:34-19:35] Uw American Express Kaartaanvraag: bevestiging - senne21bogaerts@gmail.com - Gmail - Google Chrome | 8 activity
+[2025-12-12 19:35-19:35] Inbox (1.927) - senne21bogaerts@gmail.com - Gmail - Google Chrome | 1 activity
+[2025-12-12 19:35-19:35] Google Sheets: Online Spreadsheets & Templates | Google Workspace - Google Chrome | 1 activity
+[2025-12-12 19:35-19:35] Expenses - Google Spreadsheets - Google Chrome | 1 activity
+[2025-12-12 19:35-19:35] Stripe fee refund explanation - Google Chrome | 12 activity
+[2025-12-12 19:35-19:36] ChatGPT - Google Chrome | 16 activity
+[2025-12-12 19:36-19:37] 530 credit score meaning - Google Chrome | 3 activity
+[2025-12-12 19:38-19:38] Google AI Studio - Google Chrome | 2 activity
+[2025-12-12 19:38-19:38] Pulse · senneb2002/Ovelo - Google Chrome | 2 activity
+[2025-12-12 19:38-19:38] Commits · senneb2002/Ovelo - Google Chrome | 0 activity
+[2025-12-12 19:38-19:39] Traffic · senneb2002/Ovelo - Google Chrome | 2 activity
+[2025-12-12 19:39-19:39] Payment Successful - Ovelo - Google Chrome | 7 activity
+[2025-12-12 19:39-19:39] Ovelo - See how your day felt - Google Chrome | 9 activity
+[2025-12-12 19:40-19:40] Ovelo-site - Antigravity - site_content.txt | 17 activity
+[2025-12-12 19:40-19:41] Ovelo-site - Antigravity - index.html | 36 activity
+[2025-12-12 19:41-19:41] Ovelo-site - Antigravity - index.html● | 4 activity
+[2025-12-12 19:42-19:42] Domain and hosting options - Google Chrome | 3 activity
+[2025-12-12 19:42-19:42] Ovelo-site - Antigravity - index.html | 3 activity
+[2025-12-12 19:42-19:42] Ovelo-site - Antigravity - index.html● | 2 activity
+[2025-12-12 19:42-19:42] Ovelo-site - Antigravity - index.html | 4 activity
+[2025-12-12 19:45-19:45] Ovelo-site - Antigravity - index.html● | 0 activity
+[2025-12-12 19:45-19:45] Ovelo app launch plan - Google Chrome | 2 activity
+[2025-12-12 19:45-19:45] Ovelo - See how your day felt - Google Chrome | 11 activity
+[2025-12-12 19:45-19:47] Ovelo app launch plan - Google Chrome | 10 activity
+[2025-12-12 19:48-19:48] Why do I have days where I “work” 7 hours but feel like I got nothing done? : r/ProductivityApps - Google Chrome | 4 activity
+[2025-12-12 19:48-19:48] 530 credit score meaning - Google Chrome | 1 activity
+[2025-12-12 19:48-19:48] Expenses - Google Spreadsheets - Google Chrome | 9 activity
+[2025-12-12 19:48-19:48] ovelo - Google Search - Google Chrome | 12 activity
+[2025-12-12 19:48-19:49] ovelo focus - Google Search - Google Chrome | 3 activity
+[2025-12-12 19:49-19:49] Ovelo - See how your day felt - Google Chrome | 2 activity
+[2025-12-12 19:49-19:49] senneb2002 - Google Chrome | 1 activity
+[2025-12-12 19:49-19:49] senneb2002/Ovelo-site - Google Chrome | 3 activity
+[2025-12-12 19:49-19:49] General - Google Chrome | 2 activity
+[2025-12-12 19:49-19:49] Pulse · senneb2002/Ovelo-site - Google Chrome | 2 activity
+[2025-12-12 19:49-19:49] Traffic · senneb2002/Ovelo-site - Google Chrome | 5 activity
+[2025-12-12 19:49-19:50] General - Google Chrome | 1 activity
+[2025-12-12 19:50-19:50] Environments · senneb2002/Ovelo-site - Google Chrome | 3 activity
+[2025-12-12 19:50-19:50] Configure environment github-pages · senneb2002/Ovelo-site - Google Chrome | 5 activity
+[2025-12-12 19:50-19:50] ChatGPT - Google Chrome | 15 activity
+[2025-12-12 19:50-19:50] Configure environment github-pages · senneb2002/Ovelo-site - Google Chrome | 18 activity
+[2025-12-12 19:50-19:50] ovelo focus - Google Search - Google Chrome | 7 activity
+[2025-12-12 19:50-19:51] Snipping Tool | 6 activity
+[2025-12-12 19:51-19:51] ChatGPT - Google Chrome | 12 activity
+[2025-12-12 19:51-19:51] Add logo and dot - Google Chrome | 2 activity
+[2025-12-12 19:51-19:51] Ovelo - See how your day felt - Google Chrome | 1 activity
+[2025-12-12 19:51-19:52] ovelo focus - Google Search - Google Chrome | 0 activity
+[2025-12-12 19:52-19:52] Ovelo-site - Antigravity - index.html● | 4 activity
+[2025-12-12 19:52-19:52] Ovelo - Antigravity - analyzer.py | 3 activity
+[2025-12-12 19:52-19:53] Ovelo - Antigravity - last_prompt.txt | 30 activity
+[2025-12-12 19:54-19:54] Ovelo - Antigravity - analyzer.py | 6 activity
+[2025-12-12 19:54-19:54] Ovelo - Antigravity - Ovelo-site.lnk | 13 activity
+[2025-12-12 19:54-19:55] Ovelo - Antigravity - analyzer.py | 4 activity
+[2025-12-12 19:55-19:55] Ovelo-site - File Explorer | 2 activity
+[2025-12-12 19:55-19:55] Ovelo-site - Antigravity - index.html● | 10 activity
+[2025-12-12 19:55-19:56] Add logo and dot - Google Chrome | 2 activity
+[2025-12-12 19:58-19:59] Ovelo-site - Antigravity - index.html● | 18 activity
+[2025-12-12 19:59-19:59] Add logo and dot - Google Chrome | 9 activity
+[2025-12-12 19:59-20:00] ovelo focus - Google Search - Google Chrome | 11 activity
+[2025-12-12 20:00-20:00] Add logo and dot - Google Chrome | 7 activity
+[2025-12-12 20:01-20:02] Ovelo-site - Antigravity - index.html | 1 activity
+[2025-12-12 20:02-20:02] senneb2002/Ovelo-site - Google Chrome | 1 activity
+[2025-12-12 20:02-20:02] Deployments · senneb2002/Ovelo-site - Google Chrome | 2 activity
+[2025-12-12 20:02-20:03] Add logo and dot - Google Chrome | 1 activity
+[2025-12-12 20:03-20:03] Deployments · senneb2002/Ovelo-site - Google Chrome | 12 activity
+[2025-12-12 20:03-20:03] New Tab - Google Chrome | 4 activity
+[2025-12-12 20:03-20:03] ovelo focus - Google Search - Google Chrome | 12 activity
+[2025-12-12 20:03-20:03] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 1 activity
+[2025-12-12 20:03-20:04] ovelo focus - Google Search - Google Chrome | 3 activity
+[2025-12-12 20:04-20:04] Snipping Tool | 15 activity
+[2025-12-12 20:04-20:05] Add logo and dot - Google Chrome | 10 activity
+[2025-12-12 20:05-20:05] Ovelo-site - Antigravity - index.html | 2 activity
+[2025-12-12 20:05-20:05] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 13 activity
+[2025-12-12 20:06-20:06] Ovelo-site - Antigravity - index.html | 14 activity
+[2025-12-12 20:06-20:07] Ovelo-site - Antigravity - index.html● | 3 activity
+[2025-12-12 20:08-20:08] Add logo and dot - Google Chrome | 1 activity
+[2025-12-12 20:08-20:08] ChatGPT - Google Chrome | 12 activity
+[2025-12-12 20:08-20:08] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 15 activity
+[2025-12-12 20:08-20:09] ChatGPT - Google Chrome | 17 activity
+[2025-12-12 20:10-20:10] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 14 activity
+[2025-12-12 20:10-20:10] ChatGPT - Google Chrome | 1 activity
+[2025-12-12 20:10-20:10] Funny screenshot ideas - Google Chrome | 12 activity
+[2025-12-12 20:10-20:10] Funny screenshot idea - Google Chrome | 14 activity
+[2025-12-12 20:10-20:11] Ovelo - Antigravity - app-icon.png | 7 activity
+[2025-12-12 20:11-20:12] Funny screenshot idea - Google Chrome | 10 activity
+[2025-12-12 20:12-20:12] Ovelo | 4 activity
+[2025-12-12 20:12-20:13] Funny screenshot idea - Google Chrome | 18 activity
+[2025-12-12 20:13-20:13] Ovelo | 2 activity
+[2025-12-12 20:13-20:13] Google AI Studio - Google Chrome | 4 activity
+[2025-12-12 20:13-20:13] Ovelo | 3 activity
+[2025-12-12 20:13-20:14] Funny screenshot idea - Google Chrome | 2 activity
+[2025-12-12 20:14-20:14] DevTools - localhost:1420/ | 3 activity
+[2025-12-12 20:14-20:15] Ovelo | 1 activity
+[2025-12-12 20:16-20:16] DevTools - localhost:1420/ | 1 activity
+[2025-12-12 20:16-20:16] Ovelo | 7 activity
+[2025-12-12 20:16-20:17] DevTools - localhost:1420/ | 4 activity
+[2025-12-12 20:17-20:19] Funny screenshot idea - Google Chrome | 7 activity
+[2025-12-12 20:19-20:19] DevTools - localhost:1420/ | 5 activity
+[2025-12-12 20:19-20:19] Funny screenshot idea - Google Chrome | 5 activity
+[2025-12-12 20:19-20:19] DevTools - localhost:1420/ | 5 activity
+[2025-12-12 20:19-20:20] Funny screenshot idea - Google Chrome | 6 activity
+[2025-12-12 20:20-20:20] DevTools - localhost:1420/ | 3 activity
+[2025-12-12 20:20-20:20] Snipping Tool Overlay | 0 activity
+[2025-12-12 20:20-20:20] Snipping Tool | 2 activity
+[2025-12-12 20:20-20:21] Save As | 7 activity
+[2025-12-12 20:21-20:22] Snipping Tool | 5 activity
+[2025-12-12 20:22-20:22] Snipping Tool Overlay | 3 activity
+[2025-12-12 20:22-20:22] Save As | 7 activity
+[2025-12-12 20:22-20:22] Ovelo-site - File Explorer | 4 activity
+[2025-12-12 20:22-20:22] OveloLab - File Explorer | 1 activity
+[2025-12-12 20:22-20:22] Reflection - Paint | 21 activity
+[2025-12-12 20:22-20:23] logo - Paint | 28 activity
+[2025-12-12 20:23-20:23] Reflection - Paint | 2 activity
+[2025-12-12 20:23-20:23] logo - Paint | 4 activity
+[2025-12-12 20:23-20:24] Reflection - Paint | 3 activity
+[2025-12-12 20:24-20:24] ChatGPT - Google Chrome | 19 activity
+[2025-12-12 20:24-20:24] Add picture in Paint - Google Chrome | 1 activity
+[2025-12-12 20:24-20:24] Insert picture in Paint - Google Chrome | 1 activity
+[2025-12-12 20:24-20:25] Reflection - Paint | 1 activity
+[2025-12-12 20:25-20:25] OveloLab - File Explorer | 0 activity
+[2025-12-12 20:25-20:25] logo - Paint | 7 activity
+[2025-12-12 20:25-20:26] Reflection - Paint | 1 activity
+[2025-12-12 20:26-20:26] Save as | 5 activity
+[2025-12-12 20:27-20:27] Insert picture in Paint - Google Chrome | 8 activity
+[2025-12-12 20:27-20:27] Add logo and dot - Google Chrome | 2 activity
+[2025-12-12 20:27-20:28] Ovelo app launch plan - Google Chrome | 6 activity
+[2025-12-12 20:29-20:29] Google AI Studio - Google Chrome | 5 activity
+[2025-12-12 20:29-20:29] Free trial – Google Cloud console - Google Chrome | 0 activity
+[2025-12-12 20:29-20:29] Step 1 of 2 – Free trial – Focusapp – Google Cloud console - Google Chrome | 1 activity
+[2025-12-12 20:29-20:29] Google AI Studio - Google Chrome | 2 activity
+[2025-12-12 20:29-20:30] Why do I have days where I “work” 7 hours but feel like I got nothing done? : r/ProductivityApps - Google Chrome | 6 activity
+[2025-12-12 20:30-20:30] Productivity Apps - Google Chrome | 13 activity
+[2025-12-12 20:30-20:31] Submit to r/ProductivityApps - Google Chrome | 6 activity
+[2025-12-12 20:32-20:32] Ovelo app launch plan - Google Chrome | 7 activity
+[2025-12-12 20:32-20:32] New Tab - Google Chrome | 8 activity
+[2025-12-12 20:32-20:32] Productivity Apps - Google Chrome | 8 activity
+[2025-12-12 20:32-20:32] adhd - Reddit Search! - Google Chrome | 2 activity
+[2025-12-12 20:32-20:32] ADHD - Google Chrome | 2 activity
+[2025-12-12 20:32-20:33] Submit to r/ADHD - Google Chrome | 6 activity
+[2025-12-12 20:33-20:33] Ovelo app launch plan - Google Chrome | 4 activity
+[2025-12-12 20:33-20:33] Submit to r/ADHD - Google Chrome | 4 activity
+[2025-12-12 20:33-20:33] OveloLab - File Explorer | 1 activity
+[2025-12-12 20:33-20:33] Submit to r/ADHD - Google Chrome | 0 activity
+[2025-12-12 20:33-20:33] Ovelo app launch plan - Google Chrome | 3 activity
+[2025-12-12 20:33-20:33] Funny screenshot idea - Google Chrome | 5 activity
+[2025-12-12 20:33-20:35] Submit to r/ADHD - Google Chrome | 5 activity
+[2025-12-12 20:35-20:35] Insert picture in Paint - Google Chrome | 9 activity
+[2025-12-12 20:35-20:36] Ovelo app launch plan - Google Chrome | 8 activity
+[2025-12-12 20:36-20:36] Submit to r/ADHD - Google Chrome | 6 activity
+[2025-12-12 20:36-20:36] Ovelo app launch plan - Google Chrome | 6 activity
+[2025-12-12 20:36-20:36] Submit to r/ADHD - Google Chrome | 6 activity
+[2025-12-12 20:36-20:36] Submit to r/ProductivityApps - Google Chrome | 4 activity
+[2025-12-12 20:36-20:37] Submit to r/ADHD - Google Chrome | 6 activity
+[2025-12-12 20:37-20:38] Ovelo - See how your day felt - Google Chrome | 5 activity
+[2025-12-12 20:38-20:38] Submit to r/ADHD - Google Chrome | 4 activity
+[2025-12-12 20:38-20:38] Ovelo app launch plan - Google Chrome | 18 activity
+[2025-12-12 20:38-20:39] Submit to r/ADHD - Google Chrome | 3 activity
+[2025-12-12 20:39-20:39] Submit to r/ProductivityApps - Google Chrome | 1 activity
+[2025-12-12 20:39-20:39] Productivity Apps - Google Chrome | 3 activity
+[2025-12-12 20:39-20:40] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-12 20:40-20:40] Productivity Apps - Google Chrome | 2 activity
+[2025-12-12 20:40-20:40] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 6 activity
+[2025-12-12 20:40-20:40] I built a focus tracker… and it absolutely roasts me : r/ProductivityApps - Google Chrome | 7 activity
+[2025-12-12 20:40-20:41] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 10 activity
+[2025-12-12 20:41-20:41] Analytics | Realtime overzicht - Google Chrome | 4 activity
+[2025-12-12 20:41-20:41] Analytics | Realtime pagina's - Google Chrome | 7 activity
+[2025-12-12 20:41-20:41] Analytics | Realtime overzicht - Google Chrome | 4 activity
+[2025-12-12 20:41-20:42] american express belgie - Google Search - Google Chrome | 3 activity
+[2025-12-12 20:42-20:42] Configure environment github-pages · senneb2002/Ovelo-site - Google Chrome | 2 activity
+[2025-12-12 20:42-20:42] american express belgie - Google Search - Google Chrome | 4 activity
+[2025-12-12 20:42-20:42] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 4 activity
+[2025-12-12 20:42-20:42] Submit to r/ADHD - Google Chrome | 13 activity
+[2025-12-12 20:42-20:42] I built a focus tracker… and it absolutely roasts me : r/ProductivityApps - Google Chrome | 16 activity
+[2025-12-12 20:42-20:42] Submit to r/ADHD - Google Chrome | 9 activity
+[2025-12-12 20:42-20:42] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 8 activity
+[2025-12-12 20:42-20:42] Submit to r/ADHD - Google Chrome | 4 activity
+[2025-12-12 20:42-20:43] ADHD - Google Chrome | 0 activity
+[2025-12-12 20:43-20:43] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 2 activity
+[2025-12-12 20:43-20:43] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-12 20:43-20:44] Advanced DNS - Google Chrome | 2 activity
+[2025-12-12 20:44-20:44] New Tab - Google Chrome | 2 activity
+[2025-12-12 20:44-20:44] ChatGPT - Google Chrome | 18 activity
+[2025-12-12 20:44-20:44] Cheapest way to stop protection - Google Chrome | 3 activity
+[2025-12-12 20:44-20:45] Cheapest way to stop warnings - Google Chrome | 4 activity
+[2025-12-12 20:46-20:46] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 5 activity
+[2025-12-12 20:46-20:46] My focus app roasted me so hard today that I feel spiritually attacked : r/ADHD - Google Chrome | 3 activity
+[2025-12-12 20:46-20:46] Analytics | Realtime overzicht - Google Chrome | 2 activity
+[2025-12-12 20:46-20:46] New Tab - Google Chrome | 0 activity
+[2025-12-12 20:46-20:47] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 2 activity
+[2025-12-12 20:47-20:47] Cheapest way to stop warnings - Google Chrome | 4 activity
+[2025-12-12 20:47-20:48] ksoftware - Google Search - Google Chrome | 0 activity
+[2025-12-12 20:48-20:48] Cheapest way to stop warnings - Google Chrome | 6 activity
+[2025-12-12 20:48-20:48] Sectigo EV - Google Search - Google Chrome | 2 activity
+[2025-12-12 20:48-20:48] EV SSL Certificates - Extended Validation SSL | Sectigo® Official - Google Chrome | 3 activity
+[2025-12-12 20:48-20:48] Analytics | Realtime overzicht - Google Chrome | 2 activity
+[2025-12-12 20:54-20:54] Google AI Studio - Google Chrome | 1 activity
+[2025-12-12 20:54-20:55] Analytics | Realtime overzicht - Google Chrome | 0 activity
+[2025-12-12 20:55-20:55] Advanced DNS - Google Chrome | 3 activity
+[2025-12-12 20:55-20:55] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 5 activity
+[2025-12-12 20:55-20:55] My focus app roasted me so hard today that I feel spiritually attacked : r/ADHD - Google Chrome | 1 activity
+[2025-12-12 20:55-20:55] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 3 activity
+[2025-12-12 20:55-20:55] Post Insights - Google Chrome | 4 activity
+[2025-12-12 20:55-20:56] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 8 activity
+[2025-12-12 20:56-20:56] Cheapest way to stop warnings - Google Chrome | 16 activity
+[2025-12-12 20:56-20:57] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 0 activity
+[2025-12-12 20:57-20:57] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-12 20:57-20:57] Inbox (1.929) - senne21bogaerts@gmail.com - Gmail - Google Chrome | 2 activity
+[2025-12-12 20:57-20:57] u/AutoModerator mentioned you in r/ADHD - senne21bogaerts@gmail.com - Gmail - Google Chrome | 3 activity
+[2025-12-12 20:57-20:57] Inbox (1.927) - senne21bogaerts@gmail.com - Gmail - Google Chrome | 1 activity
+[2025-12-12 20:57-20:58] Cheapest way to stop warnings - Google Chrome | 2 activity
+[2025-12-12 20:58-20:59] Ovelo app launch plan - Google Chrome | 34 activity
+[2025-12-12 20:59-20:59] Cheapest way to stop warnings - Google Chrome | 8 activity
+[2025-12-12 20:59-20:59] Ovelo app launch plan - Google Chrome | 0 activity
+[2025-12-12 21:00-21:00] Analytics | Realtime overzicht - Google Chrome | 0 activity
+[2025-12-12 21:00-21:00] Analytics | Home - Google Chrome | 5 activity
+[2025-12-12 21:00-21:01] Mail - info@ovelolab.com info@ovelolab.com - Private Email - Google Chrome | 1 activity
+[2025-12-12 21:01-21:01] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 2 activity
+[2025-12-12 21:01-21:02] Ovelo app launch plan - Google Chrome | 4 activity
+[2025-12-12 21:02-21:02] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 2 activity
+[2025-12-12 21:02-21:02] programmerhumor - Reddit Search! - Google Chrome | 0 activity
+[2025-12-12 21:02-21:02] memesAndJokesAboutEverythingProgrammingAndCS - Google Chrome | 3 activity
+[2025-12-12 21:02-21:02] Submit to r/ProgrammerHumor - Google Chrome | 1 activity
+[2025-12-12 21:02-21:03] Ovelo app launch plan - Google Chrome | 4 activity
+[2025-12-12 21:03-21:04] Submit to r/ProgrammerHumor - Google Chrome | 9 activity
+[2025-12-12 21:04-21:04] Ovelo app launch plan - Google Chrome | 4 activity
+[2025-12-12 21:04-21:06] Submit to r/ProgrammerHumor - Google Chrome | 3 activity
+[2025-12-12 21:06-21:06] ChatGPT - Google Chrome | 14 activity
+[2025-12-12 21:06-21:07] Bug report in camelcase - Google Chrome | 8 activity
+[2025-12-12 21:07-21:08] Submit to r/ProgrammerHumor - Google Chrome | 6 activity
+[2025-12-12 21:08-21:08] Ovelo app launch plan - Google Chrome | 9 activity
+[2025-12-12 21:08-21:08] Analytics | Home - Google Chrome | 0 activity
+[2025-12-12 21:08-21:08] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-12 21:08-21:09] Analytics | Overzicht van inzicht krijgen in web- en/of app-verkeer - Google Chrome | 4 activity
+[2025-12-12 21:09-21:09] Inbox (1.927) - senne21bogaerts@gmail.com - Gmail - Google Chrome | 5 activity
+[2025-12-12 21:09-21:09] ADHD - Google Chrome | 6 activity
+[2025-12-12 21:09-21:09] internetisbeautiful - Reddit Search! - Google Chrome | 0 activity
+[2025-12-12 21:09-21:10] 10/10 would bookmark again - Google Chrome | 6 activity
+[2025-12-12 21:10-21:11] Continuously Improve Yourself! - Google Chrome | 4 activity
+[2025-12-12 21:11-21:11] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 9 activity
+[2025-12-12 21:11-21:12] Ovelo app launch plan - Google Chrome | 4 activity
+[2025-12-12 21:12-21:12] Continuously Improve Yourself! - Google Chrome | 2 activity
+[2025-12-12 21:12-21:12] SideProject - Reddit Search! - Google Chrome | 9 activity
+[2025-12-12 21:12-21:12] r/SideProject - A community for sharing side projects - Google Chrome | 16 activity
+[2025-12-12 21:12-21:12] Submit to r/SideProject - Google Chrome | 14 activity
+[2025-12-12 21:12-21:12] Ovelo app launch plan - Google Chrome | 6 activity
+[2025-12-12 21:12-21:13] Submit to r/SideProject - Google Chrome | 4 activity
+[2025-12-12 21:13-21:13] Ovelo app launch plan - Google Chrome | 8 activity
+[2025-12-12 21:13-21:13] Submit to r/SideProject - Google Chrome | 6 activity
+[2025-12-12 21:13-21:13] Ovelo app launch plan - Google Chrome | 11 activity
+[2025-12-12 21:13-21:13] Submit to r/ProgrammerHumor - Google Chrome | 5 activity
+[2025-12-12 21:13-21:15] Ovelo app launch plan - Google Chrome | 9 activity
+[2025-12-12 21:15-21:15] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 11 activity
+[2025-12-12 21:15-21:15] funny - Reddit Search! - Google Chrome | 4 activity
+[2025-12-12 21:15-21:15] Submit to r/funny - Google Chrome | 6 activity
+[2025-12-12 21:15-21:16] OveloLab - File Explorer | 1 activity
+[2025-12-12 21:16-21:16] Ovelo app launch plan - Google Chrome | 4 activity
+[2025-12-12 21:16-21:16] Submit to r/funny - Google Chrome | 0 activity
+[2025-12-12 21:16-21:16] funny - Google Chrome | 12 activity
+[2025-12-12 21:16-21:16] Submit to r/SideProject - Google Chrome | 1 activity
+[2025-12-12 21:17-21:17] Ovelo app launch plan - Google Chrome | 10 activity
+[2025-12-12 21:17-21:17] funny - Google Chrome | 6 activity
+[2025-12-12 21:17-21:18] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 6 activity
+[2025-12-12 21:18-21:18] Ovelo app launch plan - Google Chrome | 10 activity
+[2025-12-12 21:18-21:18] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 10 activity
+[2025-12-12 21:18-21:18] Submit to r/SideProject - Google Chrome | 9 activity
+[2025-12-12 21:18-21:18] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 3 activity
+[2025-12-12 21:18-21:18] funny - Google Chrome | 8 activity
+[2025-12-12 21:18-21:19] Submit to r/funny - Google Chrome | 2 activity
+[2025-12-12 21:19-21:19] Ovelo app launch plan - Google Chrome | 4 activity
+[2025-12-12 21:19-21:19] Submit to r/funny - Google Chrome | 3 activity
+[2025-12-12 21:19-21:20] funny - Google Chrome | 2 activity
+[2025-12-12 21:20-21:20] Submit to r/SideProject - Google Chrome | 1 activity
+[2025-12-12 21:20-21:20] Analytics | Overzicht van inzicht krijgen in web- en/of app-verkeer - Google Chrome | 1 activity
+[2025-12-12 21:20-21:21] Analytics | Realtime overzicht - Google Chrome | 6 activity
+[2025-12-12 21:21-21:23] Ovelo app launch plan - Google Chrome | 7 activity
+[2025-12-12 21:24-21:24] New Tab - Google Chrome | 7 activity
+[2025-12-12 21:24-21:24] Hacker News - Google Chrome | 4 activity
+[2025-12-12 21:24-21:25] Ovelo app launch plan - Google Chrome | 2 activity
+[2025-12-12 21:25-21:25] OveloLab - File Explorer | 15 activity
+[2025-12-12 21:25-21:25] Ovelo | 2 activity
+[2025-12-12 21:26-21:26] Ovelo app launch plan - Google Chrome | 6 activity
+[2025-12-12 21:26-21:26] Ovelo | 4 activity
+[2025-12-12 21:27-21:27] Ovelo | Ovelo | Supabase - Google Chrome | 3 activity
+[2025-12-12 21:27-21:27] Saldo-overzicht – Ovelo – Stripe - Google Chrome | 1 activity
+[2025-12-12 21:27-21:27] Startpagina – Ovelo – Stripe - Google Chrome | 6 activity
+[2025-12-12 21:27-21:27] Google AI Studio - Google Chrome | 13 activity
+[2025-12-12 21:27-21:27] Analytics | Realtime overzicht - Google Chrome | 7 activity
+[2025-12-12 21:27-21:27] Productivity Apps - Google Chrome | 1 activity
+[2025-12-12 21:27-21:27] Submit to r/SideProject - Google Chrome | 8 activity
+[2025-12-12 21:27-21:27] funny - Google Chrome | 8 activity
+[2025-12-12 21:27-21:28] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 2 activity
+[2025-12-12 21:28-21:30] Ovelo app launch plan - Google Chrome | 8 activity
+[2025-12-12 21:31-21:32] Analytics | Realtime overzicht - Google Chrome | 2 activity
+[2025-12-12 21:32-21:32] Google AI Studio - Google Chrome | 2 activity
+[2025-12-12 21:32-21:32] The Stocks to Watch When Supreme Court Rules on Trump’s Tariffs - Google Chrome | 2 activity
+[2025-12-12 21:32-21:33] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 1 activity
+[2025-12-12 21:33-21:33] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-12 21:33-21:33] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 10 activity
+[2025-12-12 21:33-21:33] Post Insights - Google Chrome | 11 activity
+[2025-12-12 21:33-21:33] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 6 activity
+[2025-12-12 21:33-21:34] I built a focus tracker… and it absolutely roasts me : r/ProductivityApps - Google Chrome | 0 activity
+[2025-12-12 21:34-21:34] Analytics | Realtime overzicht - Google Chrome | 0 activity
+[2025-12-12 21:34-21:34] Analytics - Google Chrome | 1 activity
+[2025-12-12 21:34-21:34] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-12 21:34-21:35] Analytics | Home - Google Chrome | 7 activity
+[2025-12-12 21:35-21:35] Ovelo | 1 activity
+[2025-12-12 21:35-21:35] Analytics | Home - Google Chrome | 3 activity
+[2025-12-12 21:35-21:35] Analytics - Google Chrome | 2 activity
+[2025-12-12 21:35-21:35] Analytics | Realtime overzicht - Google Chrome | 0 activity
+[2025-12-12 21:36-21:36] EV SSL Certificates - Extended Validation SSL | Sectigo® Official - Google Chrome | 3 activity
+[2025-12-12 21:36-21:36] Submit to r/SideProject - Google Chrome | 1 activity
+[2025-12-12 21:36-21:37] Submit to r/ProgrammerHumor - Google Chrome | 7 activity
+[2025-12-12 21:37-21:37] Analytics | Realtime overzicht - Google Chrome | 0 activity
+[2025-12-12 21:37-21:37] Supabase - Google Chrome | 1 activity
+[2025-12-12 21:37-21:38] Ovelo | Ovelo | Supabase - Google Chrome | 0 activity
+[2025-12-12 21:38-21:39] Analytics | Realtime overzicht - Google Chrome | 2 activity
+[2025-12-12 21:39-21:39] I built a focus tracker… and it absolutely roasts me : r/ProductivityApps - Google Chrome | 2 activity
+[2025-12-12 21:39-21:39] Ovelo | Ovelo | Supabase - Google Chrome | 2 activity
+[2025-12-12 21:39-21:39] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-12 21:39-21:39] Analytics | Leads genereren: overzicht - Google Chrome | 2 activity
+[2025-12-12 21:39-21:40] Analytics | Realtime overzicht - Google Chrome | 0 activity
+[2025-12-12 21:40-21:40] I built a focus tracker… and it absolutely roasts me : r/ProductivityApps - Google Chrome | 3 activity
+[2025-12-12 21:40-21:40] Analytics | Realtime overzicht - Google Chrome | 8 activity
+[2025-12-12 21:40-21:40] Mail - info@ovelolab.com info@ovelolab.com - Private Email - Google Chrome | 7 activity
+[2025-12-12 21:40-21:40] Ovelo | Ovelo | Supabase - Google Chrome | 2 activity
+[2025-12-12 21:40-21:40] Quick settings | 1 activity
+[2025-12-12 21:40-21:41] Ovelo | Ovelo | Supabase - Google Chrome | 3 activity
+[2025-12-12 21:41-21:41] Saldo-overzicht – Ovelo – Stripe - Google Chrome | 5 activity
+[2025-12-12 21:41-21:41] Submit to r/ProgrammerHumor - Google Chrome | 10 activity
+[2025-12-12 21:41-21:41] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 6 activity
+[2025-12-12 21:41-21:41] Post Insights - Google Chrome | 22 activity
+[2025-12-12 21:41-21:42] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 7 activity
+[2025-12-12 21:42-21:42] productivity - Reddit Search! - Google Chrome | 2 activity
+[2025-12-12 21:42-21:42] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-12 21:42-21:42] EV SSL Certificates - Extended Validation SSL | Sectigo® Official - Google Chrome | 2 activity
+[2025-12-12 21:42-21:42] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 23 activity
+[2025-12-12 21:42-21:42] Productivity - Google Chrome | 6 activity
+[2025-12-12 21:42-21:42] Analytics | Realtime overzicht - Google Chrome | 0 activity
+[2025-12-12 21:42-21:43] Configure environment github-pages · senneb2002/Ovelo-site - Google Chrome | 1 activity
+[2025-12-12 21:43-21:43] Google AI Studio - Google Chrome | 1 activity
+[2025-12-12 21:43-21:43] WhatsApp - Google Chrome | 2 activity
+[2025-12-12 21:43-21:44] Analytics | Realtime overzicht - Google Chrome | 2 activity
+[2025-12-12 21:44-21:44] Inbox (1.927) - senne21bogaerts@gmail.com - Gmail - Google Chrome | 1 activity
+[2025-12-12 21:44-21:44] Analytics | Realtime overzicht - Google Chrome | 0 activity
+[2025-12-12 21:44-21:44] Ovelo | Ovelo | Supabase - Google Chrome | 3 activity
+[2025-12-12 21:44-21:44] Mail - info@ovelolab.com info@ovelolab.com - Private Email - Google Chrome | 2 activity
+[2025-12-12 21:44-21:44] Google AI Studio - Google Chrome | 4 activity
+[2025-12-12 21:44-21:44] Submit to r/SideProject - Google Chrome | 3 activity
+[2025-12-12 21:44-21:45] Submit to r/productivity - Google Chrome | 2 activity
+[2025-12-12 21:45-21:45] Submit to r/SideProject - Google Chrome | 0 activity
+[2025-12-12 21:45-21:46] Analytics | Realtime overzicht - Google Chrome | 4 activity
+[2025-12-12 21:46-21:47] Ovelo app launch plan - Google Chrome | 3 activity
+[2025-12-12 21:47-21:47] Analytics - Google Chrome | 0 activity
+[2025-12-12 21:47-21:48] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-12 21:48-21:48] Ovelo app launch plan - Google Chrome | 10 activity
+[2025-12-12 21:48-21:48] Deployments · senneb2002/Ovelo-site - Google Chrome | 1 activity
+[2025-12-12 21:48-21:49] Ovelo app launch plan - Google Chrome | 1 activity
+[2025-12-12 21:49-21:49] Productivity Apps - Google Chrome | 3 activity
+[2025-12-12 21:49-21:49] Continuously Improve Yourself! - Google Chrome | 3 activity
+[2025-12-12 21:49-21:49] Submit to r/getdisciplined - Google Chrome | 2 activity
+[2025-12-12 21:49-21:49] Ovelo app launch plan - Google Chrome | 7 activity
+[2025-12-12 21:49-21:50] Submit to r/getdisciplined - Google Chrome | 3 activity
+[2025-12-12 21:50-21:50] Ovelo app launch plan - Google Chrome | 11 activity
+[2025-12-12 21:50-21:50] Submit to r/getdisciplined - Google Chrome | 3 activity
+[2025-12-12 21:50-21:50] OveloLab - File Explorer | 8 activity
+[2025-12-12 21:50-21:50] Submit to r/getdisciplined - Google Chrome | 2 activity
+[2025-12-12 21:50-21:50] Submit to r/productivity - Google Chrome | 9 activity
+[2025-12-12 21:50-21:51] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 9 activity
+[2025-12-12 21:51-21:51] My focus app roasted me so hard today that I feel spiritually attacked : r/ADHD - Google Chrome | 9 activity
+[2025-12-12 21:51-21:52] Ovelo app launch plan - Google Chrome | 12 activity
+[2025-12-12 21:52-21:53] Submit to r/getdisciplined - Google Chrome | 6 activity
+[2025-12-12 21:53-21:54] Get Disciplined - Google Chrome | 3 activity
+[2025-12-12 21:54-21:55] Ovelo app launch plan - Google Chrome | 5 activity
+[2025-12-12 21:56-21:56] Get Disciplined - Google Chrome | 6 activity
+[2025-12-12 21:56-21:56] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-12 21:56-21:56] Ovelo | Ovelo | Supabase - Google Chrome | 3 activity
+[2025-12-12 21:56-21:57] Inbox (1.927) - senne21bogaerts@gmail.com - Gmail - Google Chrome | 0 activity
+[2025-12-12 21:57-21:57] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 3 activity
+[2025-12-12 21:57-21:57] My focus app roasted me so hard today that I feel spiritually attacked : r/ADHD - Google Chrome | 4 activity
+[2025-12-12 21:57-21:58] Ovelo app launch plan - Google Chrome | 8 activity
+[2025-12-12 21:58-21:58] My focus app roasted me so hard today that I feel spiritually attacked : r/ADHD - Google Chrome | 3 activity
+[2025-12-12 21:58-21:58] Deciding To Be Better - Google Chrome | 5 activity
+[2025-12-12 21:58-21:58] Submit to Reddit - Google Chrome | 7 activity
+[2025-12-12 21:58-21:59] Analytics | Realtime overzicht - Google Chrome | 2 activity
+[2025-12-12 21:59-21:59] EV SSL Certificates - Extended Validation SSL | Sectigo® Official - Google Chrome | 1 activity
+[2025-12-12 21:59-22:00] Ovelo | Ovelo | Supabase - Google Chrome | 0 activity
+[2025-12-12 22:01-22:01] Analytics | Realtime overzicht - Google Chrome | 3 activity
+[2025-12-12 22:01-22:01] Advanced DNS - Google Chrome | 4 activity
+[2025-12-12 22:01-22:01] privateemail.com/appsuite/#!!&app=io.ox/mail&folder=default0/INBOX&storeLocale=true - Google Chrome | 2 activity
+[2025-12-12 22:01-22:01] Mail - info@ovelolab.com info@ovelolab.com - Private Email - Google Chrome | 7 activity
+[2025-12-12 22:01-22:01] Analytics | Realtime overzicht - Google Chrome | 2 activity
+[2025-12-12 22:01-22:02] WhatsApp - Google Chrome | 8 activity
+[2025-12-12 22:03-22:03] Advanced DNS - Google Chrome | 4 activity
+[2025-12-12 22:03-22:04] Analytics | Realtime overzicht - Google Chrome | 3 activity
+[2025-12-12 22:04-22:04] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 1 activity
+[2025-12-12 22:04-22:06] SpaceX sets $800 billion valuation, confirms 2026 IPO plans - Google Chrome | 3 activity
+[2025-12-12 22:07-22:07] Analytics | Realtime overzicht - Google Chrome | 2 activity
+[2025-12-12 22:07-22:07] Ovelo | undefined | Supabase - Google Chrome | 6 activity
+[2025-12-12 22:07-22:07] EV SSL Certificates - Extended Validation SSL | Sectigo® Official - Google Chrome | 3 activity
+[2025-12-12 22:07-22:08] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 4 activity
+[2025-12-12 22:10-22:10] System Idle | 1 activity
+[2025-12-12 22:10-22:10] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 1 activity
+[2025-12-12 22:10-22:11] Analytics | Realtime overzicht - Google Chrome | 3 activity
+[2025-12-12 22:11-22:11] Ovelo | Ovelo | Supabase - Google Chrome | 2 activity
+[2025-12-12 22:11-22:11] Configure environment github-pages · senneb2002/Ovelo-site - Google Chrome | 4 activity
+[2025-12-12 22:11-22:11] senneb2002/Ovelo - Google Chrome | 0 activity
+[2025-12-12 22:11-22:11] Pulse · senneb2002/Ovelo - Google Chrome | 4 activity
+[2025-12-12 22:11-22:12] Traffic · senneb2002/Ovelo - Google Chrome | 4 activity
+[2025-12-12 22:12-22:12] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-12 22:20-22:20] OveloLab - File Explorer | 0 activity
+[2025-12-12 22:20-22:20] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-12 22:20-22:21] Ovelo | Ovelo | Supabase - Google Chrome | 2 activity
+[2025-12-12 22:21-22:21] Analytics | Realtime overzicht - Google Chrome | 2 activity
+[2025-12-12 22:21-22:21] Submit to r/SideProject - Google Chrome | 3 activity
+[2025-12-12 22:21-22:21] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 3 activity
+[2025-12-12 22:21-22:21] I tracked my focus for 24 hours and the “reflection” kind of broke me (in a good way) : r/getdisciplined - Google Chrome | 9 activity
+[2025-12-12 22:21-22:21] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 5 activity
+[2025-12-12 22:21-22:21] Post Insights - Google Chrome | 12 activity
+[2025-12-12 22:21-22:21] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 1 activity
+[2025-12-12 22:21-22:22] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-13 10:59-10:59] OveloLab - File Explorer | 2 activity
+[2025-12-13 11:00-11:00] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-13 11:00-11:00] Analytics | Home - Google Chrome | 4 activity
+[2025-12-13 11:00-11:00] Analytics - Google Chrome | 2 activity
+[2025-12-13 11:00-11:01] Analytics | Overzicht van gebruikersengagement en -loyaliteit tonen - Google Chrome | 7 activity
+[2025-12-13 11:01-11:01] Analytics | Gebeurtenissen: Naam gebeurtenis - Google Chrome | 3 activity
+[2025-12-13 11:01-11:01] Ovelo | Ovelo | Supabase - Google Chrome | 1 activity
+[2025-12-13 16:21-16:21] Ovelo | Ovelo | Supabase - Google Chrome | 1 activity
+[2025-12-13 16:21-16:21] Ovelo app launch plan - Google Chrome | 0 activity
+[2025-12-13 16:21-16:22] Analytics | Gebeurtenissen: Naam gebeurtenis - Google Chrome | 2 activity
+[2025-12-13 16:22-16:22] Ovelo | Ovelo | Supabase - Google Chrome | 1 activity
+[2025-12-13 17:32-17:33] Ovelo | 5 activity
+[2025-12-13 17:33-17:33] Snipping Tool Overlay | 8 activity
+[2025-12-13 17:33-17:33] Snipping Tool | 19 activity
+[2025-12-13 17:33-17:33] Ovelo - Antigravity - Api Endpoints Spec | 16 activity
+[2025-12-13 17:33-17:34] Ovelo | 8 activity
+[2025-12-13 17:34-17:34] Ovelo - Antigravity - Api Endpoints Spec | 2 activity
+[2025-12-13 17:36-17:37] ChatGPT - Google Chrome | 14 activity
+[2025-12-13 17:37-17:37] Ovelo - Antigravity - Api Endpoints Spec | 13 activity
+[2025-12-13 17:37-17:37] ChatGPT - Google Chrome | 17 activity
+[2025-12-13 17:37-17:37] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 1 activity
+[2025-12-13 17:37-17:38] Ovelo | Ovelo | Supabase - Google Chrome | 3 activity
+[2025-12-13 17:38-17:38] Edge Functions | Supabase - Google Chrome | 4 activity
+[2025-12-13 17:38-17:38] ChatGPT - Google Chrome | 5 activity
+[2025-12-13 17:38-17:38] Create Supabase endpoints - Google Chrome | 4 activity
+[2025-12-13 17:39-17:39] Edge Functions | Supabase - Google Chrome | 4 activity
+[2025-12-13 17:39-17:43] Ovelo | 5 activity
+[2025-12-13 17:46-17:46] Edge Functions | Supabase - Google Chrome | 3 activity
+[2025-12-13 17:46-17:46] Ovelo-site - Antigravity - Implementation Plan | 2 activity
+[2025-12-13 17:46-17:47] Ovelo | 1 activity
+[2025-12-13 17:47-17:48] Ovelo-site - Antigravity - Implementation Plan | 10 activity
+[2025-12-13 17:48-17:48] Ovelo | 2 activity
+[2025-12-13 17:48-17:48] Analytics | Realtime overzicht - Google Chrome | 2 activity
+[2025-12-13 17:48-17:48] Inbox (1.927) - senne21bogaerts@gmail.com - Gmail - Google Chrome | 1 activity
+[2025-12-13 18:15-18:15] Edge Functions | Supabase - Google Chrome | 0 activity
+[2025-12-13 19:13-19:13] Edge Functions | Supabase - Google Chrome | 0 activity
+[2025-12-13 19:13-19:16] Ovelo app launch plan - Google Chrome | 15 activity
+[2025-12-13 19:16-19:17] Ovelo-site - Antigravity - Implementation Plan | 2 activity
+[2025-12-13 19:17-19:17] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 18 activity
+[2025-12-13 19:17-19:17] file:///C:/examples/ - Google Chrome | 4 activity
+[2025-12-13 19:17-19:17] Examples - See Ovelo in Action - Google Chrome | 20 activity
+[2025-12-13 19:17-19:17] file:///C:/roast/ - Google Chrome | 4 activity
+[2025-12-13 19:17-19:18] Roast Me - Get Roasted by AI | Ovelo - Google Chrome | 2 activity
+[2025-12-13 19:18-19:18] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-13 19:18-19:19] Ovelo | Ovelo | Supabase - Google Chrome | 2 activity
+[2025-12-13 19:19-19:19] Ovelo-site - Antigravity - Implementation Plan | 2 activity
+[2025-12-13 19:19-19:19] Ovelo app launch plan - Google Chrome | 0 activity
+[2025-12-13 19:28-19:29] Ovelo app launch plan - Google Chrome | 3 activity
+[2025-12-13 19:29-19:29] Ovelo - Antigravity - Api Endpoints Spec | 24 activity
+[2025-12-14 10:30-10:30] System Idle | 3 activity
+[2025-12-14 10:30-10:30] Ovelo - Antigravity - Api Endpoints Spec | 1 activity
+[2025-12-14 10:30-10:30] Ovelo | Ovelo | Supabase - Google Chrome | 1 activity
+[2025-12-14 10:30-10:30] file:///C:/examples/ - Google Chrome | 3 activity
+[2025-12-14 10:30-10:31] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 3 activity
+[2025-12-14 10:31-10:32] Ovelo-site - Antigravity - Implementation Plan | 1 activity
+[2025-12-14 10:32-10:32] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-14 10:32-10:32] Analytics | Home - Google Chrome | 4 activity
+[2025-12-14 10:33-10:33] Saldo-overzicht – Ovelo – Stripe - Google Chrome | 1 activity
+[2025-12-14 10:34-10:34] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 1 activity
+[2025-12-14 10:34-10:34] Verkoop Wally - senne21bogaerts@gmail.com - Gmail - Google Chrome | 10 activity
+[2025-12-14 10:34-10:34] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 1 activity
+[2025-12-14 10:34-10:35] Quick settings | 1 activity
+[2025-12-14 10:35-10:35] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 8 activity
+[2025-12-14 10:44-10:45] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 0 activity
+[2025-12-14 10:45-10:49] Wall Street sees an AI bubble forming and its betting on what pops it - Google Chrome | 2 activity
+[2025-12-14 10:52-10:52] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 2 activity
+[2025-12-14 10:53-10:53] Analytics | Home - Google Chrome | 4 activity
+[2025-12-14 10:53-10:53] Analytics | Pagina's en schermen - Google Chrome | 12 activity
+[2025-12-14 10:53-10:53] Analytics | Gebeurtenissen - Google Chrome | 7 activity
+[2025-12-14 10:53-10:53] Analytics | Gebeurtenissen: Naam gebeurtenis - Google Chrome | 6 activity
+[2025-12-14 10:53-10:54] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-14 10:54-10:55] Ovelo-site - Antigravity - Implementation Plan | 11 activity
+[2025-12-14 10:55-10:55] Ovelo-site - Antigravity - index.html | 4 activity
+[2025-12-14 10:55-10:56] Ovelo | 5 activity
+[2025-12-14 10:56-10:56] Get Disciplined - Google Chrome | 5 activity
+[2025-12-14 10:56-10:56] Traffic · senneb2002/Ovelo - Google Chrome | 1 activity
+[2025-12-14 10:57-10:57] Saldo-overzicht – Ovelo – Stripe - Google Chrome | 1 activity
+[2025-12-14 10:57-10:57] Ovelo-site - Antigravity - index.html | 4 activity
+[2025-12-14 10:57-10:58] Ovelo app launch plan - Google Chrome | 2 activity
+[2025-12-14 10:58-10:58] Ovelo-site - Antigravity - index.html | 1 activity
+[2025-12-14 10:59-10:59] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 7 activity
+[2025-12-14 10:59-10:59] Ovelo-site - Antigravity - index.html | 3 activity
+[2025-12-14 10:59-10:59] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 3 activity
+[2025-12-14 11:00-11:01] Ovelo-site - Antigravity - index.html | 14 activity
+[2025-12-14 11:02-11:02] Ovelo-site - Antigravity - Task | 1 activity
+[2025-12-14 11:03-11:04] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 2 activity
+[2025-12-14 11:05-11:05] Snipping Tool | 0 activity
+[2025-12-14 11:05-11:05] Snipping Tool Overlay | 3 activity
+[2025-12-14 11:05-11:06] Ovelo-site - Antigravity - Task | 10 activity
+[2025-12-14 11:07-11:08] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 6 activity
+[2025-12-14 11:08-11:08] Snipping Tool | 2 activity
+[2025-12-14 11:08-11:08] Snipping Tool Overlay | 6 activity
+[2025-12-14 11:08-11:09] Ovelo-site - Antigravity - Task | 12 activity
+[2025-12-14 11:09-11:11] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 12 activity
+[2025-12-14 11:14-11:14] Ovelo-site - Antigravity - index.html | 3 activity
+[2025-12-14 11:14-11:15] Ovelo app launch plan - Google Chrome | 12 activity
+[2025-12-14 11:15-11:15] Ovelo-site - Antigravity - index.html | 3 activity
+[2025-12-14 11:15-11:15] Ovelo-site - Antigravity - index.html● | 3 activity
+[2025-12-14 11:16-11:16] Ovelo-site - Antigravity - index.html | 4 activity
+[2025-12-14 11:16-11:17] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 3 activity
+[2025-12-14 11:18-11:18] Ovelo-site - Antigravity - index.html | 1 activity
+[2025-12-14 11:18-11:18] Ovelo-site - Antigravity - index.html● | 5 activity
+[2025-12-14 11:18-11:18] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 12 activity
+[2025-12-14 11:20-11:20] Deployments · senneb2002/Ovelo-site - Google Chrome | 7 activity
+[2025-12-14 11:20-11:20] New Tab - Google Chrome | 6 activity
+[2025-12-14 11:20-11:20] ovelo focus - Google Search - Google Chrome | 3 activity
+[2025-12-14 11:20-11:21] ovelo meaning - Google Search - Google Chrome | 2 activity
+[2025-12-14 11:21-11:21] Ovelo app launch plan - Google Chrome | 9 activity
+[2025-12-14 11:21-11:21] Ovelo-site - Antigravity - index.html | 2 activity
+[2025-12-14 11:27-11:27] Ovelo-site - Antigravity - index.html | 0 activity
+[2025-12-14 11:35-11:36] Ovelo-site - Antigravity - index.html | 2 activity
+[2025-12-14 11:36-11:39] Ovelo app launch plan - Google Chrome | 3 activity
+[2025-12-14 12:02-12:02] Ovelo app launch plan - Google Chrome | 1 activity
+[2025-12-14 12:10-12:10] Ovelo app launch plan - Google Chrome | 4 activity
+[2025-12-14 12:10-12:11] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 17 activity
+[2025-12-14 14:31-14:31] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 2 activity
+[2025-12-14 14:31-14:31] Saldo-overzicht – Ovelo – Stripe - Google Chrome | 1 activity
+[2025-12-14 16:29-16:29] System Idle | 1 activity
+[2025-12-14 16:29-16:29] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-14 16:29-16:29] Analytics - Google Chrome | 1 activity
+[2025-12-14 16:29-16:29] Analytics | Realtime pagina's - Google Chrome | 0 activity
+[2025-12-14 16:39-16:39] Analytics | Realtime pagina's - Google Chrome | 2 activity
+[2025-12-14 16:39-16:39] Verkoop Wally - senne21bogaerts@gmail.com - Gmail - Google Chrome | 3 activity
+[2025-12-14 16:39-16:39] Automatic-Prize8108 (u/Automatic-Prize8108) - Reddit - Google Chrome | 4 activity
+[2025-12-14 16:41-16:41] Google Antigravity Changelog - Google Chrome | 7 activity
+[2025-12-14 16:41-16:41] Traffic · senneb2002/Ovelo - Google Chrome | 2 activity
+[2025-12-14 16:41-16:41] Google AI Studio - Google Chrome | 1 activity
+[2025-12-14 16:41-16:41] Bolero - Google Chrome | 3 activity
+[2025-12-14 16:41-16:44] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 1 activity
+[2025-12-14 16:52-16:53] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 4 activity
+[2025-12-14 16:53-16:56] Ovelo app launch plan - Google Chrome | 16 activity
+[2025-12-14 17:03-17:03] Ovelo app launch plan - Google Chrome | 0 activity
+[2025-12-14 17:21-17:21] Ovelo app launch plan - Google Chrome | 7 activity
+[2025-12-14 17:21-17:21] file:///C:/examples/ - Google Chrome | 3 activity
+[2025-12-14 17:21-17:21] Roast Me - Get Roasted by AI | Ovelo - Google Chrome | 30 activity
+[2025-12-14 17:23-17:24] Ovelo - Understand Your Focus Like Never Before - Google Chrome | 10 activity
+[2025-12-14 17:24-17:24] Ovelo | 7 activity
+[2025-12-14 17:24-17:24] billing.stripe.com/p/session/live_YWNjdF8xU2FLbVRCak02YWVsUWlhLF9UYmF1ZjBNSEZOSllHc0Y0djVzZm1iZjZlZDBOUmdz0100M5wknyPA - Google Chrome | 0 activity
+[2025-12-14 17:24-17:24] Facturatie Ovelo - Google Chrome | 4 activity
+[2025-12-14 17:25-17:25] Analytics | Realtime pagina's - Google Chrome | 0 activity
+[2025-12-14 19:37-19:37] Analytics | Realtime pagina's - Google Chrome | 3 activity
+[2025-12-14 19:37-19:37] Analytics | Realtime overzicht - Google Chrome | 1 activity
+[2025-12-14 19:37-19:38] Analytics | Home - Google Chrome | 2 activity
+[2025-12-14 19:38-19:38] doccle_documents_2025-12-13-01-20 - File Explorer | 13 activity
+[2025-12-14 19:38-19:39] Downloads - File Explorer | 1 activity
+[2025-12-14 19:39-19:39] invoice_global_equine_elegant_v8.pdf and 1 more page - Persoon 1 - Microsoft​ Edge | 3 activity
+[2025-12-14 19:39-19:39] Downloads - File Explorer | 1 activity
+[2025-12-14 19:40-19:40] invoice_global_equine_elegant_v8 - Word | 3 activity
+[2025-12-14 19:40-19:41] WhatsApp - Google Chrome | 1 activity
+[2025-12-14 19:41-19:41] Open | 3 activity
+[2025-12-14 19:41-19:41] WhatsApp - Google Chrome | 2 activity
+[2025-12-14 19:41-19:41] Ovelo | Ovelo | Supabase - Google Chrome | 1 activity
+[2025-12-14 19:41-19:41] Supabase - Google Chrome | 1 activity
+[2025-12-14 19:41-19:42] Ovelo | Ovelo | Supabase - Google Chrome | 29 activity
+[2025-12-14 19:42-19:42] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 1 activity
+[2025-12-14 19:42-19:42] WhatsApp - Google Chrome | 1 activity
+[2025-12-14 19:42-19:42] Quick settings | 1 activity
+[2025-12-14 19:42-19:42] WhatsApp - Google Chrome | 2 activity
+[2025-12-14 19:42-19:42] Downloads - File Explorer | 25 activity
+[2025-12-14 19:42-19:43] WhatsApp - Google Chrome | 1 activity
+[2025-12-14 19:44-19:44] Ovelo-site - Antigravity - index.html | 0 activity
+[2025-12-14 20:32-20:34] Ovelo | 3 activity
+[2025-12-14 20:34-20:35] Ovelo - Antigravity - analyzer.py | 4 activity
+[2025-12-14 20:36-20:36] Ovelo - Antigravity - analyzer.py● | 1 activity
+[2025-12-14 20:37-20:37] Ovelo | 9 activity
+[2025-12-14 20:38-20:39] Ovelo - Antigravity - last_prompt.txt | 13 activity
+[2025-12-14 20:39-20:40] Ovelo | 20 activity
+[2025-12-14 20:40-20:42] Ovelo - Antigravity - last_prompt.txt | 18 activity
+[2025-12-14 20:45-20:46] Ovelo | 7 activity
+[2025-12-14 20:46-20:46] Ovelo - Antigravity - analyzer.py | 38 activity
+[2025-12-14 20:46-20:46] Ovelo - Antigravity - analyzer.py● | 2 activity
+[2025-12-14 20:46-20:46] Ovelo app launch plan - Google Chrome | 3 activity
+[2025-12-14 20:46-20:46] Google AI Studio - Google Chrome | 4 activity
+[2025-12-14 20:46-20:46] Ovelo-site - Antigravity - index.html | 2 activity
+[2025-12-14 20:46-20:48] Ovelo | 12 activity
+[2025-12-14 20:50-20:50] Ovelo - Antigravity - analyzer.py● | 35 activity
+[2025-12-14 20:50-20:51] Ovelo - Antigravity - last_prompt.txt | 3 activity
+[2025-12-14 20:51-20:53] Ovelo | 7 activity
+[2025-12-14 20:54-20:56] Ovelo - Antigravity - last_prompt.txt | 18 activity
+[2025-12-14 20:58-20:59] Ovelo - Antigravity - Implementation Plan | 6 activity
+[2025-12-14 21:00-21:01] Ovelo | 4 activity
+[2025-12-14 21:01-21:01] Woosh Shark Tank update - Google Chrome | 24 activity
+[2025-12-14 21:01-21:01] Ovelo | 3 activity
+[2025-12-14 21:01-21:01] Ovelo - Antigravity - Implementation Plan | 10 activity
+[2025-12-14 21:02-21:04] Ovelo | 3 activity
+[2025-12-14 21:04-21:06] Ovelo - Antigravity - Implementation Plan | 11 activity
+[2025-12-14 21:11-21:11] Ovelo - Antigravity - Implementation Plan | 0 activity
+[2025-12-14 21:12-21:14] Ovelo | 4 activity
+[2025-12-14 21:14-21:16] Woosh Shark Tank update - Google Chrome | 4 activity
+[2025-12-14 21:16-21:16] Ovelo - Antigravity - Implementation Plan | 1 activity
+[2025-12-14 21:16-21:16] Ovelo | 7 activity
+[2025-12-14 21:16-21:17] Ovelo - Antigravity - Implementation Plan | 11 activity
+[2025-12-14 21:18-21:18] Ovelo | 15 activity
+[2025-12-14 21:18-21:18] Ovelo - Antigravity - Implementation Plan | 17 activity
+[2025-12-14 21:18-21:18] Ovelo | 6 activity
+[2025-12-14 21:18-21:19] Ovelo - Antigravity - Implementation Plan | 7 activity
+[2025-12-14 21:22-21:23] Ovelo | 10 activity
+[2025-12-14 21:23-21:23] Untitled - Google Chrome | 1 activity
+[2025-12-14 21:23-21:23] Inloggen bij X / X - Google Chrome | 3 activity
+[2025-12-14 21:23-21:23] Windows Security | 1 activity
+[2025-12-14 21:23-21:24] Inloggen bij X / X - Google Chrome | 6 activity
+[2025-12-14 21:25-21:25] (6) Home / X - Google Chrome | 1 activity
+[2025-12-14 21:28-21:28] Ovelo | 24 activity
+[2025-12-14 21:28-21:28] Ovelo - Antigravity - Implementation Plan | 13 activity
+[2025-12-14 21:28-21:28] Ovelo | 17 activity
+[2025-12-14 21:28-21:29] Ovelo - Antigravity - Passport.tsx | 20 activity
+[2025-12-14 21:29-21:29] Ovelo | 15 activity
+[2025-12-14 21:29-21:29] Ovelo - Antigravity - Passport.tsx | 14 activity
+[2025-12-14 21:29-21:30] Snipping Tool | 6 activity
+[2025-12-14 21:30-21:30] Ovelo - Antigravity - Passport.tsx | 16 activity
+[2025-12-14 21:32-21:32] Ovelo | 4 activity
+[2025-12-14 21:32-21:34] Ovelo - Antigravity - Passport.tsx | 11 activity
+[2025-12-14 21:35-21:36] Ovelo | 4 activity
+[2025-12-14 21:36-21:36] Ovelo - Antigravity - Passport.tsx | 5 activity
+[2025-12-14 21:36-21:36] Snipping Tool Overlay | 5 activity
+[2025-12-14 21:36-21:36] Ovelo - Antigravity - Passport.tsx | 18 activity
+[2025-12-14 21:37-21:38] Ovelo | 5 activity
+[2025-12-14 21:38-21:39] Ovelo - Antigravity - Passport.tsx | 10 activity
+[2025-12-14 21:42-21:42] Ovelo | 4 activity
+[2025-12-14 21:42-21:43] Ovelo - Antigravity - Passport.tsx | 21 activity
+[2025-12-14 21:46-21:47] Ovelo | 6 activity
+[2025-12-14 21:47-21:47] Ovelo - Antigravity - Passport.tsx | 2 activity
+[2025-12-14 21:47-21:47] Ovelo | 2 activity
+[2025-12-14 21:47-21:47] Ovelo - Antigravity - Passport.tsx | 14 activity
+[2025-12-14 21:48-21:48] DevTools - localhost:1420/passport.html | 1 activity
+[2025-12-14 21:48-21:49] Ovelo | 1 activity
+[2025-12-14 21:49-21:49] DevTools - localhost:1420/passport.html | 8 activity
+[2025-12-14 21:49-21:49] Ovelo | 6 activity
+[2025-12-14 21:49-21:49] Ovelo - Antigravity - Passport.tsx | 11 activity
+[2025-12-14 21:51-21:51] Ovelo | 5 activity
+[2025-12-14 21:51-21:51] DevTools - localhost:1420/passport.html | 5 activity
+[2025-12-14 21:51-21:51] Ovelo - Antigravity - Passport.tsx | 1 activity
+[2025-12-14 21:52-21:52] Ovelo | 11 activity
+[2025-12-14 21:52-21:52] Ovelo - Antigravity - Passport.tsx | 13 activity
+[2025-12-14 21:53-21:53] Ovelo | 8 activity
+[2025-12-14 21:53-21:53] DevTools - localhost:1420/passport.html | 1 activity
+[2025-12-14 21:53-21:54] Ovelo - Antigravity - Passport.tsx | 11 activity
+[2025-12-14 21:55-21:55] Ovelo | 15 activity
+[2025-12-14 21:55-21:55] Ovelo - Antigravity - Passport.tsx | 13 activity
+[2025-12-14 21:55-21:56] Ovelo | 5 activity
+[2025-12-14 21:56-21:57] Ovelo - Antigravity - Passport.tsx | 13 activity
+[2025-12-14 22:00-22:00] Ovelo | 3 activity
+[2025-12-14 22:00-22:00] DevTools - localhost:1420/ | 2 activity
+[2025-12-14 22:01-22:01] Ovelo | 9 activity
+[2025-12-14 22:01-22:02] Ovelo - Antigravity - Passport.tsx | 11 activity
+[2025-12-14 22:03-22:03] Ovelo | 9 activity
+[2025-12-14 22:03-22:04] DevTools - localhost:1420/ | 8 activity
+[2025-12-14 22:04-22:04] Ovelo - Antigravity - Passport.tsx | 3 activity
+[2025-12-14 22:04-22:04] Ovelo | 4 activity
+[2025-12-14 22:04-22:05] Ovelo - Antigravity - Passport.tsx | 11 activity
+[2025-12-14 22:07-22:07] Ovelo | 5 activity
+[2025-12-14 22:07-22:07] DevTools - localhost:1420/ | 9 activity
+[2025-12-14 22:07-22:08] Ovelo - Antigravity - Passport.tsx | 19 activity
+[2025-12-14 22:10-22:11] Ovelo | 17 activity
+[2025-12-14 22:11-22:11] Ovelo - Antigravity - Passport.tsx | 17 activity
+[2025-12-14 22:11-22:11] Ovelo | 19 activity
+[2025-12-14 22:11-22:12] Ovelo - Antigravity - Passport.tsx | 7 activity
+[2025-12-14 22:14-22:14] Ovelo | 5 activity
+[2025-12-14 22:14-22:15] Ovelo - Antigravity - App.tsx | 3 activity
+[2025-12-14 22:15-22:15] Ovelo - Antigravity - App.tsx● | 5 activity
+[2025-12-14 22:15-22:15] Ovelo | 3 activity
+[2025-12-14 22:15-22:15] Ovelo - Antigravity - App.tsx● | 11 activity
+[2025-12-14 22:15-22:15] Ovelo | 12 activity
+[2025-12-14 22:15-22:15] Ovelo - Antigravity - App.tsx● | 17 activity
+[2025-12-14 22:16-22:17] Ovelo | 8 activity
+[2025-12-14 22:17-22:17] Ovelo - Antigravity - App.tsx | 1 activity
+[2025-12-15 10:08-10:08] Ovelo-site - File Explorer | 1 activity
+[2025-12-15 10:08-10:08] Analytics | Home - Google Chrome | 4 activity
+[2025-12-15 10:08-10:09] Quick settings | 1 activity
+[2025-12-15 10:09-10:09] Ovelo | Ovelo | Supabase - Google Chrome | 0 activity
+[2025-12-15 10:22-10:22] Ovelo | Ovelo | Supabase - Google Chrome | 1 activity
+[2025-12-15 10:22-10:23] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 3 activity
+[2025-12-15 10:24-10:25] Alphabet Poised for Another Paper Gain as SpaceX Valuation Jumps - Google Chrome | 3 activity
+[2025-12-15 10:26-10:26] SpaceX Hints at $800 Billion Valuation--and an IPO Could Be Next - Google Chrome | 4 activity
+[2025-12-15 10:26-10:27] Yahoo Finance - Stock Market Live, Quotes, Business & Finance News - Google Chrome | 0 activity
+[2025-12-15 10:27-10:29] Stock market today: Dow, S&P 500, Nasdaq wobble as data-packed last full week of trading kicks off - Google Chrome | 4 activity
+[2025-12-15 10:30-10:30] Analytics | Home - Google Chrome | 5 activity
+[2025-12-15 10:31-10:31] Ovelo | 4 activity
+[2025-12-15 10:31-10:31] Google AI Studio - Google Chrome | 2 activity
+[2025-12-15 10:31-10:32] Ovelo - Antigravity - App.tsx | 1 activity
+[2025-12-15 10:34-10:34] Ovelo | 6 activity
+[2025-12-15 10:34-10:34] Ovelo - Antigravity - App.tsx | 17 activity
+[2025-12-15 10:36-10:36] Ovelo | 3 activity
+[2025-12-15 10:36-10:36] Ovelo - Day Trace - Google Chrome | 6 activity
+[2025-12-15 10:36-10:36] New Tab - Google Chrome | 25 activity
+[2025-12-15 10:36-10:37] a330 300 neo seat map[ delta - Google Search - Google Chrome | 5 activity
+[2025-12-15 10:37-10:37] Airbus A330-300 Seat Maps, Specs & Amenities | Delta Air Lines - Google Chrome | 5 activity
+[2025-12-15 10:38-10:39] Search | 3 activity
+[2025-12-15 10:40-10:40] Ovelo | 2 activity
+[2025-12-15 10:41-10:41] Ovelo - Antigravity - App.tsx | 9 activity
+[2025-12-15 10:41-10:41] Settings | 9 activity
+[2025-12-15 10:41-10:42] Ovelo - Antigravity - App.tsx | 7 activity
+[2025-12-15 10:43-10:44] Airbus A330-300 Seat Maps, Specs & Amenities | Delta Air Lines - Google Chrome | 15 activity
+[2025-12-15 10:44-10:44] Airbus A321-200 Seat Maps, Specs & Amenities | Delta Air Lines - Google Chrome | 22 activity
+[2025-12-15 10:46-10:46] Ovelo | 10 activity
+[2025-12-15 10:46-10:46] Airbus A321neo Seat Maps, Specs & Amenities | Delta Air Lines - Google Chrome | 3 activity
+[2025-12-15 10:46-10:47] Airbus A330-900neo Seat Maps, Specs & Amenities | Delta Air Lines - Google Chrome | 7 activity
+[2025-12-15 10:47-10:47] Ovelo | 1 activity
+[2025-12-15 10:48-10:48] Ovelo - Antigravity - App.tsx | 11 activity
+[2025-12-15 10:50-10:50] Airbus A330-900neo Seat Maps, Specs & Amenities | Delta Air Lines - Google Chrome | 4 activity
+[2025-12-15 10:51-10:52] Ovelo | 4 activity
+
+IMPORTANT: Your response should be ONLY the reflection text itself. Do NOT include any labels like "Reflection:" or "Suggestion:".
+Format the output using Markdown:
+- Use "## Title" for the main title
+- Use "### Section Name" for section headings
+- Use bold (**text**) for emphasis
+- Use empty lines between paragraphs for readability.
+Describe what really happened today (with concrete references to time blocks and patterns).
+
+Compare today to their usual behaviour (from Focus Profile).
+
+Offer one honest, slightly playful roast paragraph.
+
+Offer one clear, non‑overwhelming suggestion for tomorrow.
+
+Address the user by their name (Senne) naturally.
+Reference specific times using 12h format (e.g. 2:30 PM).
+
+CRITICAL FORMATTING CHECKLIST (MUST FOLLOW):
+1. USE EMOJIS IN EVERY SINGLE SENTENCE (Exceptions: Scientist/CEO, but Unhinged/Coach MUST use them).
+2. USE HEADINGS AND SEPARATE PARAGRAPHS.
+3. DO NOT WRITE A WALL OF TEXT.
