@@ -5,7 +5,7 @@ import { isPermissionGranted, requestPermission, sendNotification } from '@tauri
 import { generateReflectionApi } from './services/api';
 import { check } from '@tauri-apps/plugin-updater';
 import { relaunch } from '@tauri-apps/plugin-process';
-import { openUrl } from '@tauri-apps/plugin-opener';
+
 import "./App.css";
 
 // Configuration
