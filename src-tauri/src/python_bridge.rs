@@ -31,24 +31,56 @@ impl PythonSidecar {
         ));
 
         // 1. Try Bundled Executable (Production)
-        // 1. Try Bundled Executable (Production)
+        // Check multiple possible locations for the backend executable
         if let Ok(resource_dir) = app_handle.path().resource_dir() {
             let binary_name = if cfg!(windows) {
                 "ovelo_server.exe"
             } else {
                 "ovelo_server"
             };
-            let exe_path = resource_dir.join("backend").join(binary_name);
 
-            if exe_path.exists() {
-                println!("Found bundled sidecar: {:?}", exe_path);
-                child_result = Command::new(exe_path).spawn();
-            } else {
-                // Fallback for flat structure or legacy
-                let legacy_path = resource_dir.join("ovelo_server.exe");
-                if legacy_path.exists() {
-                    println!("Found legacy bundled sidecar: {:?}", legacy_path);
-                    child_result = Command::new(legacy_path).spawn();
+            // List of paths to check in order of preference
+            let paths_to_check = vec![
+                resource_dir.join("backend").join(binary_name),
+                resource_dir.join(binary_name),
+            ];
+
+            // Also check in the exe's directory (for NSIS installs)
+            if let Ok(exe_dir) = std::env::current_exe() {
+                if let Some(parent) = exe_dir.parent() {
+                    let paths_with_exe_dir: Vec<PathBuf> = vec![
+                        parent.join("resources").join("backend").join(binary_name),
+                        parent.join("backend").join(binary_name),
+                        parent.join(binary_name),
+                    ];
+                    for path in paths_with_exe_dir {
+                        println!(
+                            "Checking exe-relative path: {:?} exists={}",
+                            path,
+                            path.exists()
+                        );
+                        if path.exists() {
+                            println!("Found bundled sidecar at exe-relative: {:?}", path);
+                            child_result = Command::new(path).spawn();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Check resource_dir paths if not found yet
+            if child_result.is_err() {
+                for path in paths_to_check {
+                    println!(
+                        "Checking resource path: {:?} exists={}",
+                        path,
+                        path.exists()
+                    );
+                    if path.exists() {
+                        println!("Found bundled sidecar at: {:?}", path);
+                        child_result = Command::new(path).spawn();
+                        break;
+                    }
                 }
             }
         }
