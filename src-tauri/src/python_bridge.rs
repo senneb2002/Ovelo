@@ -2,6 +2,9 @@ use std::path::PathBuf;
 use std::process::{Child, Command};
 use std::sync::Mutex;
 
+#[cfg(target_os = "windows")]
+use std::os::windows::process::CommandExt;
+
 use tauri::Manager;
 
 #[cfg(target_os = "windows")]
@@ -11,8 +14,21 @@ use windows::Win32::System::JobObjects::{
     JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE,
 };
 
+// Windows flag to hide the console window
+#[cfg(target_os = "windows")]
+const CREATE_NO_WINDOW: u32 = 0x08000000;
+
 pub struct PythonSidecar {
     process: Mutex<Option<Child>>,
+}
+
+// Helper to spawn a process hidden on Windows
+fn spawn_hidden(cmd: &mut Command) -> std::io::Result<Child> {
+    #[cfg(target_os = "windows")]
+    {
+        cmd.creation_flags(CREATE_NO_WINDOW);
+    }
+    cmd.spawn()
 }
 
 impl PythonSidecar {
@@ -61,7 +77,7 @@ impl PythonSidecar {
                         );
                         if path.exists() {
                             println!("Found bundled sidecar at exe-relative: {:?}", path);
-                            child_result = Command::new(path).spawn();
+                            child_result = spawn_hidden(&mut Command::new(path));
                             break;
                         }
                     }
@@ -78,7 +94,7 @@ impl PythonSidecar {
                     );
                     if path.exists() {
                         println!("Found bundled sidecar at: {:?}", path);
-                        child_result = Command::new(path).spawn();
+                        child_result = spawn_hidden(&mut Command::new(path));
                         break;
                     }
                 }
@@ -94,7 +110,7 @@ impl PythonSidecar {
 
             if script_path.exists() {
                 println!("Found dev script: {:?}", script_path);
-                child_result = Command::new("python").arg(script_path).spawn();
+                child_result = spawn_hidden(&mut Command::new("python").arg(script_path));
             }
         }
 
