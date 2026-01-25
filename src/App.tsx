@@ -98,6 +98,37 @@ function App() {
 
     window.addEventListener('resize', handleResize);
 
+    // Proactive notification check - runs every 5 minutes
+    const checkProactiveNotification = async () => {
+      try {
+        const result: any = await invoke("check_proactive_notification");
+        if (result && result.should_notify && result.teaser) {
+          // Check notification permission
+          let permissionGranted = await isPermissionGranted();
+          if (!permissionGranted) {
+            const permission = await requestPermission();
+            permissionGranted = permission === 'granted';
+          }
+
+          if (permissionGranted) {
+            sendNotification({
+              title: result.title || 'Ovelo',
+              body: result.teaser
+            });
+            console.log('[Proactive] Sent notification:', result.teaser);
+          }
+        }
+      } catch (error) {
+        // Silently fail - proactive notifications are optional
+        console.log('[Proactive] Check failed:', error);
+      }
+    };
+
+    // Check immediately on load (after a short delay to let backend start)
+    const initialCheck = setTimeout(checkProactiveNotification, 30000);
+    // Then check every 5 minutes
+    const proactiveInterval = setInterval(checkProactiveNotification, 5 * 60 * 1000);
+
     // Auto-update check
     // Auto-update check
     const checkForUpdates = async () => {
@@ -137,6 +168,8 @@ function App() {
 
     return () => {
       clearInterval(interval);
+      clearInterval(proactiveInterval);
+      clearTimeout(initialCheck);
       window.removeEventListener('resize', handleResize);
     };
   }, []);

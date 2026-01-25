@@ -110,6 +110,7 @@ try:
     from tracker import BehaviorTracker
     from analyzer import FocusAnalyzer
     from config import Config
+    from notification_scheduler import NotificationScheduler
 except Exception as e:
     if getattr(sys, 'frozen', False):
         logging.fatal(f"Failed to import dependencies: {e}", exc_info=True)
@@ -128,6 +129,7 @@ def add_cors_headers(response):
 
 # This will be set by OveloServer
 current_tracker = None
+notification_scheduler = None
 
 @app.route('/')
 def serve_index():
@@ -601,16 +603,33 @@ def reset_account_proxy():
 @app.route('/api/delete_account', methods=['POST', 'DELETE'])
 def delete_account_proxy():
     try:
-        # Delete database first
-        delete_database()
-        # Then delete profile (logout logic)
         return logout()
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
 
+@app.route('/api/check_proactive_notification')
+def check_proactive_notification():
+    """Check if a proactive notification should be sent.
+    
+    Called by the frontend periodically to check for pending notifications.
+    Returns: {should_notify: bool, title: str, teaser: str}
+    """
+    global notification_scheduler
+    
+    if notification_scheduler:
+        result = notification_scheduler.get_pending_notification()
+        return jsonify(result)
+    
+    return jsonify({
+        'should_notify': False,
+        'title': None,
+        'teaser': None
+    })
+
+
 class OveloServer:
     def __init__(self, tracker, analyzer_instance):
-        global app, current_tracker, analyzer
+        global app, current_tracker, analyzer, notification_scheduler
         self.app = app
         self.tracker = tracker
         self.analyzer = analyzer_instance
@@ -619,8 +638,15 @@ class OveloServer:
         # Set globals
         current_tracker = tracker
         analyzer = analyzer_instance
+        
+        # Initialize notification scheduler
+        self.notification_scheduler = NotificationScheduler(tracker, analyzer_instance)
+        notification_scheduler = self.notification_scheduler
 
     def run(self):
+        # Start the notification scheduler background thread
+        self.notification_scheduler.start()
+        
         # Prevent port conflicts by killing old instances
         cleanup_zombie_processes(self.port)
         
@@ -629,6 +655,11 @@ class OveloServer:
         log = logging.getLogger('werkzeug')
         log.setLevel(logging.ERROR)
         self.app.run(port=self.port, debug=False, use_reloader=False)
+    
+    def stop(self):
+        # Stop the notification scheduler
+        if self.notification_scheduler:
+            self.notification_scheduler.stop()
 
     def start_thread(self):
         thread = threading.Thread(target=self.run)
