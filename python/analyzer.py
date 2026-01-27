@@ -136,12 +136,17 @@ class FocusAnalyzer:
             is_idle = interval.get("is_idle", False)
             
             # Calculate total activity score
-            # EXCLUDED distance to match baselines (which don't track distance)
-            activity_score = keystrokes + clicks * 2 + scrolls
+            # UPDATED: Weight scrolling and mouse movement more for reading/browsing focus
+            # - Keystrokes: 1x (typing)
+            # - Clicks: 3x (intentional actions)
+            # - Scrolls: 3x (reading/browsing - was underweighted before)
+            # - Mouse distance: normalized contribution for subtle engagement
+            distance_score = min(10, distance / 100)  # Cap at 10, normalize large movements
+            activity_score = keystrokes + clicks * 3 + scrolls * 3 + distance_score
             activity_scores.append(activity_score)
             
-            # Basic intensity (for visualization)
-            intensity = min(1.0, activity_score / 50.0)
+            # Basic intensity (for visualization) - adjusted threshold for new scoring
+            intensity = min(1.0, activity_score / 30.0)
 
             # Simple micro-state
             if is_idle:
@@ -169,7 +174,9 @@ class FocusAnalyzer:
             keystrokes = interval.get("keystrokes", 0)
             clicks = interval.get("mouse_clicks", 0)
             scrolls = interval.get("mouse_scrolls", 0)
-            activity_score = keystrokes + clicks * 2 + scrolls
+            distance = interval.get("mouse_distance", 0)
+            distance_score = min(10, distance / 100)
+            activity_score = keystrokes + clicks * 3 + scrolls * 3 + distance_score
             if not interval.get("is_idle", False):  # Only count non-idle intervals
                 reference_activity_scores.append(activity_score)
 
@@ -526,7 +533,7 @@ RULES:
 4. MOCK SPECIFIC BEHAVIORS.
    - "You opened VS Code for 5 minutes then switched to Twitter? WEAK."
    - "Spotify for 3 hours? Are you a DJ or a developer?"
-5. Use unhinged emojis (💀, 🤡, 🚽, 🗑️, 🥬) in every sentence.
+5. Use unhinged emojis in every sentence.
 
 STRUCTURE:
 - Start with a direct insult about their attention span.

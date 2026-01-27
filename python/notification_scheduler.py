@@ -108,39 +108,57 @@ class NotificationScheduler:
         """
         now = datetime.now()
         today_str = now.strftime('%Y-%m-%d')
+        current_hour = now.hour
+        
+        print(f"[NotificationScheduler] Checking conditions at {now.strftime('%H:%M:%S')}")
         
         # 1. Check if already notified today
         if self.state.get("last_notification_date") == today_str:
+            print(f"[NotificationScheduler] SKIP: Already notified today ({today_str})")
             return False, None
         
         # 2. Check quiet hours (no notifications before 9 AM or after 8 PM)
-        current_hour = now.hour
         if current_hour < self.QUIET_HOURS_END or current_hour >= self.QUIET_HOURS_START:
+            print(f"[NotificationScheduler] SKIP: Quiet hours (current={current_hour}, allowed={self.QUIET_HOURS_END}-{self.QUIET_HOURS_START})")
             return False, None
         
         # 3. Check if user is currently active (not idle in last 5 minutes)
         recent_data = self._get_recent_activity(minutes=5)
-        if not recent_data or all(d.get('is_idle', True) for d in recent_data):
+        if not recent_data:
+            print(f"[NotificationScheduler] SKIP: No recent activity data")
+            return False, None
+            
+        idle_count = sum(1 for d in recent_data if d.get('is_idle', True))
+        active_count = len(recent_data) - idle_count
+        print(f"[NotificationScheduler] Recent activity: {active_count} active, {idle_count} idle (of {len(recent_data)} intervals)")
+        
+        if all(d.get('is_idle', True) for d in recent_data):
+            print(f"[NotificationScheduler] SKIP: User currently idle")
             return False, None
         
         # 4. Check if enough activity has accumulated (at least 2 hours today)
         today_data = self._get_today_activity()
         if not today_data:
+            print(f"[NotificationScheduler] SKIP: No activity data for today")
             return False, None
             
         active_intervals = [d for d in today_data if not d.get('is_idle', True)]
         active_hours = (len(active_intervals) * Config.TRACKING_INTERVAL) / 3600
         
+        print(f"[NotificationScheduler] Today's activity: {active_hours:.2f}h (need {self.MIN_ACTIVITY_HOURS}h)")
+        
         if active_hours < self.MIN_ACTIVITY_HOURS:
+            print(f"[NotificationScheduler] SKIP: Not enough activity ({active_hours:.2f}h < {self.MIN_ACTIVITY_HOURS}h)")
             return False, None
         
         # 5. All conditions met - generate teaser
-        print(f"[NotificationScheduler] Conditions met! {active_hours:.1f}h of activity")
+        print(f"[NotificationScheduler] ✓ ALL CONDITIONS MET! Generating teaser...")
         
         teaser = self._generate_teaser(today_data)
         if teaser:
             return True, teaser
         
+        print(f"[NotificationScheduler] SKIP: Failed to generate teaser")
         return False, None
     
     def _get_recent_activity(self, minutes=5):

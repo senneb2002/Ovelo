@@ -627,6 +627,64 @@ def check_proactive_notification():
     })
 
 
+@app.route('/api/debug_notification', methods=['GET'])
+def debug_notification():
+    """Debug endpoint to check notification status and force a check."""
+    global notification_scheduler, current_tracker
+    
+    from datetime import datetime
+    from config import Config
+    
+    now = datetime.now()
+    today_str = now.strftime('%Y-%m-%d')
+    
+    debug_info = {
+        'current_time': now.strftime('%Y-%m-%d %H:%M:%S'),
+        'current_hour': now.hour,
+        'quiet_hours': f"{9}-{20} (9 AM - 8 PM allowed)",
+        'in_quiet_hours': now.hour < 9 or now.hour >= 20,
+        'scheduler_running': notification_scheduler is not None and notification_scheduler.running,
+        'last_notification_date': None,
+        'already_notified_today': False,
+        'tracker_available': current_tracker is not None,
+        'today_data_count': 0,
+        'today_active_intervals': 0,
+        'today_active_hours': 0.0,
+        'min_required_hours': 2.0,
+        'recent_5min_intervals': 0,
+        'recent_5min_active': 0,
+        'user_currently_idle': True,
+    }
+    
+    if notification_scheduler:
+        debug_info['last_notification_date'] = notification_scheduler.state.get('last_notification_date')
+        debug_info['already_notified_today'] = notification_scheduler.state.get('last_notification_date') == today_str
+        
+        # Get today's activity
+        today_data = notification_scheduler._get_today_activity()
+        if today_data:
+            debug_info['today_data_count'] = len(today_data)
+            active_intervals = [d for d in today_data if not d.get('is_idle', True)]
+            debug_info['today_active_intervals'] = len(active_intervals)
+            debug_info['today_active_hours'] = round((len(active_intervals) * Config.TRACKING_INTERVAL) / 3600, 2)
+        
+        # Get recent activity
+        recent_data = notification_scheduler._get_recent_activity(minutes=5)
+        if recent_data:
+            debug_info['recent_5min_intervals'] = len(recent_data)
+            debug_info['recent_5min_active'] = sum(1 for d in recent_data if not d.get('is_idle', True))
+            debug_info['user_currently_idle'] = all(d.get('is_idle', True) for d in recent_data)
+        
+        # Force a check
+        should_notify, teaser = notification_scheduler._check_notification_conditions()
+        debug_info['force_check_result'] = {
+            'should_notify': should_notify,
+            'teaser': teaser
+        }
+    
+    return jsonify(debug_info)
+
+
 class OveloServer:
     def __init__(self, tracker, analyzer_instance):
         global app, current_tracker, analyzer, notification_scheduler
