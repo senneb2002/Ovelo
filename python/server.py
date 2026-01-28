@@ -647,10 +647,10 @@ def debug_notification():
         'last_notification_date': None,
         'already_notified_today': False,
         'tracker_available': current_tracker is not None,
-        'today_data_count': 0,
-        'today_active_intervals': 0,
-        'today_active_hours': 0.0,
-        'min_required_hours': 2.0,
+        'last_24h_data_count': 0,
+        'last_24h_active_intervals': 0,
+        'last_24h_active_hours': 0.0,
+        'min_required_hours': 1.0,  # Updated to match new threshold
         'recent_5min_intervals': 0,
         'recent_5min_active': 0,
         'user_currently_idle': True,
@@ -659,14 +659,15 @@ def debug_notification():
     if notification_scheduler:
         debug_info['last_notification_date'] = notification_scheduler.state.get('last_notification_date')
         debug_info['already_notified_today'] = notification_scheduler.state.get('last_notification_date') == today_str
+        debug_info['min_required_hours'] = notification_scheduler.MIN_ACTIVITY_HOURS
         
-        # Get today's activity
-        today_data = notification_scheduler._get_today_activity()
-        if today_data:
-            debug_info['today_data_count'] = len(today_data)
-            active_intervals = [d for d in today_data if not d.get('is_idle', True)]
-            debug_info['today_active_intervals'] = len(active_intervals)
-            debug_info['today_active_hours'] = round((len(active_intervals) * Config.TRACKING_INTERVAL) / 3600, 2)
+        # Get last 24h activity (not just today!)
+        last_24h_data = notification_scheduler._get_last_24h_activity()
+        if last_24h_data:
+            debug_info['last_24h_data_count'] = len(last_24h_data)
+            active_intervals = [d for d in last_24h_data if not d.get('is_idle', True)]
+            debug_info['last_24h_active_intervals'] = len(active_intervals)
+            debug_info['last_24h_active_hours'] = round((len(active_intervals) * Config.TRACKING_INTERVAL) / 3600, 2)
         
         # Get recent activity
         recent_data = notification_scheduler._get_recent_activity(minutes=5)

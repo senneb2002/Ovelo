@@ -17,15 +17,17 @@ class NotificationScheduler:
     """
     Background scheduler that triggers one proactive notification per day
     when conditions are right:
-    1. User has accumulated enough activity data (at least 2 hours of tracking)
-    2. User is currently active (not idle)
+    1. User has accumulated enough activity in the LAST 24 HOURS (at least 1 hour)
+    2. User is currently active (not idle) - so they see it immediately
     3. Haven't already sent a notification today
     4. It's during reasonable hours (9 AM - 8 PM)
+    
+    This allows for morning reflections about yesterday's work!
     """
     
     STATE_FILE = os.path.join(Config.BASE_DIR, "notification_state.json")
     CHECK_INTERVAL = 5 * 60  # Check every 5 minutes
-    MIN_ACTIVITY_HOURS = 2  # Minimum hours of activity before triggering
+    MIN_ACTIVITY_HOURS = 1  # Minimum hours of activity in last 24h before triggering (lowered from 2)
     QUIET_HOURS_START = 20  # 8 PM - no notifications after this
     QUIET_HOURS_END = 9     # 9 AM - no notifications before this
     
@@ -136,16 +138,17 @@ class NotificationScheduler:
             print(f"[NotificationScheduler] SKIP: User currently idle")
             return False, None
         
-        # 4. Check if enough activity has accumulated (at least 2 hours today)
-        today_data = self._get_today_activity()
-        if not today_data:
-            print(f"[NotificationScheduler] SKIP: No activity data for today")
+        # 4. Check if enough activity in LAST 24 HOURS (not just today!)
+        #    This allows morning reflections about yesterday's work
+        last_24h_data = self._get_last_24h_activity()
+        if not last_24h_data:
+            print(f"[NotificationScheduler] SKIP: No activity data in last 24 hours")
             return False, None
             
-        active_intervals = [d for d in today_data if not d.get('is_idle', True)]
+        active_intervals = [d for d in last_24h_data if not d.get('is_idle', True)]
         active_hours = (len(active_intervals) * Config.TRACKING_INTERVAL) / 3600
         
-        print(f"[NotificationScheduler] Today's activity: {active_hours:.2f}h (need {self.MIN_ACTIVITY_HOURS}h)")
+        print(f"[NotificationScheduler] Last 24h activity: {active_hours:.2f}h (need {self.MIN_ACTIVITY_HOURS}h)")
         
         if active_hours < self.MIN_ACTIVITY_HOURS:
             print(f"[NotificationScheduler] SKIP: Not enough activity ({active_hours:.2f}h < {self.MIN_ACTIVITY_HOURS}h)")
@@ -154,7 +157,7 @@ class NotificationScheduler:
         # 5. All conditions met - generate teaser
         print(f"[NotificationScheduler] ✓ ALL CONDITIONS MET! Generating teaser...")
         
-        teaser = self._generate_teaser(today_data)
+        teaser = self._generate_teaser(last_24h_data)
         if teaser:
             return True, teaser
         
@@ -184,6 +187,18 @@ class NotificationScheduler:
         
         today_start = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
         return [d for d in all_data if d.get('timestamp', 0) >= today_start]
+    
+    def _get_last_24h_activity(self):
+        """Get all activity data from the last 24 hours."""
+        if not self.tracker:
+            return []
+            
+        all_data = self.tracker.get_data()
+        if not all_data:
+            return []
+        
+        cutoff = time.time() - (24 * 60 * 60)  # 24 hours ago
+        return [d for d in all_data if d.get('timestamp', 0) >= cutoff]
     
     def _generate_teaser(self, activity_data) -> str:
         """Generate a personalized, engaging teaser for the notification."""
