@@ -91,10 +91,16 @@ class NotificationScheduler:
         
         while self.running:
             try:
-                should_notify, teaser = self._check_notification_conditions()
+                result = self._check_notification_conditions()
+                # Handle the new 3-tuple return (should_notify, teaser, reflection)
+                if len(result) == 3:
+                    should_notify, teaser, reflection = result
+                else:
+                    should_notify, teaser = result
+                    reflection = None
                 
                 if should_notify and teaser:
-                    self._trigger_notification(teaser)
+                    self._trigger_notification(teaser, reflection)
                     
             except Exception as e:
                 print(f"[NotificationScheduler] Error in loop: {e}")
@@ -154,15 +160,28 @@ class NotificationScheduler:
             print(f"[NotificationScheduler] SKIP: Not enough activity ({active_hours:.2f}h < {self.MIN_ACTIVITY_HOURS}h)")
             return False, None
         
-        # 5. All conditions met - generate teaser
-        print(f"[NotificationScheduler] ✓ ALL CONDITIONS MET! Generating teaser...")
+        # 5. All conditions met - GENERATE REFLECTION FIRST, then create teaser from it
+        print(f"[NotificationScheduler] ✓ ALL CONDITIONS MET! Generating reflection...")
         
-        teaser = self._generate_teaser(last_24h_data)
-        if teaser:
-            return True, teaser
+        # Generate the full reflection using the analyzer
+        try:
+            reflection = self.analyzer.generate_reflection(last_24h_data)
+            if not reflection or len(reflection) < 50:
+                print(f"[NotificationScheduler] SKIP: Failed to generate reflection")
+                return False, None, None
+                
+            print(f"[NotificationScheduler] Reflection generated ({len(reflection)} chars)")
+            
+            # Now generate an engaging teaser FROM the reflection content
+            teaser = self._generate_teaser_from_reflection(reflection)
+            if teaser:
+                return True, teaser, reflection
+                
+        except Exception as e:
+            print(f"[NotificationScheduler] Error generating reflection: {e}")
         
         print(f"[NotificationScheduler] SKIP: Failed to generate teaser")
-        return False, None
+        return False, None, None
     
     def _get_recent_activity(self, minutes=5):
         """Get activity data from the last N minutes."""
@@ -200,34 +219,39 @@ class NotificationScheduler:
         cutoff = time.time() - (24 * 60 * 60)  # 24 hours ago
         return [d for d in all_data if d.get('timestamp', 0) >= cutoff]
     
-    def _generate_teaser(self, activity_data) -> str:
-        """Generate a personalized, engaging teaser for the notification."""
+    def _generate_teaser_from_reflection(self, reflection: str) -> str:
+        """Generate an engaging teaser based on the actual reflection content."""
         
         # Get user info
         profile = self.analyzer.profile
         user_name = profile.get('userName', profile.get('name', ''))
         
-        # Analyze activity for insights
-        insights = self._extract_insights(activity_data)
+        # Truncate reflection if too long for the prompt
+        reflection_excerpt = reflection[:1500] if len(reflection) > 1500 else reflection
         
-        # Build teaser prompt
-        prompt = f"""Generate a single notification teaser (max 60 chars) that will make the user want to open Ovelo immediately.
+        # Build teaser prompt based on the REFLECTION, not raw data
+        prompt = f"""You are creating a notification teaser to make someone click and read their personal reflection.
 
-User Name: {user_name if user_name else 'there'}
-Today's Insights:
-{insights}
+Here is the reflection they will see:
+---
+{reflection_excerpt}
+---
 
-Requirements:
-1. Include ONE emoji at the end
-2. Reference something SPECIFIC from the insights
-3. Create curiosity - don't reveal everything
-4. Be conversational and personal
-5. If user has a name, use it
+Generate ONE short teaser (max 60 characters) that:
+1. References something SPECIFIC and PERSONAL from this reflection
+2. Creates curiosity - makes them NEED to click to see more
+3. Feels like a friend who noticed something interesting about their day
+4. Ends with ONE emoji
+5. {f'Uses their name ({user_name})' if user_name else 'Is warm and personal'}
 
-Examples of GOOD teasers:
-- "Your focus peaked at 2pm. Want to know why? 🔍"
-- "3 hours of deep work today - impressive 🎯"
-- "That context-switching at 4pm... let's talk 👀"
+BAD examples (too generic):
+- "Your reflection is ready 📊"
+- "Check out your daily insights 🎯"
+
+GOOD examples (specific and personal):
+- "That VS Code session at 3pm was fire 🔥"
+- "Senne, your focus after lunch? Impressive 👀"
+- "You might want to see what happened at 4pm... 🤔"
 
 Output ONLY the teaser text, nothing else."""
 
@@ -240,13 +264,17 @@ Output ONLY the teaser text, nothing else."""
             if len(teaser) > 80:
                 teaser = teaser[:77] + "..."
             
-            print(f"[NotificationScheduler] Generated teaser: {teaser}")
+            print(f"[NotificationScheduler] Generated teaser from reflection: {teaser}")
             return teaser
             
         except Exception as e:
             print(f"[NotificationScheduler] Error generating teaser: {e}")
             # Fallback teaser
-            return f"Your daily focus insights are ready 📊"
+            return f"Your personal reflection is ready 🪞"
+    
+    def _generate_teaser(self, activity_data) -> str:
+        """DEPRECATED: Use _generate_teaser_from_reflection instead."""
+        return "Your daily focus insights are ready 📊"
     
     def _extract_insights(self, activity_data) -> str:
         """Extract key insights from activity data for teaser generation."""
@@ -293,17 +321,20 @@ Output ONLY the teaser text, nothing else."""
         
         return "\n".join(insights)
     
-    def _trigger_notification(self, teaser: str):
-        """Send the notification and update state."""
+    def _trigger_notification(self, teaser: str, reflection: str = None):
+        """Send the notification and update state with the pre-generated reflection."""
         today_str = datetime.now().strftime('%Y-%m-%d')
         
         # Update state FIRST to prevent duplicate sends
         self.state["last_notification_date"] = today_str
         self.state["last_teaser"] = teaser
+        self.state["last_reflection"] = reflection  # Store the reflection!
         self.state["notifications_today"] = self.state.get("notifications_today", 0) + 1
         self._save_state()
         
         print(f"[NotificationScheduler] Triggering notification: {teaser}")
+        if reflection:
+            print(f"[NotificationScheduler] Reflection stored ({len(reflection)} chars)")
         
         # Call the notification callback if set
         if self._notification_callback:
@@ -320,23 +351,33 @@ Output ONLY the teaser text, nothing else."""
         Check if there's a pending notification to send.
         Called by the frontend/Tauri to poll for notifications.
         
-        Returns: {should_notify: bool, teaser: str, title: str}
+        Returns: {should_notify: bool, teaser: str, title: str, reflection: str}
         """
-        should_notify, teaser = self._check_notification_conditions()
+        result = self._check_notification_conditions()
+        
+        # Handle the new 3-tuple return (should_notify, teaser, reflection)
+        if len(result) == 3:
+            should_notify, teaser, reflection = result
+        else:
+            # Fallback for old 2-tuple format
+            should_notify, teaser = result
+            reflection = None
         
         if should_notify and teaser:
-            # Mark as sent
-            self._trigger_notification(teaser)
+            # Mark as sent and store the reflection
+            self._trigger_notification(teaser, reflection)
             return {
                 "should_notify": True,
                 "title": "Ovelo",
-                "teaser": teaser
+                "teaser": teaser,
+                "reflection": reflection  # Include for immediate display!
             }
         
         return {
             "should_notify": False,
             "title": None,
-            "teaser": None
+            "teaser": None,
+            "reflection": None
         }
     
     def force_check(self) -> dict:

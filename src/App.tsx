@@ -103,6 +103,34 @@ function App() {
       try {
         const result: any = await invoke("check_proactive_notification");
         if (result && result.should_notify && result.teaser) {
+          // If we have a pre-generated reflection, display it immediately!
+          if (result.reflection) {
+            console.log('[Proactive] Setting pre-generated reflection');
+            setReflection(result.reflection);
+
+            // Save to localStorage history for persistence
+            try {
+              const historyKey = 'ovelo_reflection_history';
+              const existing = localStorage.getItem(historyKey);
+              const history = existing ? JSON.parse(existing) : [];
+              const newEntry = {
+                id: Date.now(),
+                date: new Date().toISOString().split('T')[0],
+                content: result.reflection,
+                persona: 'proactive',
+                timestamp: new Date().toISOString()
+              };
+              history.unshift(newEntry);
+              // Keep only last 20 reflections
+              if (history.length > 20) history.pop();
+              localStorage.setItem(historyKey, JSON.stringify(history));
+              setReflectionHistory(history);
+              console.log('[Proactive] Saved reflection to history');
+            } catch (e) {
+              console.error('[Proactive] Failed to save to history:', e);
+            }
+          }
+
           // Check notification permission
           let permissionGranted = await isPermissionGranted();
           if (!permissionGranted) {
