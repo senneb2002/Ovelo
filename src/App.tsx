@@ -235,8 +235,21 @@ function App() {
       if (result && result.hasReflection && result.reflection) {
         console.log('[Startup] Found pending notification reflection from:', result.date);
 
+        // CRITICAL: Validate this isn't a system prompt (broken data from old versions)
+        const reflection = result.reflection;
+        const isSystemPrompt = reflection.includes('You are OVELO') ||
+          reflection.includes('RULES:') ||
+          reflection.includes('STRUCTURE:') ||
+          reflection.includes('CRITICAL FORMATTING CHECKLIST') ||
+          reflection.includes('USER NAME:');
+
+        if (isSystemPrompt) {
+          console.log('[Startup] Detected system prompt in stored reflection - skipping display');
+          return; // Don't display broken data
+        }
+
         // Display the reflection
-        setReflection(result.reflection);
+        setReflection(reflection);
 
         // Save to localStorage history
         try {
