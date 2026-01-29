@@ -612,7 +612,9 @@ CRITICAL FORMATTING CHECKLIST (MUST FOLLOW):
         except Exception as e:
             print(f"DEBUG: Failed to save prompt: {e}")
 
-        return full_prompt
+        # Actually call Gemini to get the reflection!
+        reflection_text = self._call_gemini_proxy(full_prompt, persona)
+        return reflection_text
 
     def get_daily_summary(self, raw_data):
         """Generates a very short summary for a notification."""
