@@ -42,9 +42,14 @@ jobs:
 
       - name: Build Python Backend
         run: |
+          # Clear any PyInstaller caches to ensure fresh build
+          rm -rf build dist __pycache__ python/__pycache__
+          
           if [ "$RUNNER_OS" == "Windows" ]; then
-            pyinstaller --clean --onefile --name ovelo_server --hidden-import win32timezone --hidden-import win32gui --hidden-import win32api --hidden-import win32con --hidden-import pynput.keyboard._win32 --hidden-import pynput.mouse._win32 python/server.py
+            # Use the spec file for explicit control
+            pyinstaller --clean ovelo_server.spec
           else
+            # macOS build (no spec file needed yet)
             pyinstaller --clean --onefile --name ovelo_server python/server.py
           fi
         shell: bash

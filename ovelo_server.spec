@@ -3,7 +3,7 @@
 
 a = Analysis(
     ['python\\server.py'],
-    pathex=[],
+    pathex=['python'],  # CRITICAL: Include python directory so all modules are found
     binaries=[],
     datas=[],
     hiddenimports=['win32timezone', 'win32gui', 'win32api', 'win32con', 'pynput.keyboard._win32', 'pynput.mouse._win32'],
@@ -12,7 +12,7 @@ a = Analysis(
     runtime_hooks=[],
     excludes=[],
     noarchive=False,
-    optimize=0,
+    optimize=0,  # Set to 0 to disable bytecode optimization (ensures fresh compile)
 )
 pyz = PYZ(a.pure)
 
