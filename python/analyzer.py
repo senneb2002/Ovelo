@@ -64,7 +64,7 @@ class FocusAnalyzer:
         
         return device_id
     
-    def _call_gemini_proxy(self, prompt: str, persona: str = "calm_coach") -> str:
+    def _call_gemini_proxy(self, prompt: str, persona: str = "calm_coach", exclude_from_usage: bool = False) -> str:
         """Call the Supabase Edge Function to proxy Gemini API requests."""
         headers = {"Content-Type": "application/json"}
         if Config.SUPABASE_ANON_KEY:
@@ -78,7 +78,8 @@ class FocusAnalyzer:
             "prompt": prompt,
             "persona": persona,
             "deviceId": device_id,
-            "date": today
+            "date": today,
+            "excludeFromUsage": exclude_from_usage
         }
         
         print(f"[Reflection] Calling proxy with deviceId: {device_id}, date: {today}")

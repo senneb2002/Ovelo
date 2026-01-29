@@ -256,7 +256,7 @@ GOOD examples (specific and personal):
 Output ONLY the teaser text, nothing else."""
 
         try:
-            teaser = self.analyzer._call_gemini_proxy(prompt, "teaser")
+            teaser = self.analyzer._call_gemini_proxy(prompt, "teaser", exclude_from_usage=True)
             # Clean up the response
             teaser = teaser.strip().strip('"').strip("'")
             

@@ -94,6 +94,8 @@ function App() {
     syncDeviceId();
     checkProfile();
     loadData();
+    loadReflectionHistory();
+    checkForPendingNotificationReflection(); // Check if there's a reflection from a notification we sent while app was closed
     const interval = setInterval(loadData, 60000); // Refresh every minute
 
     window.addEventListener('resize', handleResize);
@@ -223,6 +225,53 @@ function App() {
     } catch (error) {
       console.error('Error checking profile:', error);
       setBackendError(true);
+    }
+  }
+
+  // Check if there's a pending notification reflection (from when app was closed)
+  async function checkForPendingNotificationReflection() {
+    try {
+      const result: any = await invoke("get_last_notification_reflection");
+      if (result && result.hasReflection && result.reflection) {
+        console.log('[Startup] Found pending notification reflection from:', result.date);
+
+        // Display the reflection
+        setReflection(result.reflection);
+
+        // Save to localStorage history
+        try {
+          const historyKey = 'ovelo_reflection_history';
+          const existing = localStorage.getItem(historyKey);
+          const history = existing ? JSON.parse(existing) : [];
+
+          // Check if this reflection is already in history (by comparing content)
+          const alreadyExists = history.some((item: any) =>
+            item.content === result.reflection
+          );
+
+          if (!alreadyExists) {
+            const newEntry = {
+              id: Date.now(),
+              date: result.date || new Date().toISOString().split('T')[0],
+              content: result.reflection,
+              persona: 'proactive',
+              timestamp: new Date().toISOString()
+            };
+            history.unshift(newEntry);
+            // Keep only last 20 reflections
+            if (history.length > 20) history.pop();
+            localStorage.setItem(historyKey, JSON.stringify(history));
+            setReflectionHistory(history);
+            console.log('[Startup] Saved pending reflection to history');
+          } else {
+            console.log('[Startup] Reflection already in history, skipping save');
+          }
+        } catch (e) {
+          console.error('[Startup] Failed to save to history:', e);
+        }
+      }
+    } catch (error) {
+      console.log('[Startup] No pending notification reflection or error:', error);
     }
   }
 

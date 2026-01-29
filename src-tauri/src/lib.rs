@@ -114,6 +114,11 @@ async fn check_proactive_notification() -> Result<serde_json::Value, String> {
     python_bridge::call_api("/api/check_proactive_notification").await
 }
 
+#[tauri::command]
+async fn get_last_notification_reflection() -> Result<serde_json::Value, String> {
+    python_bridge::call_api("/api/get_last_notification_reflection").await
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let sidecar = Arc::new(PythonSidecar::new());
@@ -190,7 +195,8 @@ pub fn run() {
             force_start_server,
             get_device_id,
             get_reflection_history,
-            check_proactive_notification
+            check_proactive_notification,
+            get_last_notification_reflection
         ])
         .build(tauri::generate_context!())
         .expect("error while building tauri application")

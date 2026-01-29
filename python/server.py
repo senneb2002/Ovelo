@@ -686,6 +686,41 @@ def debug_notification():
     return jsonify(debug_info)
 
 
+@app.route('/api/get_last_notification_reflection', methods=['GET'])
+def get_last_notification_reflection():
+    """Get the last stored notification reflection (if any)."""
+    global notification_scheduler
+    
+    if not notification_scheduler:
+        return jsonify({
+            'hasReflection': False,
+            'reflection': None,
+            'teaser': None,
+            'date': None
+        })
+    
+    # Get the stored state
+    state = notification_scheduler.state
+    last_reflection = state.get('last_reflection')
+    last_teaser = state.get('last_teaser')
+    last_date = state.get('last_notification_date')
+    
+    if last_reflection:
+        return jsonify({
+            'hasReflection': True,
+            'reflection': last_reflection,
+            'teaser': last_teaser,
+            'date': last_date
+        })
+    
+    return jsonify({
+        'hasReflection': False,
+        'reflection': None,
+        'teaser': None,
+        'date': None
+    })
+
+
 class OveloServer:
     def __init__(self, tracker, analyzer_instance):
         global app, current_tracker, analyzer, notification_scheduler
